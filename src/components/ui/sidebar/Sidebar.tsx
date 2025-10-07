@@ -17,7 +17,7 @@ export function Sidebar() {
     }
 
     return (
-        <aside className={clsx("flex flex-col h-full bg-white border-r border-r-lexy-border-table py-6 transition-all", { "w-64": expanded, "w-20": !expanded })}>
+        <aside className={clsx("flex flex-col h-full bg-white border-r border-r-lexy-border-table py-6 transition-all duration-300", { "w-64": expanded, "w-20": !expanded })}>
             <section className="header px-4">
                 <div className={clsx("flex items-center justify-between py-4", { "flex-col gap-y-7": !expanded })}>
                     <div className="flex items-center gap-x-2">
