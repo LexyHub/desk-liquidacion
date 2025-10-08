@@ -1,7 +1,11 @@
-import { Header } from "@components/ui/Header";
-import { MessageBar } from "@components/ui/messages/MessageBar";
-import { Sidebar } from "@components/ui/sidebar/Sidebar";
 import { Outlet } from "react-router-dom";
+
+import { Header } from "@components/ui/Header";
+// import { MessageBar } from "@components/ui/messages/MessageBar";
+import { Sidebar } from "@components/ui/sidebar/Sidebar";
+import { lazy } from "react";
+
+const MessageBar = lazy(() => import("@components/ui/messages/MessageBar"))
 
 export function Layout() {
   return (

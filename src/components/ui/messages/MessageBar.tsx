@@ -1,15 +1,15 @@
-import { useHeaderUI } from "@context/HeaderUIContext";
-import { useMessagesContext } from "@context/messages/MessagesContext";
+import { useHeaderUI } from "@context/headerUI";
+import { useMessages } from "@context/messages";
 import clsx from "clsx";
 import { ArrowUp, X } from "lucide-react";
 import { useState } from "react";
 import Search from "@assets/search.webp";
 
-export function MessageBar() {
+export default function MessageBar() {
   const { isOpen, close, rawPath } = useHeaderUI();
   // const { fetchMessages, getMessages, addMessage, removeMessage } =
-  //   useMessagesContext();
-  const { getMessages } = useMessagesContext();
+  //   useMessages();
+  const { getMessages } = useMessages();
   const [message, setMessage] = useState("");
 
   return (

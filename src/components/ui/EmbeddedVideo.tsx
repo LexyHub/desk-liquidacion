@@ -3,7 +3,7 @@ interface Props {
   videoId: string;
 }
 
-export function EmbeddedVideo({ title, videoId }: Props) {
+export default function EmbeddedVideo({ title, videoId }: Props) {
   return (
     <iframe
       className="w-full h-full rounded-b-lg"

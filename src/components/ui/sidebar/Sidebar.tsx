@@ -1,5 +1,5 @@
 import clsx from "clsx";
-import { useState } from "react";
+import { lazy, useState } from "react";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import {
   ArrowLeftToLine,
@@ -18,7 +18,8 @@ import {
   DialogHeader,
   DialogTitle,
 } from "../dialog";
-import { EmbeddedVideo } from "../EmbeddedVideo";
+// import { EmbeddedVideo } from "../EmbeddedVideo";
+const EmbeddedVideo = lazy(() => import("../EmbeddedVideo"));
 
 export function Sidebar() {
   const { clientId } = useParams();

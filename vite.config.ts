@@ -26,7 +26,8 @@ export default defineConfig({
         manualChunks: {
           react: ['react', 'react-dom', 'react-router-dom'],
           icons: ['lucide-react'],
-          zod: ['zod'],
+          radix: ["@radix-ui/react-dialog"]
+          // zod: ['zod'],
         }
       }
     }

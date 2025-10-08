@@ -1,10 +1,10 @@
-import { useMessagesContext } from "@/context/messages/MessagesContext";
-import { useHeaderUI } from "@context/HeaderUIContext";
+import { useMessages } from "@context/messages";
+import { useHeaderUI } from "@context/headerUI";
 import { MessageCircle } from "lucide-react";
 
 export function Header() {
   const { actualPath, rawPath, toggle } = useHeaderUI();
-  const { getMessages } = useMessagesContext();
+  const { getMessages } = useMessages();
 
   return (
     <header className="w-full flex items-center justify-between px-6 py-2.5 bg-white border-b border-b-lexy-border-table">

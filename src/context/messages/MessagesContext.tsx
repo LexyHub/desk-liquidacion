@@ -1,52 +1,43 @@
 import {
-  createContext,
   useCallback,
-  useContext,
   useMemo,
   useReducer,
   useRef,
   type ReactNode,
 } from "react";
-import type { Message } from "@/types";
-import {
-  messagesReducer,
-  initialState,
-  type State,
-  type Action,
-} from "./messagesReducer";
-
-interface MessagesContextValue {
-  fetchMessages: (path: string, signal?: AbortSignal) => Promise<void>;
-  addMessage: (path: string, msg: Message) => void;
-  removeMessage: (path: string, id: string) => void;
-  getMessages: (path: string) => Message[];
-  getMessage: (id: string) => Message | undefined;
-}
-
-const MessagesContext = createContext<MessagesContextValue | undefined>(
-  undefined
-);
+import { messagesReducer, initialState, type Action } from "./messagesReducer";
+import { MessagesContext } from "./useMessages";
+import type { MessagesContextValue, Message } from "@/types";
 
 export function MessagesProvider({ children }: { children: ReactNode }) {
-  const [state, dispatch] = useReducer(messagesReducer, initialState as State);
-  const lastRequestByPath = useRef<Record<string, number>>({});
+  const [state, dispatch] = useReducer(messagesReducer, initialState);
+  const controllersRef = useRef<Record<string, AbortController | undefined>>(
+    {}
+  );
 
   const fetchMessages = useCallback(
-    async (path: string, signal?: AbortSignal) => {
-      console.info("Debug para signal", signal)
-      const reqId = (lastRequestByPath.current[path] ?? 0) + 1;
-      lastRequestByPath.current[path] = reqId;
+    async (path: string, externalSignal?: AbortSignal) => {
+      controllersRef.current[path]?.abort();
+      const controller = new AbortController();
+      controllersRef.current[path] = controller;
+
+      const signal = externalSignal ?? controller.signal;
+
+      console.info("Debug para signal", signal);
       try {
         // const res = await fetch(`/api/messages/${path}`, { signal });
         // const data: Message[] = await res.json();
-        await new Promise((r) => setTimeout(r, 120)); // simuelo latencia
+        await new Promise((r) => setTimeout(r, 120)); // simula latencia
         const data: Message[] = [];
-
-        if (lastRequestByPath.current[path] !== reqId) return;
+        if (controller.signal.aborted) return;
         dispatch({ type: "SET", path, messages: data } as Action);
       } catch (err) {
         if ((err as DOMException)?.name === "AbortError") return;
         console.error("fetchMessages error", err);
+      } finally {
+        if (controllersRef.current[path] === controller) {
+          delete controllersRef.current[path];
+        }
       }
     },
     []
@@ -73,7 +64,7 @@ export function MessagesProvider({ children }: { children: ReactNode }) {
     [state.normalized.byId, state.normalized.idsByPath]
   );
 
-  const value = useMemo(
+  const value: MessagesContextValue = useMemo(
     () => ({
       fetchMessages,
       addMessage,
@@ -89,11 +80,4 @@ export function MessagesProvider({ children }: { children: ReactNode }) {
       {children}
     </MessagesContext.Provider>
   );
-}
-
-export function useMessagesContext(): MessagesContextValue {
-  const ctx = useContext(MessagesContext);
-  if (!ctx)
-    throw new Error("useMessagesContext must be used inside MessagesProvider");
-  return ctx;
 }
