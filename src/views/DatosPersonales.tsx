@@ -10,9 +10,6 @@ export default function DatosPersonales() {
   const [testValue, setTestValue] = useState<string>("");
   const [testValue2, setTestValue2] = useState<number>(0);
 
-  const estoEsIntencional: any = "ESTO ES INTENCIONAL PARA PROBAR EL CI";
-  const estoTambien;
-
   return (
     <main className='animate-fade-in animate-duration-200'>
       <ContentHead />
