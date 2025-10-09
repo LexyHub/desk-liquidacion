@@ -3,9 +3,9 @@ import { useMessages } from "@context/messages";
 import clsx from "clsx";
 import { ArrowUp, X } from "lucide-react";
 import { useState } from "react";
-import Search from "@assets/search.webp";
+import { Search } from "@assets";
 
-export default function MessageBar() {
+export function MessageBar() {
   const { isOpen, close, rawPath } = useHeaderUI();
   // const { fetchMessages, getMessages, addMessage, removeMessage } =
   //   useMessages();
@@ -56,6 +56,8 @@ export default function MessageBar() {
           className="p-2.5 rounded-sm w-full text-lexy-text-secondary placeholder:text-lexy-text-placeholder bg-lexy-bg-platform border border-lexy-border-table outline-none resize-none"
         ></textarea>
         <button
+          title="Enviar comentario"
+          type="button"
           disabled={message.trim() === ""}
           className={clsx(
             "text-white size-fit py-2.5 px-2.5 rounded-lg shadow-lexy-button cursor-pointer disabled:cursor-not-allowed transition-colors",
