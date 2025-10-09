@@ -19,12 +19,14 @@ export function SidebarItem({
 }: Props) {
   return (
     <button
+      title={label}
+      type="button"
       onClick={() => onClick(to)}
       className={clsx(
-        "flex items-center w-full gap-x-2.5 rounded-sm transition-all",
+        "flex items-center gap-x-2.5 rounded-sm transition-all size-fit",
         {
-          "px-4 py-2 justify-start": expanded,
-          "p-2 justify-center": !expanded,
+          "px-4 py-2 justify-start w-full": expanded,
+          "p-2.5 justify-center": !expanded,
           "text-lexy-text-secondary bg-lexy-bg-card hover:bg-[#EAE6FF] cursor-pointer": !active,
           "text-lexy-brand-secondary-dark bg-[#EAE6FF]": active,
         }

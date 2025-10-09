@@ -1,5 +1,5 @@
 import clsx from "clsx";
-import { lazy, useState } from "react";
+import { useState } from "react";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import {
   ArrowLeftToLine,
@@ -8,24 +8,16 @@ import {
   CreditCard,
   ScrollText,
   UserRound,
-  X,
 } from "lucide-react";
 import { SidebarItem } from "./SidebarItem";
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
-} from "../dialog";
-// import { EmbeddedVideo } from "../EmbeddedVideo";
-const EmbeddedVideo = lazy(() => import("../EmbeddedVideo"));
+import { VideoDialog } from "./VideoDialog";
+import { useSidebar } from "@/context/sidebar/useSidebar";
 
 export function Sidebar() {
   const { clientId } = useParams();
   const { pathname } = useLocation();
   const navigate = useNavigate();
-  const [expanded, setExpanded] = useState(true);
+  const { isOpen, toggle } = useSidebar();
   const [showVideoDialog, setShowVideoDialog] = useState(false);
   const isDistribution = pathname.startsWith("/distribucion");
 
@@ -36,39 +28,17 @@ export function Sidebar() {
 
   return (
     <>
-      <Dialog open={showVideoDialog}>
-        <DialogContent showCloseButton={false} className="sm:max-w-2xl w-full border border-lexy-border-table p-0 gap-y-0">
-          <DialogHeader className="flex flex-row items-center justify-between p-4">
-            <DialogTitle className="font-normal">Vídeo: <strong>Presentación Liquidación</strong></DialogTitle>
-            <DialogDescription></DialogDescription>
-            <button
-              type="button"
-              title="Cerrar vídeo"
-              aria-description="Cerrar vídeo de presentación de liquidación"
-              onClick={() => setShowVideoDialog(false)}
-              className="flex items-center justify-center size-9 bg-white border border-black/10 hover:bg-lexy-border-table transition-colors rounded-full cursor-pointer"
-            >
-              <X />
-            </button>
-          </DialogHeader>
-          <div className="w-full h-96">
-            <EmbeddedVideo
-              title="Presentación Liquidación"
-              videoId="xlX7NwTq9Zo"
-            />
-          </div>
-        </DialogContent>
-      </Dialog>
+      <VideoDialog isOpen={showVideoDialog} toggleOpen={setShowVideoDialog} />
       <aside
         className={clsx(
           "flex flex-col h-full bg-white border-r border-r-lexy-border-table py-6 transition-all duration-300",
-          { "w-64": expanded, "w-20": !expanded }
+          { "w-64": isOpen, "w-20": !isOpen }
         )}
       >
         <section className="header px-4">
           <div
             className={clsx("flex items-center justify-between py-4", {
-              "flex-col gap-y-7": !expanded,
+              "flex-col gap-y-7": !isOpen,
             })}
           >
             <div className="flex items-center gap-x-2">
@@ -95,23 +65,25 @@ export function Sidebar() {
                   fill="#4429CC"
                 />
               </svg>
-              {expanded && (
+              {isOpen && (
                 <h2 className="text-[#0B013C] leading-6 font-medium">
                   Desk Liquidación
                 </h2>
               )}
             </div>
             <button
-              onClick={() => setExpanded(!expanded)}
+              title="Expandir / Contraer menú"
+              type="button"
+              onClick={toggle}
               className={clsx(
                 "flex items-center justify-center cursor-pointer p-1 border border-lexy-border-table text-lexy-brand-secondary-dark rounded-sm hover:bg-lexy-btn-secondary-hover transition-colors",
-                { "size-6": expanded, "rotate-180 size-8": !expanded }
+                { "size-6": isOpen, "rotate-180 size-8": !isOpen }
               )}
             >
               <ArrowLeftToLine className="size-4" />
             </button>
           </div>
-          {expanded && (
+          {isOpen && (
             <div className="flex items-center justify-between my-6">
               <button
                 type="button"
@@ -151,7 +123,7 @@ export function Sidebar() {
             aria-description="Reproducir vídeo de presentación sobre liquidación"
             className={clsx(
               "w-full flex items-center justify-center gap-x-2.5 cursor-pointer rounded-sm border border-lexy-btn-secondary-hover bg-lexy-bg-secondary hover:bg-[#E4DFFF] hover:border-[#EEEBFF] transition-all text-lexy-brand-secondary-dark shadow-lexy-button",
-              { "p-2": !expanded, "px-4 py-2": expanded }
+              { "p-2": !isOpen, "px-4 py-2": isOpen }
             )}
           >
             <svg
@@ -168,18 +140,18 @@ export function Sidebar() {
               <path d="M2.5 17a24.1 24.1 0 0 1 0-10 2 2 0 0 1 1.4-1.4 49.6 49.6 0 0 1 16.2 0A2 2 0 0 1 21.5 7a24.1 24.1 0 0 1 0 10 2 2 0 0 1-1.4 1.4 49.6 49.6 0 0 1-16.2 0A2 2 0 0 1 2.5 17" />
               <path d="m10 15 5-3-5-3z" />
             </svg>
-            {expanded && (
+            {isOpen && (
               <span className="leading-6 font-medium">Presentación</span>
             )}
           </button>
         </section>
         <div className="w-full h-px bg-lexy-border-table" />
-        <section className="body flex flex-col gap-y-4 py-4 px-4">
+        <section className={clsx("body flex flex-col gap-y-4 py-4 px-4", { "items-center": !isOpen })}>
           <SidebarItem
             icon={UserRound}
             label="Datos personales"
             to={`/datos-personales/${clientId}`}
-            expanded={expanded}
+            expanded={isOpen}
             active={pathname.startsWith("/datos-personales")}
             onClick={handleOptionClick}
           />
@@ -187,7 +159,7 @@ export function Sidebar() {
             icon={Briefcase}
             label="Situación laboral"
             to={`/situacion-laboral/${clientId}`}
-            expanded={expanded}
+            expanded={isOpen}
             active={pathname.startsWith("/situacion-laboral")}
             onClick={handleOptionClick}
           />
@@ -195,7 +167,7 @@ export function Sidebar() {
             icon={CreditCard}
             label="Deudas"
             to={`/deudas/${clientId}`}
-            expanded={expanded}
+            expanded={isOpen}
             active={pathname.startsWith("/deudas")}
             onClick={handleOptionClick}
           />
@@ -203,7 +175,7 @@ export function Sidebar() {
             icon={Building2}
             label="Bienes"
             to={`/bienes/${clientId}`}
-            expanded={expanded}
+            expanded={isOpen}
             active={pathname.startsWith("/bienes")}
             onClick={handleOptionClick}
           />
@@ -211,7 +183,7 @@ export function Sidebar() {
             icon={ScrollText}
             label="Historia de SE"
             to={`/historia-se/${clientId}`}
-            expanded={expanded}
+            expanded={isOpen}
             active={pathname.startsWith("/historia-se")}
             onClick={handleOptionClick}
           />

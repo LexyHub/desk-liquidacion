@@ -1,10 +1,11 @@
 @import "tailwindcss";
 @import "tw-animate-css";
+@plugin "@midudev/tailwind-animations";
 
 @theme {
   /* Font */
   --font-sans: "Archivo", sans-serif;
-  
+
   /* Radius */
   --radius-xs: 2px;
   --radius-sm: 4px;
@@ -36,7 +37,7 @@
   /* Borders / tables */
   --color-lexy-border-default: #e8e8e8;
   --color-lexy-bg-table-header: #f5f5f5;
-  --color-lexy-border-table: #E6E6E6;
+  --color-lexy-border-table: #e6e6e6;
   --color-lexy-input-border: #c5c5c5;
 
   /* Alerts / states */
@@ -57,20 +58,25 @@
   --color-lexy-icon-disabled: #6b6b6b;
 
   /* Shadows */
-  --shadow-lexy-table: inset 0 1px 3px rgba(0, 0, 0, 0.05),
-    0 4px 12px rgba(0, 0, 0, 0.03);
-  --shadow-lexy-button: 0 4px 12px rgba(0, 0, 0, 0.1),
-    inset 0 1px 3px rgba(0, 0, 0, 0.05), 0 2px 6px rgba(0, 0, 0, 0.05);
+  --shadow-lexy-table:
+    inset 0 1px 3px rgba(0, 0, 0, 0.05), 0 4px 12px rgba(0, 0, 0, 0.03);
+  --shadow-lexy-card:
+    0 1px 3px 0 rgba(0, 0, 0, 0) inset, 0 4px 12px 0 rgba(0, 0, 0, 0.05);
+  --shadow-lexy-button:
+    0 4px 12px rgba(0, 0, 0, 0.1), inset 0 1px 3px rgba(0, 0, 0, 0.05),
+    0 2px 6px rgba(0, 0, 0, 0.05);
   --shadow-lexy-inset: 0 1px 8.8px 0 rgba(76, 46, 255, 0.4) inset;
 }
 
 @custom-variant dark (&:is(.dark *));
 
 @theme inline {
+  /* nao nao sr shadcn
   --radius-sm: calc(var(--radius) - 4px);
   --radius-md: calc(var(--radius) - 2px);
   --radius-lg: var(--radius);
   --radius-xl: calc(var(--radius) + 4px);
+  */
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --color-card: var(--card);

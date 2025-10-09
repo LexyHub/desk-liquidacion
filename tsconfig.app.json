@@ -10,6 +10,7 @@
     "baseUrl": ".",
     "paths": {
       "@/*": ["./src/*"],
+      "@assets": ["src/assets/index"],
       "@assets/*": ["src/assets/*"],
       "@components/*": ["src/components/*"],
       "@hooks/*": ["src/hooks/*"],
