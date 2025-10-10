@@ -1,1 +1,2 @@
-// Barrel para routes/
+export * from "./Router";
+export * from "./PrivateRoute";

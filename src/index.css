@@ -187,3 +187,16 @@
     @apply bg-background text-foreground;
   }
 }
+
+@layer utilities {
+  .bg-login {
+    background:
+      linear-gradient(0deg, rgba(0, 0, 0, 0.2) 0%, rgba(0, 0, 0, 0.2) 100%),
+      linear-gradient(
+        0deg,
+        rgba(76, 46, 255, 0.3) 0%,
+        rgba(76, 46, 255, 0.3) 100%
+      ),
+      url("./assets/login-bg.webp") lightgray 50% / cover no-repeat;
+  }
+}
