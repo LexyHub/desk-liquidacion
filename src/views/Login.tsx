@@ -26,7 +26,7 @@ export function Login() {
     if (unauthenticated)
       return "Tú sesión ha expirado o no has iniciado sesión. Por favor, ingresa nuevamente.";
     return null;
-  }, []);
+  }, [redirectIdDefensoria, unauthenticated]);
   const [error, setError] = useState<string | null>(initialError);
   const [loading, setLoading] = useState<boolean>(false);
 
