@@ -1,4 +1,7 @@
-import { logIn as AuthLogIn, logOut as AuthLogOut } from "@services/auth";
+import {
+  logIn as AuthLogIn,
+  logOut as AuthLogOut,
+} from "@services/auth.service";
 import type { Credentials } from "@types";
 import { useState, type ReactNode } from "react";
 import { AuthContext } from "./useAuth";
