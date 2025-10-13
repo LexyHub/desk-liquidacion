@@ -5,6 +5,7 @@ import { Input, Select, SearchableSelect } from "@components/form";
 import { useGeoData, usePinService } from "@hooks";
 import { EstadoCivil, RegimenMarital, SiONo } from "./options";
 import { useClientDataContext } from "@context/clientData/useClientData";
+import { LoadingView } from "@components/ui/loading/LoadingView";
 
 export default function DatosPersonales() {
   const { isRowPinned, togglePinRow } = usePinService();
@@ -13,7 +14,7 @@ export default function DatosPersonales() {
   const { clientData, loading } = useClientDataContext();
 
   if (loading) {
-    return <div>Cargando datos del cliente...</div>;
+    return <LoadingView />;
   }
 
   return (
