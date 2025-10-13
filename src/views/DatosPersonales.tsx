@@ -2,12 +2,11 @@ import { Card } from "@components/ui/Card";
 import { ContentHead } from "@components/ui/ContentHead";
 import { Table } from "@components/ui/Table";
 import { Input, Select, SearchableSelect } from "@components/form";
-import { useGeoData, usePinService } from "@hooks";
+import { useGeoData } from "@hooks";
 import { EstadoCivil, RegimenMarital, SiONo } from "./options";
 import { useClientDataContext } from "@context/clientData/useClientData";
 
 export default function DatosPersonales() {
-  const { isRowPinned, togglePinRow } = usePinService();
   //! TODO esto está hard-codeado. No se cambiará hasta que el backend esté listo.
   const { countryOptions } = useGeoData();
   const { clientData, loading } = useClientDataContext();
@@ -26,57 +25,32 @@ export default function DatosPersonales() {
           </Card.Header>
           <Card.Content>
             <Table className='gap-y-2'>
-              <Table.Row
-                rowkey='nombre'
-                label='Nombre completo'
-                stareable
-                isStared={isRowPinned("nombre")}
-                onStarToggle={() => togglePinRow("nombre")}>
+              <Table.Row rowkey='nombre' label='Nombre completo' stareable>
                 <Input
                   value={clientData?.datos_personales.nombre}
                   onChange={() => console.log("Cambió el nombre")}
                 />
               </Table.Row>
-              <Table.Row
-                rowkey='rut'
-                label='RUT'
-                stareable
-                isStared={isRowPinned("rut")}
-                onStarToggle={() => togglePinRow("rut")}>
+              <Table.Row rowkey='rut' label='RUT' stareable>
                 <Input
                   value={clientData?.datos_personales.rut}
                   onChange={() => console.log("Cambió el RUT")}
                 />
               </Table.Row>
-              <Table.Row
-                rowkey='nacionalidad'
-                label='Nacionalidad'
-                stareable
-                isStared={isRowPinned("nacionalidad")}
-                onStarToggle={() => togglePinRow("nacionalidad")}>
+              <Table.Row rowkey='nacionalidad' label='Nacionalidad' stareable>
                 <SearchableSelect
                   value={clientData?.datos_personales.nacionalidad ?? ""}
                   options={countryOptions}
                   onValueChange={() => console.log("Cambió el país")}
                 />
               </Table.Row>
-              <Table.Row
-                rowkey='profesion'
-                label='Profesión'
-                stareable
-                isStared={isRowPinned("profesion")}
-                onStarToggle={() => togglePinRow("profesion")}>
+              <Table.Row rowkey='profesion' label='Profesión' stareable>
                 <Input
                   value={clientData?.datos_personales.profesion}
                   onChange={() => console.log("Cambió la profesión")}
                 />
               </Table.Row>
-              <Table.Row
-                rowkey='juicios'
-                label='Juicios pendientes'
-                stareable
-                isStared={isRowPinned("juicios")}
-                onStarToggle={() => togglePinRow("juicios")}>
+              <Table.Row rowkey='juicios' label='Juicios pendientes' stareable>
                 <Input
                   value={clientData?.datos_personales.juicios}
                   onChange={() => console.log("Cambió los juicios")}
@@ -85,9 +59,7 @@ export default function DatosPersonales() {
               <Table.Row
                 rowkey='procedimiento_concursal'
                 label='Sometido a procedimiento concursal'
-                stareable
-                isStared={isRowPinned("procedimiento_concursal")}
-                onStarToggle={() => togglePinRow("procedimiento_concursal")}>
+                stareable>
                 <Select
                   options={SiONo}
                   value={clientData?.datos_personales.procedimiento_concursal}
@@ -106,12 +78,7 @@ export default function DatosPersonales() {
           </Card.Header>
           <Card.Content>
             <Table className='gap-y-2'>
-              <Table.Row
-                rowkey='direccion'
-                label='Dirección'
-                stareable
-                isStared={isRowPinned("direccion")}
-                onStarToggle={() => togglePinRow("direccion")}>
+              <Table.Row rowkey='direccion' label='Dirección' stareable>
                 <Input
                   value={clientData?.datos_personales.direccion}
                   onChange={() => console.log("Cambió la dirección")}
@@ -129,9 +96,7 @@ export default function DatosPersonales() {
               <Table.Row
                 rowkey='padres_fallecidos'
                 label='Padres fallecidos'
-                stareable
-                isStared={isRowPinned("padres_fallecidos")}
-                onStarToggle={() => togglePinRow("padres_fallecidos")}>
+                stareable>
                 <Select
                   value={clientData?.datos_personales.padres_fallecidos}
                   options={SiONo}
@@ -140,9 +105,7 @@ export default function DatosPersonales() {
               <Table.Row
                 rowkey='posesion_efectiva'
                 label='Posesión efectiva realizada'
-                stareable
-                isStared={isRowPinned("posesion_efectiva")}
-                onStarToggle={() => togglePinRow("posesion_efectiva")}>
+                stareable>
                 <Select
                   value={clientData?.datos_personales.posesion_efectiva}
                   options={SiONo}
@@ -151,20 +114,13 @@ export default function DatosPersonales() {
               <Table.Row
                 rowkey='derechos_hereditarios'
                 label='Derechos hereditarios'
-                stareable
-                isStared={isRowPinned("derechos_hereditarios")}
-                onStarToggle={() => togglePinRow("derechos_hereditarios")}>
+                stareable>
                 <Select
                   value={clientData?.datos_personales.derechos_hereditarios}
                   options={SiONo}
                 />
               </Table.Row>
-              <Table.Row
-                rowkey='hijos'
-                label='Hijos'
-                stareable
-                isStared={isRowPinned("hijos")}
-                onStarToggle={() => togglePinRow("hijos")}>
+              <Table.Row rowkey='hijos' label='Hijos' stareable>
                 <Select
                   value={clientData?.datos_personales.hijos}
                   options={SiONo}
@@ -173,9 +129,7 @@ export default function DatosPersonales() {
               <Table.Row
                 rowkey='recibe_alimentos'
                 label='Recibe alimentos'
-                stareable
-                isStared={isRowPinned("recibe_alimentos")}
-                onStarToggle={() => togglePinRow("recibe_alimentos")}>
+                stareable>
                 <Select
                   value={clientData?.datos_personales.recibe_alimentos}
                   options={SiONo}
@@ -184,9 +138,7 @@ export default function DatosPersonales() {
               <Table.Row
                 rowkey='deuda_alimenticia'
                 label='Tiene deuda de alimentos'
-                stareable
-                isStared={isRowPinned("deuda_alimenticia")}
-                onStarToggle={() => togglePinRow("deuda_alimenticia")}>
+                stareable>
                 <Select
                   value={clientData?.datos_personales.deuda_alimenticia}
                   options={SiONo}
@@ -195,9 +147,7 @@ export default function DatosPersonales() {
               <Table.Row
                 rowkey='regularizada'
                 label='Están regularizados'
-                stareable
-                isStared={isRowPinned("regularizada")}
-                onStarToggle={() => togglePinRow("regularizada")}>
+                stareable>
                 <Select
                   value={clientData?.datos_personales.regularizada}
                   options={SiONo}
@@ -212,12 +162,7 @@ export default function DatosPersonales() {
           </Card.Header>
           <Card.Content>
             <Table className='gap-y-2'>
-              <Table.Row
-                rowkey='estado_civil'
-                label='Estado civil'
-                stareable
-                isStared={isRowPinned("estado_civil")}
-                onStarToggle={() => togglePinRow("estado_civil")}>
+              <Table.Row rowkey='estado_civil' label='Estado civil' stareable>
                 <Select
                   value={clientData?.datos_personales.estado_civil}
                   options={EstadoCivil}
@@ -226,9 +171,7 @@ export default function DatosPersonales() {
               <Table.Row
                 rowkey='regimen_matrimonial'
                 label='Régimen matrimonial'
-                stareable
-                isStared={isRowPinned("regimen_matrimonial")}
-                onStarToggle={() => togglePinRow("regimen_matrimonial")}>
+                stareable>
                 <Select
                   value={clientData?.datos_personales.regimen_matrimonial}
                   options={RegimenMarital}
