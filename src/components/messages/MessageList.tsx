@@ -13,7 +13,7 @@ export function MessageList() {
   }, [messages.length]);
 
   return (
-    <div className='flex flex-col items-end max-w-72 gap-y-2'>
+    <div className='flex flex-col items-end max-w-72 gap-y-2.5'>
       {messages.map((msg) => (
         <Message key={msg.id} message={msg} />
       ))}
