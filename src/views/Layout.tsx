@@ -15,11 +15,11 @@ export function Layout() {
     <div className='flex w-dvw h-dvh bg-lexy-bg-platform'>
       <Sidebar />
 
-      <main className='flex-1 grid grid-rows-[auto_1fr]'>
+      <main className='flex-1 grid grid-rows-[auto_1fr] min-h-0'>
         <Header />
 
-        <section className='grid grid-cols-[1fr_auto]'>
-          <div className='overflow-auto'>
+        <section className='grid grid-cols-[1fr_auto] min-h-0'>
+          <div className='overflow-auto h-full pb-8'>
             <Outlet />
           </div>
           <MessageBar />

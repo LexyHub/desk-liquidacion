@@ -19,6 +19,8 @@
       "@routes/*": ["src/routes/*"],
       "@services/*": ["src/services/*"],
       "@views/*": ["src/views/*"],
+      "@types/*": ["src/types/*"],
+      "@types": ["src/types/index"],
       "@context/*": ["src/context/*"],
       "@context": ["src/context/index"]
     },
