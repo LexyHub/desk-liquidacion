@@ -1,6 +1,6 @@
 import { LexyMobile } from "@assets";
 import type { Credentials } from "@types";
-import { CircleX, Eye, EyeClosed } from "lucide-react";
+import { CircleX, Eye, EyeClosed } from "@/lib/icons";
 import { useMemo, useState } from "react";
 import { useAuth } from "@context/auth";
 import { useLocation, useNavigate } from "react-router-dom";

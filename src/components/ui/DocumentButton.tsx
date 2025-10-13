@@ -1,4 +1,4 @@
-import { Eye } from "lucide-react";
+import { Eye } from "@/lib/icons";
 import { useDocumentViewer } from "@/context/documentViewer";
 
 interface Props {

@@ -7,7 +7,7 @@ import { usePinService } from "@/hooks";
 import { SiONo, TipoTrabajador, TipoTrabajo } from "./options";
 import { DocumentButton } from "@/components/ui/DocumentButton";
 
-export function SituacionLaboral() {
+export default function SituacionLaboral() {
   const { isRowPinned, togglePinRow } = usePinService();
   const { clientData, loading } = useClientDataContext();
 

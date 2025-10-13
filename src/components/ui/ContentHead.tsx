@@ -1,4 +1,4 @@
-import { UserSearch } from "lucide-react";
+import { UserSearch } from "@/lib/icons";
 import { Drive, PoderJudicial, SII } from "@assets";
 import { useSidebar } from "@context/sidebar";
 import { useHeaderUI } from "@context/headerUI";

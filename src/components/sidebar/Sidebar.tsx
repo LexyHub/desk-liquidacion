@@ -1,4 +1,3 @@
-import clsx from "clsx";
 import { useState } from "react";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import {
@@ -6,16 +5,22 @@ import {
   Briefcase,
   Building2,
   CreditCard,
+  LogOut,
   ScrollText,
   UserRound,
-} from "lucide-react";
+  LexyLogo,
+  YoutubeLogo,
+} from "@/lib/icons";
 import { SidebarItem } from "./SidebarItem";
 import { VideoDialog } from "./VideoDialog";
 import { useSidebar } from "@/context/sidebar/useSidebar";
+import { cn } from "@/lib/utils";
+import { useAuth } from "@/context/auth";
 
 export function Sidebar() {
   const { idDefensoria } = useParams();
   const { pathname } = useLocation();
+  const { logOut } = useAuth();
   const navigate = useNavigate();
   const { isOpen, toggle } = useSidebar();
   const [showVideoDialog, setShowVideoDialog] = useState(false);
@@ -30,38 +35,17 @@ export function Sidebar() {
     <>
       <VideoDialog isOpen={showVideoDialog} toggleOpen={setShowVideoDialog} />
       <aside
-        className={clsx(
+        className={cn(
           "flex flex-col h-full bg-white border-r border-r-lexy-border-table py-6 transition-all duration-300",
           { "w-64": isOpen, "w-20": !isOpen }
         )}>
         <section className='header px-4'>
           <div
-            className={clsx("flex items-center justify-between py-4", {
+            className={cn("flex items-center justify-between py-4", {
               "flex-col gap-y-7": !isOpen,
             })}>
             <div className='flex items-center gap-x-2'>
-              <svg
-                className='size-6'
-                viewBox='0 0 25 24'
-                fill='none'
-                xmlns='http://www.w3.org/2000/svg'>
-                <path
-                  d='m19.344 23.642 4.805-4.804a.497.497 0 0 0 0-.703L6.367.354a.497.497 0 0 0-.702 0L.86 5.159a.497.497 0 0 0 0 .702l17.781 17.781a.497.497 0 0 0 .703 0'
-                  fill='#0B013C'
-                />
-                <path
-                  d='M6.016 20.019.51 14.512l9.242-5.266 5.507 5.507z'
-                  fill='#9D90FC'
-                />
-                <path
-                  d='m6.017 20.018-.01 3.77a.5.5 0 0 0 .36-.145l8.892-8.891z'
-                  fill='#27198E'
-                />
-                <path
-                  d='m6.007 23.789.01-3.77-5.508-5.507L.5 18.275c0 .122.046.239.127.33l5.038 5.038a.5.5 0 0 0 .342.145M24.149 5.16 19.344.354a.497.497 0 0 0-.703 0L9.75 9.245l5.507 5.507 8.89-8.89a.5.5 0 0 0 0-.704z'
-                  fill='#4429CC'
-                />
-              </svg>
+              <LexyLogo className='size-6' />
               {isOpen && (
                 <h2 className='text-[#0B013C] leading-6 font-medium'>
                   Desk Liquidación
@@ -72,7 +56,7 @@ export function Sidebar() {
               title='Expandir / Contraer menú'
               type='button'
               onClick={toggle}
-              className={clsx(
+              className={cn(
                 "flex items-center justify-center cursor-pointer p-1 border border-lexy-border-table text-lexy-brand-secondary-dark rounded-sm hover:bg-lexy-btn-secondary-hover transition-colors",
                 { "size-6": isOpen, "rotate-180 size-8": !isOpen }
               )}>
@@ -83,7 +67,7 @@ export function Sidebar() {
             <div className='flex items-center justify-between my-6'>
               <button
                 type='button'
-                className={clsx(
+                className={cn(
                   "cursor-pointer text-sm leading-5 font-medium px-4 py-1 rounded-sm h-8 transition-all",
                   {
                     "text-lexy-text-secondary bg-lexy-bg-card border border-lexy-border-table":
@@ -95,7 +79,7 @@ export function Sidebar() {
               </button>
               <button
                 type='button'
-                className={clsx(
+                className={cn(
                   "cursor-pointer text-sm leading-5 font-medium px-4 py-1 rounded-sm h-8 transition-all",
                   {
                     "text-lexy-text-secondary bg-lexy-bg-card border border-lexy-border-table":
@@ -115,23 +99,11 @@ export function Sidebar() {
             onClick={() => setShowVideoDialog(true)}
             title='Reproducir vídeo'
             aria-description='Reproducir vídeo de presentación sobre liquidación'
-            className={clsx(
+            className={cn(
               "w-full flex items-center justify-center gap-x-2.5 cursor-pointer rounded-sm border border-lexy-btn-secondary-hover bg-lexy-bg-secondary hover:bg-[#E4DFFF] hover:border-[#EEEBFF] transition-all text-lexy-brand-secondary-dark shadow-lexy-button",
               { "p-2": !isOpen, "px-4 py-2": isOpen }
             )}>
-            <svg
-              xmlns='http://www.w3.org/2000/svg'
-              width={24}
-              height={24}
-              viewBox='0 0 24 24'
-              fill='none'
-              stroke='currentColor'
-              strokeWidth={2}
-              strokeLinecap='round'
-              strokeLinejoin='round'>
-              <path d='M2.5 17a24.1 24.1 0 0 1 0-10 2 2 0 0 1 1.4-1.4 49.6 49.6 0 0 1 16.2 0A2 2 0 0 1 21.5 7a24.1 24.1 0 0 1 0 10 2 2 0 0 1-1.4 1.4 49.6 49.6 0 0 1-16.2 0A2 2 0 0 1 2.5 17' />
-              <path d='m10 15 5-3-5-3z' />
-            </svg>
+            <YoutubeLogo />
             {isOpen && (
               <span className='leading-6 font-medium'>Presentación</span>
             )}
@@ -139,7 +111,7 @@ export function Sidebar() {
         </section>
         <div className='w-full h-px bg-lexy-border-table' />
         <section
-          className={clsx("body flex flex-col gap-y-4 py-4 px-4", {
+          className={cn("body flex flex-col gap-y-4 py-4 px-4 flex-grow", {
             "items-center": !isOpen,
           })}>
           <SidebarItem
@@ -182,6 +154,22 @@ export function Sidebar() {
             active={pathname.startsWith("/historia-se")}
             onClick={handleOptionClick}
           />
+        </section>
+
+        <div className='w-full h-px bg-lexy-border-table' />
+        <section className='flex justify-center pt-6 px-4'>
+          <button
+            type='button'
+            title='Cerrar sesión'
+            aria-description='Cerrar sesión y volver a la pantalla de inicio de sesión'
+            onClick={logOut}
+            className={cn(
+              "flex items-center justify-center gap-x-2 rounded-sm font-medium text-red-600  border border-red-500 hover:bg-red-400 hover:text-white w-full py-2 transition-colors cursor-pointer",
+              { "p-3 justify-center": !isOpen }
+            )}>
+            <LogOut className='size-5' />
+            {isOpen && <span>Cerrar sesión</span>}
+          </button>
         </section>
       </aside>
     </>
