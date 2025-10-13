@@ -1,1 +1,1 @@
-// Barrel para hooks/
+export * from "./useGeoData";

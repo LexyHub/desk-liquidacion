@@ -1,0 +1,20 @@
+{
+  "datos_personales": {
+    "nombre": "Moonie Silva",
+    "rut": "20.919.721-9",
+    "nacionalidad": "CL",
+    "profesion": "Cazadadora de recompensas",
+    "juicios": "Juicio por evasión de impuestos",
+    "procedimiento_concursal": "si",
+    "direccion": "Calle Falsa 123",
+    "padres_fallecidos": "no",
+    "posesion_efectiva": "no",
+    "derechos_hereditarios": "no",
+    "hijos": "no",
+    "recibe_alimentos": "no",
+    "deuda_alimenticia": "no",
+    "regularizada": "no",
+    "estado_civil": "soltero",
+    "regimen_matrimonial": "no"
+  }
+}

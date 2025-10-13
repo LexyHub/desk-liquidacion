@@ -1,1 +1,3 @@
-// Barrel para components/form
+export * from "./Input";
+export * from "./Select";
+export * from "./SearchableSelect";
