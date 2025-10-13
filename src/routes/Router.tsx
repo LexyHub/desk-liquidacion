@@ -1,5 +1,5 @@
-// import { createBrowserRouter } from "react-router-dom";
-import { createBrowserRouter } from "@datadog/browser-rum-react/react-router-v6";
+import { createBrowserRouter } from "react-router-dom";
+// import { createBrowserRouter } from "@datadog/browser-rum-react/react-router-v6";
 import { Layout } from "@views/Layout";
 import { Navigate } from "react-router-dom";
 import DatosPersonales from "@views/DatosPersonales";

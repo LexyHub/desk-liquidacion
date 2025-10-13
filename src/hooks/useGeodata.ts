@@ -1,4 +1,4 @@
-import type { Country, Region } from "@/types/geodata";
+import type { Country, Region } from "@types";
 import countriesData from "@lib/data/countries.json";
 import { useCallback, useEffect, useMemo, useState } from "react";
 
