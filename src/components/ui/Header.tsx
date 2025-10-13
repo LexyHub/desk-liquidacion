@@ -3,7 +3,8 @@ import { useHeaderUI } from "@context/headerUI";
 import { MessageCircle } from "@/lib/icons";
 
 export function Header() {
-  const { actualPath, rawPath, toggle } = useHeaderUI();
+  // const { actualPath, rawPath, toggle } = useHeaderUI();
+  const { actualPath, toggle } = useHeaderUI();
   const { getMessages } = useMessages();
 
   return (
@@ -16,7 +17,7 @@ export function Header() {
         className='group flex items-center gap-x-2.5 px-3 py-2.5 cursor-pointer rounded-lg border border-lexy-border-table hover:bg-lexy-btn-secondary-hover transition-all'>
         <MessageCircle className='size-6 text-black' />
         <div className='px-2.5 py-0.5 rounded-sm text-lexy-brand-secondary-dark bg-lexy-btn-secondary-hover group-hover:bg-lexy-bg-secondary'>
-          <span>{getMessages(rawPath).length}</span>
+          <span>{getMessages().length}</span>
         </div>
       </button>
     </header>
