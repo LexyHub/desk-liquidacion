@@ -5,6 +5,7 @@ import { Navigate } from "react-router-dom";
 import DatosPersonales from "@views/DatosPersonales";
 import { Login } from "@views/Login";
 import { ContextWrapper } from "@context/Wrapper";
+import { SituacionLaboral } from "@views/SituacionLaboral";
 
 export const router = createBrowserRouter([
   {
@@ -29,7 +30,7 @@ export const router = createBrowserRouter([
       },
       {
         path: "situacion-laboral/:idDefensoria",
-        element: <h1>Situacion Laboral</h1>,
+        element: <SituacionLaboral />,
       },
       { path: "deudas/:idDefensoria", element: <h1>Deudas</h1> },
       { path: "bienes/:idDefensoria", element: <h1>Bienes</h1> },

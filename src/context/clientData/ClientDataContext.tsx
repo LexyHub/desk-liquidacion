@@ -1,4 +1,12 @@
-import { useCallback, useMemo, useRef, useState, type ReactNode } from "react";
+import {
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+  type ReactNode,
+} from "react";
+import { useParams } from "react-router-dom";
 import type { ClientData } from "@types";
 import { getClientData } from "@services/client.service";
 import {
@@ -7,6 +15,7 @@ import {
 } from "./useClientData";
 
 export function ClientDataProvider({ children }: { children: ReactNode }) {
+  const { idDefensoria } = useParams<{ idDefensoria: string }>();
   const [clientData, setClientData] = useState<ClientData | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -42,6 +51,20 @@ export function ClientDataProvider({ children }: { children: ReactNode }) {
     },
     []
   );
+
+  useEffect(() => {
+    if (idDefensoria) {
+      fetchClientData(idDefensoria);
+    } else {
+      // Limpiar datos cuando no hay idDefensoria (ej: en login)
+      setClientData(null);
+      setError(null);
+      setLoading(false);
+      // Cancelar petición si está en progreso
+      controllerRef.current?.abort();
+      controllerRef.current = null;
+    }
+  }, [fetchClientData, idDefensoria]);
 
   const value = useMemo<ClientDataContextValue>(
     () => ({

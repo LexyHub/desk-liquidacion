@@ -10,7 +10,7 @@ import { X } from "lucide-react";
 import { Spinner } from "@components/ui/loading/Spinner";
 
 const EmbeddedVideo = lazy(() =>
-  import("@components/ui/EmbeddedVideo").then((module) => ({
+  import("@components/ui/popups/EmbeddedVideo").then((module) => ({
     default: module.EmbeddedVideo,
   }))
 );
@@ -22,7 +22,7 @@ interface Props {
 
 export function VideoDialog({ isOpen, toggleOpen }: Props) {
   const handlePreload = useCallback(() => {
-    import("@components/ui/EmbeddedVideo");
+    import("@components/ui/popups/EmbeddedVideo");
   }, []);
 
   return (

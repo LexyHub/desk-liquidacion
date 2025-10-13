@@ -1,6 +1,7 @@
 // Provicional
 export interface ClientData {
   datos_personales: PersonalData;
+  situacion_laboral: LaboralSituation;
 }
 
 interface PersonalData {
@@ -22,8 +23,22 @@ interface PersonalData {
   regimen_matrimonial: string;
 }
 
+interface LaboralSituation {
+  trabajando: string;
+  tipo_trabajo: string;
+  tipo_trabajador: string;
+  cesante: string;
+  remuneracion: number;
+  bonos: string;
+  link_liquidacion: string;
+  finiquito: string;
+  monto_finiquito: number;
+  link_finiquito: string;
+}
+
 export interface ClientDataResponse {
   datos_personales: ResponsePersonalData;
+  situacion_laboral: ResponseLaboralSituation;
 }
 
 interface ResponsePersonalData
@@ -46,4 +61,15 @@ interface ResponsePersonalData
   recibe_alimentos: boolean;
   deuda_alimenticia: boolean;
   regularizada: boolean;
+}
+
+interface ResponseLaboralSituation
+  extends Omit<
+    LaboralSituation,
+    "trabajando" | "cesante" | "bonos" | "finiquito"
+  > {
+  trabajando: boolean;
+  cesante: boolean;
+  bonos: boolean;
+  finiquito: boolean;
 }

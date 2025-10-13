@@ -16,5 +16,17 @@
     "regularizada": "no",
     "estado_civil": "soltero",
     "regimen_matrimonial": "no"
+  },
+  "situacion_laboral": {
+    "trabajando": "si",
+    "tipo_trabajo": "dependiente",
+    "tipo_trabajador": "privado",
+    "cesante": "no",
+    "remuneracion": 850000,
+    "bonos": "si",
+    "link_liquidacion": "https://images.nintendolife.com/129754a478a88/large.jpg",
+    "finiquito": "si",
+    "monto_finiquito": 1200000,
+    "link_finiquito": "https://revolutionarena.com/pt-br/wp-content/uploads/sites/2/2024/10/Mega-Man-X6.jpg"
   }
 }
