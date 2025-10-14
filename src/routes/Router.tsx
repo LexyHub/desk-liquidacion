@@ -10,6 +10,7 @@ import { lazy } from "react";
 
 const DatosPersonales = lazy(() => import("@views/DatosPersonales"));
 const SituacionLaboral = lazy(() => import("@views/SituacionLaboral"));
+const Deudas = lazy(() => import("@views/Deudas"));
 
 export const router = createBrowserRouter([
   {
@@ -36,7 +37,7 @@ export const router = createBrowserRouter([
         path: "situacion-laboral/:idDefensoria",
         element: <SituacionLaboral />,
       },
-      { path: "deudas/:idDefensoria", element: <h1>Deudas</h1> },
+      { path: "deudas/:idDefensoria", element: <Deudas /> },
       { path: "bienes/:idDefensoria", element: <h1>Bienes</h1> },
       { path: "historia-se/:idDefensoria", element: <h1>Historia</h1> },
       {

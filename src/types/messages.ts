@@ -7,10 +7,11 @@ export type Message = {
 
 // Context
 export interface MessagesContextValue {
-  fetchMessages: (path: string, signal?: AbortSignal) => Promise<void>;
+  messages: Message[];
+  loading: boolean;
+  error: string | null;
+  refetch: () => void;
   addMessage: (path: string, msg: Message) => void;
   removeMessage: (path: string, id: string) => void;
-  getMessages: () => Message[];
-  getMessagesByDomain: (path: string) => Message[];
-  getMessage: (id: string) => Message | undefined;
+  saveMessages: (path?: string) => Promise<void>;
 }

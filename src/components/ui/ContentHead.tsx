@@ -12,13 +12,15 @@ export function ContentHead() {
   const { isOpen: isMessageTabOpen } = useHeaderUI();
   const { clientData } = useClientDataContext();
   const claveUnica = "*********";
-
   return (
     <section className='p-4 grid grid-cols-[auto_1fr] gap-x-6 h-fit border-b border-b-lexy-border-table'>
       <Card
         className={twMerge(
-          "min-w-md max-w-md transition-all",
-          clsx({ "min-w-xs max-w-xs": isSidebarOpen && isMessageTabOpen })
+          "min-w-72 max-w-72 lg:min-w-md lg:max-w-md transition-all",
+          clsx({
+            "min-w-72 max-w-72 lg:min-w-72 lg:max-w-72":
+              isSidebarOpen && isMessageTabOpen,
+          })
         )}>
         <Card.Header>
           <Card.Icon>

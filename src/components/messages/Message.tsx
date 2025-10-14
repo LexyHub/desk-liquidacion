@@ -1,4 +1,4 @@
-import { formatDate } from "@lib/utils/formatters";
+import { getHourAndMinutes } from "@/lib/utils/date-utils";
 import type { Message } from "@types";
 
 interface Props {
@@ -6,11 +6,15 @@ interface Props {
 }
 
 export function Message({ message }: Props) {
-  const formattedDate = formatDate(message.date, "long");
+  const formattedDate = getHourAndMinutes(message.date);
   return (
-    <div className='flex flex-col items-end w-fit bg-lexy-bg-platform gap-y-1 px-4 py-2.5 rounded-sm border border-lexy-border-table whitespace-pre-line animate-fade-in-left animate-duration-400'>
-      <p className='max-w-60 wrap-break-word text-end'>{message.message}</p>
-      <span className='text-xs text-lexy-text-secondary'>{formattedDate}</span>
+    <div className='flex flex-col items-end w-fit gap-y-1 animate-fade-in-left animate-duration-400'>
+      <p className='bg-lexy-bg-platform leading-6 text-lexy-text-secondary max-w-60 wrap-break-word text-end px-4 py-2.5 rounded-sm whitespace-pre-line'>
+        {message.message}
+      </p>
+      <span className='text-xs leading-4 text-lexy-text-secondary'>
+        {formattedDate} hrs
+      </span>
     </div>
   );
 }

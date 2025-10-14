@@ -3,15 +3,12 @@ import { useMessages } from "@context/messages";
 import clsx from "clsx";
 import { ArrowUp, X } from "@/lib/icons";
 import { useState } from "react";
-import { Search } from "@assets";
 import { MessageList } from "./MessageList";
 import type { Message } from "@/types";
 
 export function MessageBar() {
-  const { isOpen, close, rawPath, actualPath } = useHeaderUI();
-  // const { fetchMessages, getMessages, addMessage, removeMessage } =
-  //   useMessages();
-  const { getMessages, addMessage } = useMessages();
+  const { isOpen, close, rawPath } = useHeaderUI();
+  const { addMessage } = useMessages();
   const [message, setMessage] = useState("");
 
   const handleMessageSubmit = (e: React.FormEvent<HTMLFormElement>) => {
@@ -42,22 +39,7 @@ export function MessageBar() {
           <X />
         </button>
       </header>
-      <section className='border-y border-y-lexy-border-table py-6 px-4 overflow-y-auto hide-scrollbar min-h-0'>
-        {getMessages().length === 0 ? (
-          <div className='h-full flex flex-col items-center justify-center'>
-            <img
-              src={Search}
-              alt='No hay mensajes disponibles'
-              className='size-16 object-contain'
-            />
-            <span className='text-lexy-text-secondary leading-6 text-center font-medium'>
-              No hay comentarios aún en la sección <strong>{actualPath}</strong>
-            </span>
-          </div>
-        ) : (
-          <MessageList />
-        )}
-      </section>
+      <MessageList />
       <footer className='p-4'>
         <form
           id='enviar-mensaje'

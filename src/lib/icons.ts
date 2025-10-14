@@ -8,6 +8,8 @@ export {
   X,
   UserSearch,
   SearchIcon as Search,
+  Plus,
+  Trash2,
   // Base components
   Check as CheckIcon,
   Check,

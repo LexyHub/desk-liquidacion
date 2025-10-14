@@ -156,15 +156,14 @@ export function Sidebar() {
           />
         </section>
 
-        <div className='w-full h-px bg-lexy-border-table' />
-        <section className='flex justify-center pt-6 px-4'>
+        <section className='px-4'>
           <button
             type='button'
             title='Cerrar sesión'
             aria-description='Cerrar sesión y volver a la pantalla de inicio de sesión'
             onClick={logOut}
             className={cn(
-              "flex items-center justify-center gap-x-2 rounded-sm font-medium text-red-600  border border-red-500 hover:bg-red-400 hover:text-white w-full py-2 transition-colors cursor-pointer",
+              "flex items-center justify-center leading-6 gap-x-2.5 rounded-sm font-medium text-lexy-text-secondary bg-lexy-bg-card hover:bg-[#EAE6FF] border border-lexy-border-table w-full py-2 transition-colors cursor-pointer",
               { "p-3 justify-center": !isOpen }
             )}>
             <LogOut className='size-5' />
