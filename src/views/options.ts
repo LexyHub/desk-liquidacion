@@ -30,3 +30,10 @@ export const TipoTrabajador = [
   { label: "Privado", value: "privado" },
   { label: "Público", value: "publico" },
 ];
+
+export const TipoCreditos = [
+  { label: "Hipotecario", value: "hipotecario" },
+  { label: "Consumo", value: "consumo" },
+  { label: "Automotriz", value: "automotriz" },
+  { label: "Tarjeta de Crédito", value: "tarjeta-credito" },
+];

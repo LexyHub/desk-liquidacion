@@ -7,7 +7,7 @@ export function normalizeString(str: string) {
 }
 
 export function formatCurrency(value: string | number): string {
-  if (!value || value === "" || Number(value) === 0) return "";
+  if (!value || value === "" || Number(value) === 0) return "$0";
   return "$" + Number(value).toLocaleString("es-CL");
 }
 

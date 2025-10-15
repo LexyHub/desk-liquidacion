@@ -1,7 +1,10 @@
+import type { Deuda, ResponseDeuda } from "./deudas";
+
 // Provicional
 export interface ClientData {
   datos_personales: PersonalData;
   situacion_laboral: LaboralSituation;
+  deudas: Deuda[];
 }
 
 interface PersonalData {
@@ -39,6 +42,7 @@ interface LaboralSituation {
 export interface ClientDataResponse {
   datos_personales: ResponsePersonalData;
   situacion_laboral: ResponseLaboralSituation;
+  deudas: ResponseDeuda[];
 }
 
 interface ResponsePersonalData

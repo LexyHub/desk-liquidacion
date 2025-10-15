@@ -7,7 +7,7 @@ import {
   type ReactNode,
 } from "react";
 import { useParams } from "react-router-dom";
-import type { ClientData } from "@types";
+import type { ClientData, Deuda } from "@types";
 import { getClientData } from "@services/client.service";
 import {
   ClientDataContext,
@@ -52,6 +52,48 @@ export function ClientDataProvider({ children }: { children: ReactNode }) {
     []
   );
 
+  const addDeuda = useCallback(
+    (deuda: Deuda) => {
+      if (!clientData) return;
+      const actualDeudas = clientData.deudas || [];
+      const updatedDeudas = [...actualDeudas, deuda];
+      setClientData({ ...clientData, deudas: updatedDeudas });
+    },
+    [clientData]
+  );
+
+  const modifyDeuda = useCallback(
+    (index: number, deuda: Deuda) => {
+      if (!clientData) return;
+      const actualDeudas = clientData.deudas || [];
+      if (index < 0 || index >= actualDeudas.length) return;
+      const updatedDeudas = actualDeudas.map((d, i) =>
+        i === index ? deuda : d
+      );
+      setClientData({ ...clientData, deudas: updatedDeudas });
+    },
+    [clientData]
+  );
+
+  const removeDeuda = useCallback(
+    (index: number) => {
+      if (!clientData) return;
+      const actualDeudas = clientData.deudas || [];
+      if (index < 0 || index >= actualDeudas.length) return;
+      const updatedDeudas = actualDeudas.filter((_, i) => i !== index);
+      setClientData({ ...clientData, deudas: updatedDeudas });
+    },
+    [clientData]
+  );
+
+  const totalDeudas = useMemo(() => {
+    if (!clientData?.deudas || clientData.deudas.length === 0) return 0;
+    return clientData.deudas.reduce(
+      (sum, deuda) => sum + (deuda.monto || 0),
+      0
+    );
+  }, [clientData]);
+
   useEffect(() => {
     if (idDefensoria) {
       fetchClientData(idDefensoria);
@@ -69,12 +111,25 @@ export function ClientDataProvider({ children }: { children: ReactNode }) {
   const value = useMemo<ClientDataContextValue>(
     () => ({
       clientData,
+      addDeuda,
+      modifyDeuda,
+      removeDeuda,
+      totalDeudas,
       loading,
       error,
       fetchClientData,
       setClientData,
     }),
-    [clientData, loading, error, fetchClientData]
+    [
+      clientData,
+      addDeuda,
+      modifyDeuda,
+      removeDeuda,
+      totalDeudas,
+      loading,
+      error,
+      fetchClientData,
+    ]
   );
 
   return (

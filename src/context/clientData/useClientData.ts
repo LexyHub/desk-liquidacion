@@ -1,8 +1,12 @@
 import { createContext, useContext } from "react";
-import type { ClientData } from "@types";
+import type { ClientData, Deuda } from "@types";
 
 export interface ClientDataContextValue {
   clientData: ClientData | null;
+  addDeuda: (deuda: Deuda) => void;
+  modifyDeuda: (index: number, deuda: Deuda) => void;
+  removeDeuda: (index: number) => void;
+  totalDeudas: number;
   loading: boolean;
   error: string | null;
   fetchClientData: (
