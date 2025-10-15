@@ -22,7 +22,11 @@
       "@types/*": ["src/types/*"],
       "@types": ["src/types/index"],
       "@context/*": ["src/context/*"],
-      "@context": ["src/context/index"]
+      "@context": ["src/context/index"],
+      // nueva arquitectura
+      "@features/*": ["src/features/*"],
+      "@shared/*": ["src/shared/*"],
+      "@app/*": ["src/app/*"]
     },
 
     /* Bundler mode */
