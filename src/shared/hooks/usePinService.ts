@@ -5,7 +5,7 @@ import {
   togglePinRow as _togglePinRow,
   subscribe,
   isPinned as _isPinned,
-} from "@services/pinned.service";
+} from "@shared/services/pinned.service";
 import { useMemo, useSyncExternalStore } from "react";
 
 export function usePinService() {

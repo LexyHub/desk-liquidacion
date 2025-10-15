@@ -1,4 +1,4 @@
-import { Check, ChevronDown } from "lucide-react";
+import { Check, ChevronDown } from "@shared/lib/icons";
 import {
   Command,
   CommandEmpty,
@@ -6,17 +6,17 @@ import {
   CommandInput,
   CommandItem,
   CommandList,
-} from "@components/ui/base/command";
+} from "@shared/components/base/command";
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
-} from "@components/ui/base/popover";
+} from "@shared/components/base/popover";
 import clsx from "clsx";
 import { useEffect, useId, useMemo, useState } from "react";
-import { normalizeString } from "@/lib/utils/formatters";
-import type { SelectOption } from "@/types/global";
-import { cn } from "@/lib/utils";
+import { normalizeString } from "@shared/lib/utils/formatters";
+import type { SelectOption } from "@shared/types/global";
+import { cn } from "@shared/lib/utils";
 
 interface Props {
   triggerClassName?: string;

@@ -1,6 +1,6 @@
-import type { Acreedor } from "@/types";
+import type { Acreedor } from "@features/deudas";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import { fetchAcreedores as _fetchAcreedores } from "@/services/acreedores.service";
+import { fetchAcreedores as _fetchAcreedores } from "../services/acreedores.service";
 
 export function useAcreedores() {
   const [acreedores, setAcreedores] = useState<Acreedor[]>([]);

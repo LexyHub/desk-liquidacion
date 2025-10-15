@@ -1,6 +1,6 @@
-import { useMessages } from "@context/messages";
-import { useHeaderUI } from "@context/headerUI";
-import { MessageCircle } from "@/lib/icons";
+import { useMessages } from "@features/mensajes";
+import { useHeaderUI } from "@features/header";
+import { MessageCircle } from "@shared/lib/icons";
 
 export function Header() {
   // const { actualPath, rawPath, toggle } = useHeaderUI();

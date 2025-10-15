@@ -5,12 +5,12 @@ import {
   DialogDescription,
   DialogHeader,
   DialogTitle,
-} from "../ui/base/dialog";
+} from "@shared/components/base/dialog";
 import { X } from "lucide-react";
-import { Spinner } from "@components/ui/loading/Spinner";
+import { Spinner } from "@shared/components/loading";
 
 const EmbeddedVideo = lazy(() =>
-  import("@components/ui/popups/EmbeddedVideo").then((module) => ({
+  import("@shared/components/popups/EmbeddedVideo").then((module) => ({
     default: module.EmbeddedVideo,
   }))
 );
@@ -22,7 +22,7 @@ interface Props {
 
 export function VideoDialog({ isOpen, toggleOpen }: Props) {
   const handlePreload = useCallback(() => {
-    import("@components/ui/popups/EmbeddedVideo");
+    import("@shared/components/popups/EmbeddedVideo");
   }, []);
 
   return (

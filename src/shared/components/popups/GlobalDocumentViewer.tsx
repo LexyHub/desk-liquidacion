@@ -5,10 +5,10 @@ import {
   DialogDescription,
   DialogHeader,
   DialogTitle,
-} from "@/components/ui/base/dialog";
-import { X } from "@/lib/icons";
-import { useDocumentViewer } from "@/context/documentViewer/useDocumentViewer";
-import { Spinner } from "@/components/ui/loading/Spinner";
+} from "@shared/components/base/dialog";
+import { X } from "@shared/lib/icons";
+import { useDocumentViewer } from "@features/documentos";
+import { Spinner } from "@shared/components/loading/Spinner";
 
 // Lazy loading solo del contenido del iframe, no del Dialog completo
 const DocumentIframe = lazy(() =>

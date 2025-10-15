@@ -1,5 +1,5 @@
-import type { ClientData } from "@types";
-import _ClientData from "@lib/data/client.mock.json";
+import type { ClientData } from "@features/clientes";
+import _ClientData from "@shared/lib/data/client.mock.json";
 
 export function getClientData(idDefensoria: string) {
   console.info("DEBUG - Fetching de data de cliente", idDefensoria);

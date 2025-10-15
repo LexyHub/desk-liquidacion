@@ -1,5 +1,5 @@
-import { cn } from "@/lib/utils";
-import type { SelectOption } from "@/types";
+import { cn } from "@shared/lib/utils";
+import type { SelectOption } from "@shared/types";
 import {
   Select as BaseSelect,
   SelectContent,
@@ -8,7 +8,7 @@ import {
   SelectLabel,
   SelectTrigger,
   SelectValue,
-} from "@components/ui/base/select";
+} from "@shared/components/base/select";
 
 interface Props {
   triggerClassName?: string;

@@ -1,10 +1,9 @@
 import {
   logIn as AuthLogIn,
   logOut as AuthLogOut,
-} from "@services/auth.service";
-import type { Credentials } from "@types";
+} from "../services/auth.service";
+import { AuthContext, type Credentials } from "@features/auth";
 import { useState, type ReactNode } from "react";
-import { AuthContext } from "./useAuth";
 
 export function AuthProvider({ children }: { children: ReactNode }) {
   const [token, setToken] = useState<string>(

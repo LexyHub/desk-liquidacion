@@ -1,12 +1,12 @@
 import type { ReactNode, ComponentType } from "react";
-import { SidebarProvider } from "./sidebar";
-import { HeaderUIProvider } from "./headerUI";
-import { MessagesProvider } from "./messages";
-import { ClientDataProvider } from "./clientData";
-import { DocumentViewerProvider } from "./documentViewer";
-import { GlobalDocumentViewer } from "@/components/ui/popups/GlobalDocumentViewer";
-import { useProviderComposition } from "@/hooks";
-import { PrivateRoute } from "@/routes";
+import { SidebarProvider } from "@features/sidebar";
+import { HeaderUIProvider } from "@features/header";
+import { MessagesProvider } from "@features/mensajes";
+import { ClientDataProvider } from "@features/clientes";
+import { DocumentViewerProvider } from "@features/documentos";
+import { GlobalDocumentViewer } from "@shared/components/popups/GlobalDocumentViewer";
+import { useProviderComposition } from "@shared/hooks";
+import { PrivateRoute } from "@app/PrivateRoute";
 
 interface Props {
   isPrivate?: boolean;

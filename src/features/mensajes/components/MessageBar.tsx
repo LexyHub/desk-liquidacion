@@ -1,10 +1,10 @@
-import { useHeaderUI } from "@context/headerUI";
-import { useMessages } from "@context/messages";
+import { useHeaderUI } from "@features/header";
+import { useMessages } from "@features/mensajes";
 import clsx from "clsx";
-import { ArrowUp, X } from "@/lib/icons";
+import { ArrowUp, X } from "@shared/lib/icons";
 import { useState } from "react";
 import { MessageList } from "./MessageList";
-import type { Message } from "@/types";
+import type { Message } from "../types/messages";
 
 export function MessageBar() {
   const { isOpen, close, rawPath } = useHeaderUI();

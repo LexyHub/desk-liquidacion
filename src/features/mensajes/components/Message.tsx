@@ -1,5 +1,5 @@
-import { getHourAndMinutes } from "@/lib/utils/date-utils";
-import type { Message } from "@types";
+import { getHourAndMinutes } from "@shared/lib/utils/date-utils";
+import type { Message } from "../types/messages";
 
 interface Props {
   message: Message;

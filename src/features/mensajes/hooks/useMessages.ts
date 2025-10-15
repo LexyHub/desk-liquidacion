@@ -1,5 +1,5 @@
 import { createContext, useContext } from "react";
-import type { MessagesContextValue } from "@/types";
+import type { MessagesContextValue } from "@features/mensajes";
 
 export const MessagesContext = createContext<MessagesContextValue | undefined>(
   undefined

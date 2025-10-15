@@ -1,7 +1,7 @@
 import { useCallback, useMemo, useState, type ReactNode } from "react";
 import { useLocation } from "react-router-dom";
-import { PATH_TITLES } from "./constants";
-import { HeaderUIContext } from "./useHeaderUI";
+import { PATH_TITLES } from "../constants";
+import { HeaderUIContext } from "@features/header";
 
 export function HeaderUIProvider({ children }: { children: ReactNode }) {
   const [isOpen, setIsOpen] = useState(false);

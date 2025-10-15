@@ -1,5 +1,5 @@
-import { Eye } from "@/lib/icons";
-import { useDocumentViewer } from "@/context/documentViewer";
+import { Eye } from "@shared/lib/icons";
+import { useDocumentViewer } from "@features/documentos";
 
 interface Props {
   document: string;

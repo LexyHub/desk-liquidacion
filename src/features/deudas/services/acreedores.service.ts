@@ -1,4 +1,4 @@
-import type { Acreedor } from "@/types";
+import type { Acreedor } from "@features/deudas";
 
 const API_URL = import.meta.env.VITE_LEXY_API + "acreedores";
 const API_KEY = import.meta.env.VITE_LEXY_KEY;

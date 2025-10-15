@@ -2,7 +2,7 @@ import { useState, type ReactNode } from "react";
 import {
   DocumentViewerContext,
   type DocumentViewerContextValue,
-} from "./useDocumentViewer";
+} from "@features/documentos";
 
 interface DocumentViewerProviderProps {
   children: ReactNode;

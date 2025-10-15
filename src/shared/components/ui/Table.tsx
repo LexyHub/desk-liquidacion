@@ -1,8 +1,6 @@
-import clsx from "clsx";
-import { Star } from "@/lib/icons";
+import { Star } from "@shared/lib/icons";
 import type { ReactNode } from "react";
-import { twMerge } from "tailwind-merge";
-import { cn } from "@/lib/utils";
+import { cn } from "@shared/lib/utils";
 
 interface TableProps {
   children: ReactNode;
@@ -11,8 +9,7 @@ interface TableProps {
 
 function Table({ children, className }: TableProps) {
   return (
-    <section
-      className={twMerge("w-full flex flex-col justify-start", className)}>
+    <section className={cn("w-full flex flex-col justify-start", className)}>
       {children}
     </section>
   );
@@ -101,18 +98,18 @@ Table.Row = function Row({
   const handleClick = onStarToggle ? () => onStarToggle(rowkey) : undefined;
   return (
     <div
-      className={twMerge(
+      className={cn(
         "w-full grid grid-cols-2 items-center px-2 py-2 rounded-sm transition-colors",
         className,
-        clsx({ "bg-lexy-btn-secondary-hover": isStared && stareable })
+        cn({ "bg-lexy-btn-secondary-hover": isStared && stareable })
       )}>
-      <div className={clsx("flex items-center", { "gap-x-2": stareable })}>
+      <div className={cn("flex items-center", { "gap-x-2": stareable })}>
         {stareable && (
           <button
             title='Marcar / Desmarcar fila'
             type='button'
             onClick={handleClick}
-            className={clsx(
+            className={cn(
               "flex items-center justify-center size-8 rounded-sm cursor-pointer",
               {
                 "hover:bg-lexy-btn-secondary-hover transition-colors":
@@ -120,7 +117,7 @@ Table.Row = function Row({
               }
             )}>
             <Star
-              className={clsx("size-5 transition-colors", {
+              className={cn("size-5 transition-colors", {
                 "text-lexy-brand-secondary-dark fill-lexy-brand-secondary-dark":
                   isStared,
                 "text-lexy-text-secondary fill-transparent": !isStared,

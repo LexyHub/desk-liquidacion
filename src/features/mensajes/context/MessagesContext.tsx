@@ -6,10 +6,10 @@ import {
   useMemo,
   type ReactNode,
 } from "react";
-import { MessagesContext } from "./useMessages";
-import { useHeaderUI } from "../headerUI";
-import { getMessagesByDomain } from "@/services/messages.service";
-import type { Message, MessagesContextValue } from "@/types";
+import { MessagesContext } from "@features/mensajes";
+import { useHeaderUI } from "@features/header";
+import { getMessagesByDomain } from "../services/messages.service";
+import type { Message, MessagesContextValue } from "../types/messages";
 
 export function MessagesProvider({ children }: { children: ReactNode }) {
   const { rawPath } = useHeaderUI();

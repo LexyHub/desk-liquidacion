@@ -7,12 +7,13 @@ import {
   type ReactNode,
 } from "react";
 import { useParams } from "react-router-dom";
-import type { ClientData, Deuda } from "@types";
-import { getClientData } from "@services/client.service";
+import type { ClientData } from "@features/clientes";
+import type { Deuda } from "@features/deudas";
+import { getClientData } from "../services/client.service";
 import {
   ClientDataContext,
   type ClientDataContextValue,
-} from "./useClientData";
+} from "@features/clientes";
 
 export function ClientDataProvider({ children }: { children: ReactNode }) {
   const { idDefensoria } = useParams<{ idDefensoria: string }>();

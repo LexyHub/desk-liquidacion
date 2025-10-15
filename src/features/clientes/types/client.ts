@@ -1,4 +1,4 @@
-import type { Deuda, ResponseDeuda } from "./deudas";
+import type { Deuda, ResponseDeuda } from "@features/deudas";
 
 // Provicional
 export interface ClientData {

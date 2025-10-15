@@ -1,5 +1,5 @@
-import type { Message } from "@/types";
-import MockMessages from "@lib/data/messages.mock.json";
+import MockMessages from "@shared/lib/data/messages.mock.json";
+import type { Message } from "../types/messages";
 
 export async function getMessagesByDomain(
   domain: string,

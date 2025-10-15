@@ -1,16 +1,20 @@
 import { createBrowserRouter } from "react-router-dom";
 // import { createBrowserRouter } from "@datadog/browser-rum-react/react-router-v6";
-import { Layout } from "@views/Layout";
+import { Layout } from "@app/Layout";
 import { Navigate } from "react-router-dom";
 // import DatosPersonales from "@views/DatosPersonales";
-import { Login } from "@views/Login";
-import { ContextWrapper } from "@context/Wrapper";
+import { Login } from "@features/auth/views/Login";
+import { ContextWrapper } from "@app/Wrapper";
 import { lazy } from "react";
 // import { SituacionLaboral } from "@views/SituacionLaboral";
 
-const DatosPersonales = lazy(() => import("@views/DatosPersonales"));
-const SituacionLaboral = lazy(() => import("@views/SituacionLaboral"));
-const Deudas = lazy(() => import("@views/Deudas"));
+const DatosPersonales = lazy(
+  () => import("@features/clientes/views/DatosPersonales")
+);
+const SituacionLaboral = lazy(
+  () => import("@features/clientes/views/SituacionLaboral")
+);
+const Deudas = lazy(() => import("@features/deudas/views/Deudas"));
 
 export const router = createBrowserRouter([
   {

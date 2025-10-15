@@ -1,5 +1,5 @@
-import type { Country, Region } from "@types";
-import countriesData from "@lib/data/countries.json";
+import type { Country, Region } from "@shared/types";
+import countriesData from "@shared/lib/data/countries.json";
 import { useCallback, useEffect, useMemo, useState } from "react";
 
 const API_URL = import.meta.env.VITE_LEXY_API + "regiones/con_comunas";

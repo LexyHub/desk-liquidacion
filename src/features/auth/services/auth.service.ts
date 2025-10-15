@@ -1,4 +1,4 @@
-import type { AuthAPIData, Credentials } from "@/types/auth";
+import type { AuthAPIData, Credentials } from "@features/auth";
 
 const AUTH_API = import.meta.env.VITE_LEXY_API + "auth/token";
 const API_KEY = import.meta.env.VITE_LEXY_KEY;

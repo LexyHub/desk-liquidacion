@@ -1,5 +1,6 @@
 import { createContext, useContext } from "react";
-import type { ClientData, Deuda } from "@types";
+import type { ClientData } from "@features/clientes";
+import type { Deuda } from "@features/deudas";
 
 export interface ClientDataContextValue {
   clientData: ClientData | null;

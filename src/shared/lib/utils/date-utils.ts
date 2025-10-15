@@ -1,4 +1,4 @@
-import type { Message } from "@/types";
+import type { Message } from "@features/mensajes/types/messages";
 
 export function getSortedMessages(messages: Message[]) {
   return messages.sort(

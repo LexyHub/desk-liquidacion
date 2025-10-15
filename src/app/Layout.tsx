@@ -1,11 +1,11 @@
 import { Outlet } from "react-router-dom";
 
-import { Header } from "@components/ui/Header";
-import { Sidebar } from "@components/sidebar";
+import { Header } from "@features/header";
+import { Sidebar } from "@features/sidebar";
 import { lazy } from "react";
 
 const MessageBar = lazy(() =>
-  import("@/components/messages/MessageBar").then((module) => ({
+  import("@features/mensajes/components/MessageBar").then((module) => ({
     default: module.MessageBar,
   }))
 );

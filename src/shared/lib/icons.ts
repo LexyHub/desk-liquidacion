@@ -30,5 +30,5 @@ export {
 } from "lucide-react";
 
 // Custom
-export { LexyLogo } from "@/lib/icons/custom/LexyLogo";
-export { YoutubeLogo } from "@/lib/icons/custom/YoutubeLogo";
+export { LexyLogo } from "@shared/lib/icons/LexyLogo";
+export { YoutubeLogo } from "@shared/lib/icons/YoutubeLogo";

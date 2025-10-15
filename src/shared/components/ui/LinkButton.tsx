@@ -1,4 +1,4 @@
-import { SquareArrowOutUpRight } from "@/lib/icons";
+import { SquareArrowOutUpRight } from "@shared/lib/icons";
 
 interface Props {
   logo_url: string;

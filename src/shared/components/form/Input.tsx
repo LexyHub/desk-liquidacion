@@ -1,5 +1,8 @@
-import { cn } from "@/lib/utils";
-import { formatCurrency, parseCurrencyInput } from "@/lib/utils/formatters";
+import { cn } from "@shared/lib/utils";
+import {
+  formatCurrency,
+  parseCurrencyInput,
+} from "@shared/lib/utils/formatters";
 import type { ChangeEvent } from "react";
 import { useEffect, useState } from "react";
 

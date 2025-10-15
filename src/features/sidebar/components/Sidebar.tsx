@@ -10,12 +10,12 @@ import {
   UserRound,
   LexyLogo,
   YoutubeLogo,
-} from "@/lib/icons";
+} from "@shared/lib/icons";
 import { SidebarItem } from "./SidebarItem";
 import { VideoDialog } from "./VideoDialog";
-import { useSidebar } from "@/context/sidebar/useSidebar";
-import { cn } from "@/lib/utils";
-import { useAuth } from "@/context/auth";
+import { useSidebar } from "@features/sidebar";
+import { cn } from "@shared/lib/utils";
+import { useAuth } from "@features/auth";
 
 export function Sidebar() {
   const { idDefensoria } = useParams();

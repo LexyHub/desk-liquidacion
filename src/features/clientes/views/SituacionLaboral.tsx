@@ -1,12 +1,12 @@
-import { Input, Select } from "@/components/form";
-import { Card } from "@components/ui/Card";
-import { ContentHead } from "@components/ui/ContentHead";
-import { Table } from "@components/ui/Table";
-import { useClientDataContext } from "@context/clientData";
-import { usePinService } from "@hooks";
-import { SiONo, TipoTrabajador, TipoTrabajo } from "./options";
-import { DocumentButton } from "@components/ui/DocumentButton";
-import { LoadingView } from "@components/ui/loading/LoadingView";
+import { Input, Select } from "@shared/components/form";
+import { Card } from "@shared/components/ui/Card";
+import { ContentHead } from "@shared/components/ui/ContentHead";
+import { Table } from "@shared/components/ui/Table";
+import { useClientDataContext } from "@features/clientes/hooks/useClientData";
+import { usePinService } from "@shared/hooks";
+import { SiONo, TipoTrabajador, TipoTrabajo } from "@shared/lib/options";
+import { DocumentButton } from "@shared/components/ui/DocumentButton";
+import { LoadingView } from "@shared/components/loading/LoadingView";
 
 export default function SituacionLaboral() {
   const { isRowPinned, togglePinRow } = usePinService();

@@ -1,10 +1,9 @@
-import { LexyMobile } from "@assets";
-import type { Credentials } from "@types";
-import { CircleX, Eye, EyeClosed } from "@/lib/icons";
+import { LexyMobile } from "@shared/assets";
+import { useAuth, type Credentials } from "@features/auth";
+import { CircleX, Eye, EyeClosed } from "@shared/lib/icons";
 import { useMemo, useState } from "react";
-import { useAuth } from "@context/auth";
 import { useLocation, useNavigate } from "react-router-dom";
-import { cn } from "@/lib/utils";
+import { cn } from "@shared/lib/utils";
 
 export function Login() {
   const { logIn } = useAuth();

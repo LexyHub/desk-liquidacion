@@ -1,11 +1,12 @@
-import { UserSearch } from "@/lib/icons";
-import { Drive, PoderJudicial, SII } from "@assets";
-import clsx from "clsx";
-import { twMerge } from "tailwind-merge";
+import { UserSearch } from "@shared/lib/icons";
+import { Drive, PoderJudicial, SII } from "@shared/assets";
 import { Card } from "./Card";
 import { LinkButton } from "./LinkButton";
 import { Table } from "./Table";
-import { useClientDataContext, useHeaderUI, useSidebar } from "@context";
+import { useClientDataContext } from "@features/clientes";
+import { useHeaderUI } from "@features/header";
+import { useSidebar } from "@features/sidebar";
+import { cn } from "@/shared/lib/utils";
 
 export function ContentHead() {
   const { isOpen: isSidebarOpen } = useSidebar();
@@ -15,9 +16,9 @@ export function ContentHead() {
   return (
     <section className='p-4 grid grid-cols-[auto_1fr] gap-x-6 h-fit border-b border-b-lexy-border-table'>
       <Card
-        className={twMerge(
+        className={cn(
           "min-w-72 max-w-72 lg:min-w-md lg:max-w-md transition-all",
-          clsx({
+          cn({
             "min-w-72 max-w-72 lg:min-w-72 lg:max-w-72":
               isSidebarOpen && isMessageTabOpen,
           })

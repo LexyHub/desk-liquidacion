@@ -1,6 +1,6 @@
 import { createContext, useContext, useMemo, type ReactNode } from "react";
-import { Skeleton } from "@components/ui/loading/Skeleton";
-import { cn } from "@lib/utils";
+import { Skeleton } from "@shared/components/loading/Skeleton";
+import { cn } from "@shared/lib/utils";
 
 interface CardProps {
   children: ReactNode;

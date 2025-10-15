@@ -1,4 +1,4 @@
-import type { Message } from "@/types";
+import type { Message } from "../types/messages";
 
 export type Normalized = {
   byId: Record<string, Message>;

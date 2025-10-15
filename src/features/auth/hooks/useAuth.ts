@@ -1,4 +1,4 @@
-import type { Credentials } from "@/types";
+import type { Credentials } from "@features/auth";
 import { createContext, useContext } from "react";
 
 interface AuthContextValue {

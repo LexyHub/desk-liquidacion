@@ -1,11 +1,11 @@
-import { Card } from "@components/ui/Card";
-import { ContentHead } from "@components/ui/ContentHead";
-import { Table } from "@components/ui/Table";
-import { Input, Select, SearchableSelect } from "@components/form";
-import { useGeoData, usePinService } from "@hooks";
-import { EstadoCivil, RegimenMarital, SiONo } from "./options";
-import { useClientDataContext } from "@context/clientData/useClientData";
-import { LoadingView } from "@components/ui/loading/LoadingView";
+import { Card } from "@shared/components/ui/Card";
+import { ContentHead } from "@shared/components/ui/ContentHead";
+import { Table } from "@shared/components/ui/Table";
+import { Input, Select, SearchableSelect } from "@shared/components/form";
+import { useGeoData, usePinService } from "@shared/hooks";
+import { EstadoCivil, RegimenMarital, SiONo } from "@shared/lib/options";
+import { useClientDataContext } from "@features/clientes/hooks/useClientData";
+import { LoadingView } from "@shared/components/loading/LoadingView";
 
 export default function DatosPersonales() {
   const { isRowPinned, togglePinRow } = usePinService();

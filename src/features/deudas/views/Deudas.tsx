@@ -1,15 +1,15 @@
-import { Input, SearchableSelect, Select } from "@components/form";
-import { Card } from "@components/ui/Card";
-import { ContentHead } from "@components/ui/ContentHead";
-import { LoadingView } from "@components/ui/loading/LoadingView";
-import { Table } from "@components/ui/Table";
-import { useClientDataContext } from "@context";
-import { cn } from "@lib/utils";
-import type { Deuda } from "@types";
-import { useAcreedores, usePinService } from "@hooks";
-import { Plus, Trash2 } from "@lib/icons";
-import { TipoCreditos, SiONo } from "./options";
-import { formatCurrency } from "@lib/utils/formatters";
+import { Input, SearchableSelect, Select } from "@shared/components/form";
+import { Card } from "@shared/components/ui/Card";
+import { ContentHead } from "@shared/components/ui/ContentHead";
+import { LoadingView } from "@shared/components/loading/LoadingView";
+import { Table } from "@shared/components/ui/Table";
+import { useClientDataContext } from "@features/clientes";
+import { cn } from "@shared/lib/utils";
+import { useAcreedores, type Deuda } from "@features/deudas";
+import { usePinService } from "@shared/hooks";
+import { Plus, Trash2 } from "@shared/lib/icons";
+import { TipoCreditos, SiONo } from "@shared/lib/options";
+import { formatCurrency } from "@shared/lib/utils/formatters";
 
 export default function Deudas() {
   const { isRowPinned, togglePinRow } = usePinService();
@@ -86,7 +86,7 @@ export default function Deudas() {
               </Table.Header>
               <Table.Content>
                 {clientData?.deudas && clientData.deudas.length > 0 ? (
-                  clientData.deudas.map((deuda, index) => (
+                  clientData.deudas.map((deuda: Deuda, index: number) => (
                     <Table.Cell
                       key={`deuda-${index}`}
                       className='grid-cols-[1fr_1fr_1fr_auto] gap-x-8 animate-fade-in-down animate-duration-200'>

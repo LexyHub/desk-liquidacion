@@ -1,8 +1,9 @@
 import { useEffect, useRef } from "react";
 import { Message } from "./Message";
-import { getGroupedMessages } from "@lib/utils/date-utils";
-import { Search } from "@assets";
-import { useHeaderUI, useMessages } from "@context";
+import { getGroupedMessages } from "@shared/lib/utils/date-utils";
+import { Search } from "@shared/assets";
+import { useMessages } from "@features/mensajes";
+import { useHeaderUI } from "@features/header";
 
 export function MessageList() {
   const { actualPath } = useHeaderUI();
