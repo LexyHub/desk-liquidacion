@@ -13,7 +13,7 @@ import { getClientData } from "../services/client.service";
 import {
   ClientDataContext,
   type ClientDataContextValue,
-} from "@features/clientes";
+} from "@shared/hooks/useClientData";
 
 export function ClientDataProvider({ children }: { children: ReactNode }) {
   const { idDefensoria } = useParams<{ idDefensoria: string }>();

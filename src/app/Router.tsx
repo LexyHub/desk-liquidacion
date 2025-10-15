@@ -9,10 +9,10 @@ import { lazy } from "react";
 // import { SituacionLaboral } from "@views/SituacionLaboral";
 
 const DatosPersonales = lazy(
-  () => import("@features/clientes/views/DatosPersonales")
+  () => import("@features/datos-personales/views/DatosPersonales")
 );
 const SituacionLaboral = lazy(
-  () => import("@features/clientes/views/SituacionLaboral")
+  () => import("@features/situacion-laboral/views/SituacionLaboral")
 );
 const Deudas = lazy(() => import("@features/deudas/views/Deudas"));
 

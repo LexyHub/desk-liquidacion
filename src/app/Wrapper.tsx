@@ -2,7 +2,7 @@ import type { ReactNode, ComponentType } from "react";
 import { SidebarProvider } from "@features/sidebar";
 import { HeaderUIProvider } from "@features/header";
 import { MessagesProvider } from "@features/mensajes";
-import { ClientDataProvider } from "@features/clientes";
+import { ClientDataProvider } from "@shared/context";
 import { DocumentViewerProvider } from "@features/documentos";
 import { GlobalDocumentViewer } from "@shared/components/popups/GlobalDocumentViewer";
 import { useProviderComposition } from "@shared/hooks";
