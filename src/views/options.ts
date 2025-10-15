@@ -20,3 +20,20 @@ export const RegimenMarital = [
     value: "participacion-en-los-gananciales",
   },
 ];
+
+export const TipoTrabajo = [
+  { label: "Independiente", value: "independiente" },
+  { label: "Dependiente", value: "dependiente" },
+];
+
+export const TipoTrabajador = [
+  { label: "Privado", value: "privado" },
+  { label: "Público", value: "publico" },
+];
+
+export const TipoCreditos = [
+  { label: "Hipotecario", value: "hipotecario" },
+  { label: "Consumo", value: "consumo" },
+  { label: "Automotriz", value: "automotriz" },
+  { label: "Tarjeta de Crédito", value: "tarjeta-credito" },
+];

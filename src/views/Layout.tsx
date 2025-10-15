@@ -19,7 +19,7 @@ export function Layout() {
         <Header />
 
         <section className='grid grid-cols-[1fr_auto] min-h-0'>
-          <div className='overflow-auto h-full pb-8'>
+          <div className='overflow-auto h-full pb-8 hide-scrollbar'>
             <Outlet />
           </div>
           <MessageBar />

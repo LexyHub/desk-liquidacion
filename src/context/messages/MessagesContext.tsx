@@ -1,78 +1,104 @@
 import {
   useCallback,
-  useMemo,
-  useReducer,
+  useEffect,
   useRef,
+  useState,
+  useMemo,
   type ReactNode,
 } from "react";
-import { messagesReducer, initialState, type Action } from "./messagesReducer";
 import { MessagesContext } from "./useMessages";
-import type { MessagesContextValue, Message } from "@/types";
+import { useHeaderUI } from "../headerUI";
+import { getMessagesByDomain } from "@/services/messages.service";
+import type { Message, MessagesContextValue } from "@/types";
 
 export function MessagesProvider({ children }: { children: ReactNode }) {
-  const [state, dispatch] = useReducer(messagesReducer, initialState);
-  const controllersRef = useRef<Record<string, AbortController | undefined>>(
-    {}
-  );
+  const { rawPath } = useHeaderUI();
+  const [messages, setMessages] = useState<Message[]>([]);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const cacheRef = useRef<Record<string, Message[]>>({});
+  const abortRef = useRef<AbortController | null>(null);
 
-  const fetchMessages = useCallback(
-    async (path: string, externalSignal?: AbortSignal) => {
-      controllersRef.current[path]?.abort();
-      const controller = new AbortController();
-      controllersRef.current[path] = controller;
-
-      const signal = externalSignal ?? controller.signal;
-
-      console.info("Debug para signal", signal);
-      try {
-        // const res = await fetch(`/api/messages/${path}`, { signal });
-        // const data: Message[] = await res.json();
-        await new Promise((r) => setTimeout(r, 120)); // simula latencia
-        const data: Message[] = [];
-        if (controller.signal.aborted) return;
-        dispatch({ type: "SET", path, messages: data } as Action);
-      } catch (err) {
-        if ((err as DOMException)?.name === "AbortError") return;
-        console.error("fetchMessages error", err);
-      } finally {
-        if (controllersRef.current[path] === controller) {
-          delete controllersRef.current[path];
-        }
-      }
-    },
-    []
-  );
-
-  const addMessage = useCallback((path: string, msg: Message) => {
-    dispatch({ type: "ADD", path, msg } as Action);
+  const loadPath = useCallback(async (path: string) => {
+    if (!path) return;
+    // Cache hit
+    if (cacheRef.current[path]) {
+      setMessages(cacheRef.current[path]);
+      return;
+    }
+    abortRef.current?.abort();
+    const controller = new AbortController();
+    abortRef.current = controller;
+    setLoading(true);
+    setError(null);
+    try {
+      const data = await getMessagesByDomain(path, controller.signal);
+      if (controller.signal.aborted) return;
+      cacheRef.current[path] = data;
+      setMessages(data);
+    } catch (e) {
+      if ((e as DOMException)?.name === "AbortError") return;
+      console.error("Error obteniendo mensajes", e);
+      setError("No se pudieron cargar los mensajes.");
+      setMessages([]);
+    } finally {
+      setLoading(false);
+    }
   }, []);
 
-  const removeMessage = useCallback((path: string, id: string) => {
-    dispatch({ type: "REMOVE", path, id } as Action);
-  }, []);
+  // para cuando cambiemos de path
+  useEffect(() => {
+    if (rawPath) loadPath(rawPath);
+    return () => abortRef.current?.abort();
+  }, [rawPath, loadPath]);
 
-  const getMessage = useCallback(
-    (id: string) => state.normalized.byId[id],
-    [state.normalized.byId]
+  const refetch = useCallback(() => {
+    if (!rawPath) return;
+    delete cacheRef.current[rawPath];
+    loadPath(rawPath);
+  }, [rawPath, loadPath]);
+
+  const addMessage = useCallback(
+    (path: string, msg: Message) => {
+      cacheRef.current[path] = [...(cacheRef.current[path] ?? []), msg];
+      if (path === rawPath) setMessages((prev) => [...prev, msg]);
+    },
+    [rawPath]
   );
 
-  const getMessages = useCallback(
-    (path: string) => {
-      const ids = state.normalized.idsByPath[path] ?? [];
-      return ids.map((id) => state.normalized.byId[id]).filter(Boolean);
+  const removeMessage = useCallback(
+    (path: string, id: string) => {
+      cacheRef.current[path] = (cacheRef.current[path] ?? []).filter(
+        (m) => m.id !== id
+      );
+      if (path === rawPath)
+        setMessages((prev) => prev.filter((m) => m.id !== id));
     },
-    [state.normalized.byId, state.normalized.idsByPath]
+    [rawPath]
+  );
+
+  const saveMessages = useCallback(
+    async (path?: string) => {
+      const target = path || rawPath;
+      if (!target) return;
+      const msgs = cacheRef.current[target] ?? [];
+      console.info("Guardando mensajes de", target, msgs);
+      await new Promise((r) => setTimeout(r, 120));
+    },
+    [rawPath]
   );
 
   const value: MessagesContextValue = useMemo(
     () => ({
-      fetchMessages,
+      messages,
+      loading,
+      error,
+      refetch,
       addMessage,
       removeMessage,
-      getMessages,
-      getMessage,
+      saveMessages,
     }),
-    [fetchMessages, addMessage, removeMessage, getMessages, getMessage]
+    [messages, loading, error, refetch, addMessage, removeMessage, saveMessages]
   );
 
   return (

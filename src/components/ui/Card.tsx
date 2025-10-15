@@ -1,6 +1,6 @@
 import { createContext, useContext, useMemo, type ReactNode } from "react";
-import { twMerge } from "tailwind-merge";
 import { Skeleton } from "@components/ui/loading/Skeleton";
+import { cn } from "@lib/utils";
 
 interface CardProps {
   children: ReactNode;
@@ -26,7 +26,7 @@ function Card({ children, className, isLoading = false }: CardProps) {
   return (
     <CardContext.Provider value={value}>
       <div
-        className={twMerge(
+        className={cn(
           "w-full h-full p-4 flex flex-col items-start gap-y-4 rounded-lg border border-lexy-border-table shadow-lexy-card bg-white",
           className
         )}>
@@ -36,9 +36,17 @@ function Card({ children, className, isLoading = false }: CardProps) {
   );
 }
 
-Card.Header = function CardHeader({ children }: { children: ReactNode }) {
+Card.Header = function CardHeader({
+  children,
+  className,
+}: {
+  children: ReactNode;
+  className?: string;
+}) {
   return (
-    <section className='flex items-center gap-x-2 mb-4'>{children}</section>
+    <section className={cn("flex items-center gap-x-2 mb-4", className)}>
+      {children}
+    </section>
   );
 };
 
@@ -51,8 +59,8 @@ Card.Title = function CardTitle({
 }) {
   return (
     <h3
-      className={twMerge(
-        "text-lg font-medium leading-7 text-lexy-brand-secondary-dark",
+      className={cn(
+        "text-xl font-medium leading-7 text-lexy-brand-secondary-dark",
         className
       )}>
       {children}
@@ -80,7 +88,7 @@ Card.Content = function CardContent({
   skeletonWidth?: "full" | "3/4" | "1/2" | "1/3" | "1/4";
 }) {
   const { isLoading } = useCard();
-  const defaultClassName = twMerge(
+  const defaultClassName = cn(
     "flex flex-col items-start justify-start w-full",
     className
   );
@@ -95,7 +103,7 @@ Card.Content = function CardContent({
 
   return (
     <section
-      className={twMerge(
+      className={cn(
         "flex flex-col items-start justify-start w-full",
         className
       )}>

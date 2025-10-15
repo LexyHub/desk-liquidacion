@@ -25,7 +25,11 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     return true;
   };
 
-  const logOut = () => AuthLogOut();
+  const logOut = () => {
+    AuthLogOut();
+    setToken("");
+    setUserId("");
+  };
 
   const isAuthenticated = !!sessionStorage.getItem("token");
 

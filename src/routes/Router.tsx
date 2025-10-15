@@ -2,9 +2,15 @@ import { createBrowserRouter } from "react-router-dom";
 // import { createBrowserRouter } from "@datadog/browser-rum-react/react-router-v6";
 import { Layout } from "@views/Layout";
 import { Navigate } from "react-router-dom";
-import DatosPersonales from "@views/DatosPersonales";
+// import DatosPersonales from "@views/DatosPersonales";
 import { Login } from "@views/Login";
 import { ContextWrapper } from "@context/Wrapper";
+import { lazy } from "react";
+// import { SituacionLaboral } from "@views/SituacionLaboral";
+
+const DatosPersonales = lazy(() => import("@views/DatosPersonales"));
+const SituacionLaboral = lazy(() => import("@views/SituacionLaboral"));
+const Deudas = lazy(() => import("@views/Deudas"));
 
 export const router = createBrowserRouter([
   {
@@ -29,9 +35,9 @@ export const router = createBrowserRouter([
       },
       {
         path: "situacion-laboral/:idDefensoria",
-        element: <h1>Situacion Laboral</h1>,
+        element: <SituacionLaboral />,
       },
-      { path: "deudas/:idDefensoria", element: <h1>Deudas</h1> },
+      { path: "deudas/:idDefensoria", element: <Deudas /> },
       { path: "bienes/:idDefensoria", element: <h1>Bienes</h1> },
       { path: "historia-se/:idDefensoria", element: <h1>Historia</h1> },
       {

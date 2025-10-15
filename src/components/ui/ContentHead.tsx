@@ -1,29 +1,26 @@
-import { UserSearch } from "lucide-react";
+import { UserSearch } from "@/lib/icons";
 import { Drive, PoderJudicial, SII } from "@assets";
-import { useSidebar } from "@context/sidebar";
-import { useHeaderUI } from "@context/headerUI";
 import clsx from "clsx";
 import { twMerge } from "tailwind-merge";
 import { Card } from "./Card";
 import { LinkButton } from "./LinkButton";
 import { Table } from "./Table";
+import { useClientDataContext, useHeaderUI, useSidebar } from "@context";
 
 export function ContentHead() {
   const { isOpen: isSidebarOpen } = useSidebar();
   const { isOpen: isMessageTabOpen } = useHeaderUI();
-
-  //! Hard-codeado por mientras
-  const ClientData = {
-    nombre: "Moonie",
-    rut: "20.919.721-9",
-    clave_unica: "Er papu 123",
-  };
+  const { clientData } = useClientDataContext();
+  const claveUnica = "*********";
   return (
     <section className='p-4 grid grid-cols-[auto_1fr] gap-x-6 h-fit border-b border-b-lexy-border-table'>
       <Card
         className={twMerge(
-          "min-w-md max-w-md transition-all",
-          clsx({ "min-w-xs max-w-xs": isSidebarOpen && isMessageTabOpen })
+          "min-w-72 max-w-72 lg:min-w-md lg:max-w-md transition-all",
+          clsx({
+            "min-w-72 max-w-72 lg:min-w-72 lg:max-w-72":
+              isSidebarOpen && isMessageTabOpen,
+          })
         )}>
         <Card.Header>
           <Card.Icon>
@@ -37,19 +34,19 @@ export function ContentHead() {
               className='justify-between'
               rowkey='nombre'
               label='Nombre'
-              value={ClientData.nombre}
+              value={clientData?.datos_personales.nombre}
             />
             <Table.Row
               className='justify-between'
               rowkey='rut'
               label='RUT'
-              value={ClientData.rut}
+              value={clientData?.datos_personales.rut}
             />
             <Table.Row
               className='justify-between'
               rowkey='clave_unica'
               label='Clave única'
-              value={ClientData.clave_unica}
+              value={claveUnica}
             />
           </Table>
         </Card.Content>
