@@ -1,5 +1,5 @@
 import { createContext, useContext } from "react";
-import type { ClientData } from "@features/clientes";
+import type { ClientData } from "@shared/types";
 import type { Deuda } from "@features/deudas";
 
 export interface ClientDataContextValue {

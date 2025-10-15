@@ -7,7 +7,7 @@ import {
   type ReactNode,
 } from "react";
 import { useParams } from "react-router-dom";
-import type { ClientData } from "@features/clientes";
+import type { ClientData } from "@shared/types";
 import type { Deuda } from "@features/deudas";
 import { getClientData } from "../services/client.service";
 import {
