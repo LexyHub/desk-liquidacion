@@ -19,6 +19,10 @@ export default defineConfig({
       "@types": path.resolve(__dirname, "src/types"),
       "@services": path.resolve(__dirname, "src/services"),
       "@styles": path.resolve(__dirname, "src/styles"),
+      // nueva arquitectura
+      "@features": path.resolve(__dirname, "src/features"),
+      "@shared": path.resolve(__dirname, "src/shared"),
+      "@app": path.resolve(__dirname, "src/app"),
     },
   },
   build: {
