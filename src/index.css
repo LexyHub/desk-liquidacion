@@ -197,7 +197,7 @@
         rgba(76, 46, 255, 0.3) 0%,
         rgba(76, 46, 255, 0.3) 100%
       ),
-      url("./assets/login-bg.webp") lightgray 50% / cover no-repeat;
+      url("./shared/assets/login-bg.webp") lightgray 50% / cover no-repeat;
   }
 
   .hide-scrollbar::-webkit-scrollbar {
