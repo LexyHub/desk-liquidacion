@@ -8,6 +8,7 @@ import {
   LogOut,
   ScrollText,
   UserRound,
+  Send,
   LexyLogo,
   YoutubeLogo,
 } from "@shared/lib/icons";
@@ -22,13 +23,18 @@ export function Sidebar() {
   const { pathname } = useLocation();
   const { logOut } = useAuth();
   const navigate = useNavigate();
-  const { isOpen, toggle } = useSidebar();
+  const { isOpen, toggle, isInDistribution, setInDistribution } = useSidebar();
   const [showVideoDialog, setShowVideoDialog] = useState(false);
-  const isDistribution = pathname.startsWith("/distribucion");
 
   const handleOptionClick = (to: string) => {
     if (to === pathname) return;
     navigate(to);
+  };
+
+  const backToEntrevista = () => {
+    if (!idDefensoria) return;
+    setInDistribution(false);
+    navigate(`/datos-personales/${idDefensoria}`);
   };
 
   return (
@@ -67,12 +73,13 @@ export function Sidebar() {
             <div className='flex items-center justify-between my-6'>
               <button
                 type='button'
+                onClick={backToEntrevista}
                 className={cn(
                   "cursor-pointer text-sm leading-5 font-medium px-4 py-1 rounded-sm h-8 transition-all",
                   {
                     "text-lexy-text-secondary bg-lexy-bg-card border border-lexy-border-table":
-                      isDistribution,
-                    "text-lexy-bg-card bg-[#0B013C]": !isDistribution,
+                      isInDistribution,
+                    "text-lexy-bg-card bg-[#0B013C]": !isInDistribution,
                   }
                 )}>
                 Entrevista
@@ -83,8 +90,8 @@ export function Sidebar() {
                   "cursor-pointer text-sm leading-5 font-medium px-4 py-1 rounded-sm h-8 transition-all",
                   {
                     "text-lexy-text-secondary bg-lexy-bg-card border border-lexy-border-table":
-                      !isDistribution,
-                    "text-lexy-bg-card bg-[#0B013C]": isDistribution,
+                      !isInDistribution,
+                    "text-lexy-bg-card bg-[#0B013C]": isInDistribution,
                   }
                 )}>
                 Distribución
@@ -154,6 +161,16 @@ export function Sidebar() {
             active={pathname.startsWith("/historia-se")}
             onClick={handleOptionClick}
           />
+          {isInDistribution && (
+            <SidebarItem
+              icon={Send}
+              label='Distribución'
+              to={`/distribucion/${idDefensoria}`}
+              expanded={isOpen}
+              active={pathname.startsWith("/distribucion")}
+              onClick={handleOptionClick}
+            />
+          )}
         </section>
 
         <section className='px-4'>

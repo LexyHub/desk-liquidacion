@@ -37,3 +37,22 @@ export const TipoCreditos = [
   { label: "Automotriz", value: "automotriz" },
   { label: "Tarjeta de Crédito", value: "tarjeta-credito" },
 ];
+
+export const HaceCuanto = [
+  { label: "Menos de dos años", value: "menos-dos-años" },
+  { label: "Más de dos años", value: "mas-dos-años" },
+];
+
+export const AQuien = [
+  { label: "A un pariente", value: "pariente" },
+  { label: "A una empresa", value: "empresa" },
+  { label: "A un extraño", value: "extraño" },
+  { label: "Fue rematado", value: "rematado" },
+];
+
+export const QueMedio = [
+  { label: "Autofact", value: "autofact" },
+  { label: "Carta poder (mandato)", value: "carta-poder" },
+  { label: "Contrato escriturado", value: "contrato-escriturado" },
+  { label: "De palabra", value: "de-palabra" },
+];

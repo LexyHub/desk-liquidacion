@@ -43,8 +43,29 @@
       "date": "2025-10-14T15:00:00.000Z"
     }
   ],
-  "situacion-laboral": [],
+  "situacion-laboral": [
+    {
+      "path": "situacion-laboral",
+      "id": "8",
+      "message": "Comentario en situación laboraaall",
+      "date": "2025-10-13T15:10:00.000Z"
+    },
+    {
+      "path": "situacion-laboral",
+      "id": "9",
+      "message": "Moonie Gamer Pro 777 😺",
+      "date": "2025-10-15T16:30:00.000Z"
+    }
+  ],
   "deudas": [],
-  "bienes": [],
-  "historia-de-se": []
+  "bienes": [
+    {
+      "path": "bienes",
+      "id": "10",
+      "message": "La clienta tiene un rascador y un comedero automático",
+      "date": "2025-10-14T18:45:00.000Z"
+    }
+  ],
+  "historia-de-se": [],
+  "distribucion": []
 }

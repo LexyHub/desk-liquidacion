@@ -3,7 +3,7 @@ import { Drive, PoderJudicial, SII } from "@shared/assets";
 import { Card } from "./Card";
 import { LinkButton } from "./LinkButton";
 import { Table } from "./Table";
-import { useClientDataContext } from "@features/clientes";
+import { useClientDataContext } from "@shared/context";
 import { useHeaderUI } from "@features/header";
 import { useSidebar } from "@features/sidebar";
 import { cn } from "@/shared/lib/utils";

@@ -5,6 +5,9 @@ export interface ClientData {
   datos_personales: PersonalData;
   situacion_laboral: LaboralSituation;
   deudas: Deuda[];
+  bienes?: Bienes;
+  historia_sobreendeudamiento?: HistoriaSobreendeudamiento;
+  gastos_mensuales?: GastoMensual[];
 }
 
 interface PersonalData {
@@ -77,3 +80,45 @@ interface ResponseLaboralSituation
   bonos: boolean;
   finiquito: boolean;
 }
+
+export interface Bienes {
+  inmuebles: Inmuebles;
+  vehiculos: Vehiculos;
+  sociedades: Sociedades;
+}
+
+export interface Inmuebles {
+  posee_inmuebles: string;
+  paga_cred_hipotecario: string;
+  tiene_codeudor: string;
+  al_dia_hipoteca: string;
+  hipoteco_ultimos_anos: string;
+  vendio_inmueble: string;
+}
+
+export interface Vehiculos {
+  posee_vehiculos: string;
+  ha_vendido_vehiculo: string;
+  hace_cuanto: string;
+  a_quien: string;
+  a_traves_de: string;
+}
+
+export interface Sociedades {
+  posee_empresas: string;
+  nombre: string;
+  activos_pasivos: number;
+  tiene_movimientos: string;
+  presenta_contabilidad: string;
+  socios: string;
+}
+
+export interface HistoriaSobreendeudamiento {
+  historia?: string;
+}
+
+export type GastoMensual = {
+  categoria: string;
+  descripcion: string;
+  monto: number;
+};

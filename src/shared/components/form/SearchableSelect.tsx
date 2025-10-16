@@ -73,7 +73,10 @@ export function SearchableSelect({
 
   return (
     <Popover open={open} onOpenChange={setOpen}>
-      <PopoverTrigger disabled={disabled} asChild>
+      <PopoverTrigger
+        disabled={disabled}
+        className='disabled:text-lexy-text-secondary disabled:opacity-100'
+        asChild>
         <button
           type='button'
           title='Seleccionar opción'
