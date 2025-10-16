@@ -3,9 +3,11 @@ import { Input, SearchableSelect, Select } from "@shared/components/form";
 import { useGeoData, usePinService } from "@shared/hooks";
 import { useClientDataContext } from "@shared/context";
 import { SiONo } from "@shared/lib/options";
+import { useSidebar } from "@features/sidebar";
 
 export function Identificacion() {
   const { isRowPinned, togglePinRow } = usePinService();
+  const { isInDistribution } = useSidebar();
   const { countryOptions } = useGeoData();
   // por ahora hard-coded y con mock-data
   const { clientData } = useClientDataContext();
@@ -24,6 +26,7 @@ export function Identificacion() {
             isStared={isRowPinned("nombre")}
             onStarToggle={() => togglePinRow("nombre")}>
             <Input
+              disabled={isInDistribution}
               value={clientData?.datos_personales.nombre}
               onChange={() => console.log("Cambió el nombre")}
             />
@@ -35,6 +38,7 @@ export function Identificacion() {
             isStared={isRowPinned("rut")}
             onStarToggle={() => togglePinRow("rut")}>
             <Input
+              disabled={isInDistribution}
               value={clientData?.datos_personales.rut}
               onChange={() => console.log("Cambió el RUT")}
             />
@@ -46,6 +50,7 @@ export function Identificacion() {
             isStared={isRowPinned("nacionalidad")}
             onStarToggle={() => togglePinRow("nacionalidad")}>
             <SearchableSelect
+              disabled={isInDistribution}
               value={clientData?.datos_personales.nacionalidad ?? ""}
               options={countryOptions}
               onValueChange={() => console.log("Cambió el país")}
@@ -58,6 +63,7 @@ export function Identificacion() {
             isStared={isRowPinned("profesion")}
             onStarToggle={() => togglePinRow("profesion")}>
             <Input
+              disabled={isInDistribution}
               value={clientData?.datos_personales.profesion}
               onChange={() => console.log("Cambió la profesión")}
             />
@@ -69,6 +75,7 @@ export function Identificacion() {
             isStared={isRowPinned("juicios")}
             onStarToggle={() => togglePinRow("juicios")}>
             <Input
+              disabled={isInDistribution}
               value={clientData?.datos_personales.juicios}
               onChange={() => console.log("Cambió los juicios")}
             />
@@ -80,6 +87,7 @@ export function Identificacion() {
             isStared={isRowPinned("procedimiento_concursal")}
             onStarToggle={() => togglePinRow("procedimiento_concursal")}>
             <Select
+              disabled={isInDistribution}
               options={SiONo}
               value={clientData?.datos_personales.procedimiento_concursal}
               onValueChange={() =>

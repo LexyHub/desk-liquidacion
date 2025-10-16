@@ -2,6 +2,9 @@ import { createContext, useContext } from "react";
 
 interface SidebarValue {
   isOpen: boolean;
+  isInDistribution: boolean;
+  setInDistribution: (value: boolean) => void;
+  toggleDistribution: () => void;
   open: () => void;
   close: () => void;
   toggle: () => void;

@@ -2,8 +2,10 @@ import { usePinService } from "@shared/hooks";
 import { Card, Table } from "@shared/components/ui";
 import { Select } from "@shared/components/form";
 import { SiONo } from "@shared/lib/options";
+import { useSidebar } from "@features/sidebar";
 
 export function InstrumentosFinancieros() {
+  const { isInDistribution } = useSidebar();
   const { isRowPinned, togglePinRow } = usePinService();
 
   /*
@@ -27,6 +29,7 @@ export function InstrumentosFinancieros() {
             isStared={isRowPinned("instrumento_tarjeta_credito")}
             onStarToggle={() => togglePinRow("instrumento_tarjeta_credito")}>
             <Select
+              disabled={isInDistribution}
               options={SiONo}
               onValueChange={() =>
                 console.log("Cambió el instrumento_tarjeta_credito")
@@ -40,6 +43,7 @@ export function InstrumentosFinancieros() {
             isStared={isRowPinned("instrumento_chequera")}
             onStarToggle={() => togglePinRow("instrumento_chequera")}>
             <Select
+              disabled={isInDistribution}
               options={SiONo}
               onValueChange={() =>
                 console.log("Cambió el instrumento_chequera")
@@ -55,6 +59,7 @@ export function InstrumentosFinancieros() {
               togglePinRow("instrumento_cheques_protestados")
             }>
             <Select
+              disabled={isInDistribution}
               options={SiONo}
               onValueChange={() =>
                 console.log("Cambió el instrumento_cheques_protestados")
@@ -68,6 +73,7 @@ export function InstrumentosFinancieros() {
             isStared={isRowPinned("instrumento_vv_sincobrar")}
             onStarToggle={() => togglePinRow("instrumento_vv_sincobrar")}>
             <Select
+              disabled={isInDistribution}
               options={SiONo}
               onValueChange={() =>
                 console.log("Cambió el instrumento_vv_sincobrar")
@@ -81,6 +87,7 @@ export function InstrumentosFinancieros() {
             isStared={isRowPinned("instrumento_vv_vencido")}
             onStarToggle={() => togglePinRow("instrumento_vv_vencido")}>
             <Select
+              disabled={isInDistribution}
               options={SiONo}
               onValueChange={() =>
                 console.log("Cambió el instrumento_vv_vencido")
@@ -94,6 +101,7 @@ export function InstrumentosFinancieros() {
             isStared={isRowPinned("instrumento_fondo_cooperativas")}
             onStarToggle={() => togglePinRow("instrumento_fondo_cooperativas")}>
             <Select
+              disabled={isInDistribution}
               options={SiONo}
               onValueChange={() =>
                 console.log("Cambió el instrumento_fondo_cooperativas")
@@ -107,6 +115,7 @@ export function InstrumentosFinancieros() {
             isStared={isRowPinned("instrumento_criptomoneda")}
             onStarToggle={() => togglePinRow("instrumento_criptomoneda")}>
             <Select
+              disabled={isInDistribution}
               options={SiONo}
               onValueChange={() =>
                 console.log("Cambió el instrumento_criptomoneda")
@@ -120,6 +129,7 @@ export function InstrumentosFinancieros() {
             isStared={isRowPinned("instrumento_libreta_ahorro")}
             onStarToggle={() => togglePinRow("instrumento_libreta_ahorro")}>
             <Select
+              disabled={isInDistribution}
               options={SiONo}
               onValueChange={() =>
                 console.log("Cambió el instrumento_libreta_ahorro")
@@ -133,6 +143,7 @@ export function InstrumentosFinancieros() {
             isStared={isRowPinned("instrumento_fondos_mutuos")}
             onStarToggle={() => togglePinRow("instrumento_fondos_mutuos")}>
             <Select
+              disabled={isInDistribution}
               options={SiONo}
               onValueChange={() =>
                 console.log("Cambió el instrumento_fondos_mutuos")
@@ -146,6 +157,7 @@ export function InstrumentosFinancieros() {
             isStared={isRowPinned("instrumento_apv")}
             onStarToggle={() => togglePinRow("instrumento_apv")}>
             <Select
+              disabled={isInDistribution}
               options={SiONo}
               onValueChange={() => console.log("Cambió el instrumento_apv")}
             />
@@ -157,6 +169,7 @@ export function InstrumentosFinancieros() {
             isStared={isRowPinned("instrumento_deposito_plazo")}
             onStarToggle={() => togglePinRow("instrumento_deposito_plazo")}>
             <Select
+              disabled={isInDistribution}
               options={SiONo}
               onValueChange={() =>
                 console.log("Cambió el instrumento_deposito_plazo")

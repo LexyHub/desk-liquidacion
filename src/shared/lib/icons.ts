@@ -10,6 +10,13 @@ export {
   SearchIcon as Search,
   Plus,
   Trash2,
+  Save,
+  ClipboardCheck,
+  Hourglass,
+  Send,
+  Files,
+  Mail,
+  CirclePause,
   // Base components
   Check as CheckIcon,
   Check,

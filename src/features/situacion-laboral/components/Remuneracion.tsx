@@ -1,3 +1,4 @@
+import { useSidebar } from "@features/sidebar";
 import { Input, Select } from "@shared/components/form";
 import { Card, DocumentButton, Table } from "@shared/components/ui";
 import { useClientDataContext } from "@shared/context";
@@ -5,6 +6,7 @@ import { usePinService } from "@shared/hooks";
 import { SiONo } from "@shared/lib/options";
 
 export function Remuneracion() {
+  const { isInDistribution } = useSidebar();
   const { isRowPinned, togglePinRow } = usePinService();
   const { clientData } = useClientDataContext();
 
@@ -23,6 +25,7 @@ export function Remuneracion() {
             onStarToggle={() => togglePinRow("remuneracion")}>
             <Input
               type='currency'
+              disabled={isInDistribution}
               value={String(clientData?.situacion_laboral.remuneracion || "")}
               onChange={(value) => console.log("Nueva remuneración:", value)}
             />
@@ -34,6 +37,7 @@ export function Remuneracion() {
             isStared={isRowPinned("bonos")}
             onStarToggle={() => togglePinRow("bonos")}>
             <Select
+              disabled={isInDistribution}
               options={SiONo}
               value={clientData?.situacion_laboral.bonos}
             />

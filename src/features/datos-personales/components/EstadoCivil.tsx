@@ -6,9 +6,11 @@ import {
 } from "@shared/lib/options";
 import { useClientDataContext } from "@shared/context";
 import { usePinService } from "@shared/hooks";
+import { useSidebar } from "@/features/sidebar";
 
 export function EstadoCivil() {
   const { isRowPinned, togglePinRow } = usePinService();
+  const { isInDistribution } = useSidebar();
   //! TODO esto está hard-codeado. No se cambiará hasta que el backend esté listo.
   const { clientData } = useClientDataContext();
 
@@ -26,6 +28,7 @@ export function EstadoCivil() {
             isStared={isRowPinned("estado_civil")}
             onStarToggle={() => togglePinRow("estado_civil")}>
             <Select
+              disabled={isInDistribution}
               value={clientData?.datos_personales.estado_civil}
               options={OPT_ESTADOCIVIL}
             />
@@ -37,6 +40,7 @@ export function EstadoCivil() {
             isStared={isRowPinned("regimen_matrimonial")}
             onStarToggle={() => togglePinRow("regimen_matrimonial")}>
             <Select
+              disabled={isInDistribution}
               value={clientData?.datos_personales.regimen_matrimonial}
               options={RegimenMarital}
             />

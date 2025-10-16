@@ -36,7 +36,7 @@ export function Select({
       <SelectTrigger
         disabled={disabled}
         className={cn(
-          "w-full shadow-none border-transparent cursor-pointer bg-transparent select-none text-base text-lexy-text-secondary leading-6",
+          "w-full shadow-none border-transparent cursor-pointer bg-transparent select-none text-base text-lexy-text-secondary disabled:text-lexy-text-secondary disabled:opacity-100 leading-6",
           triggerClassName
         )}>
         <SelectValue placeholder={placeholder}>

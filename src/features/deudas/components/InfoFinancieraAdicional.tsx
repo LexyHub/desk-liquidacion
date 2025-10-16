@@ -2,8 +2,10 @@ import { usePinService } from "@shared/hooks";
 import { Input, Select } from "@shared/components/form";
 import { Card, Table } from "@shared/components/ui";
 import { SiONo } from "@shared/lib/options";
+import { useSidebar } from "@features/sidebar";
 
 export function InfoFinancieraAdicional() {
+  const { isInDistribution } = useSidebar();
   const { isRowPinned, togglePinRow } = usePinService();
 
   /*
@@ -27,6 +29,7 @@ export function InfoFinancieraAdicional() {
             isStared={isRowPinned("cae")}
             onStarToggle={() => togglePinRow("cae")}>
             <Select
+              disabled={isInDistribution}
               options={SiONo}
               onValueChange={() => console.log("Cambió el cae")}
             />
@@ -38,6 +41,7 @@ export function InfoFinancieraAdicional() {
             isStared={isRowPinned("codeudor")}
             onStarToggle={() => togglePinRow("codeudor")}>
             <Select
+              disabled={isInDistribution}
               options={SiONo}
               onValueChange={() => console.log("Cambió el codeudor")}
             />
@@ -49,6 +53,7 @@ export function InfoFinancieraAdicional() {
             isStared={isRowPinned("ultima_vez_credito")}
             onStarToggle={() => togglePinRow("ultima_vez_credito")}>
             <Input
+              disabled={isInDistribution}
               value=''
               placeholder='Escribe aquí...'
               onChange={() => console.log("Cambió el ultima_vez_credito")}

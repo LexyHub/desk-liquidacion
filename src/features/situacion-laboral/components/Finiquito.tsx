@@ -1,3 +1,4 @@
+import { useSidebar } from "@features/sidebar";
 import { Input, Select } from "@shared/components/form";
 import { Card, DocumentButton, Table } from "@shared/components/ui";
 import { useClientDataContext } from "@shared/context";
@@ -5,6 +6,7 @@ import { usePinService } from "@shared/hooks";
 import { SiONo } from "@shared/lib/options";
 
 export function Finiquito() {
+  const { isInDistribution } = useSidebar();
   const { isRowPinned, togglePinRow } = usePinService();
   const { clientData } = useClientDataContext();
 
@@ -22,6 +24,7 @@ export function Finiquito() {
             isStared={isRowPinned("finiquito")}
             onStarToggle={() => togglePinRow("finiquito")}>
             <Select
+              disabled={isInDistribution}
               options={SiONo}
               value={clientData?.situacion_laboral.finiquito}
             />
@@ -33,6 +36,7 @@ export function Finiquito() {
             isStared={isRowPinned("monto_finiquito")}
             onStarToggle={() => togglePinRow("monto_finiquito")}>
             <Input
+              disabled={isInDistribution}
               type='currency'
               value={String(
                 clientData?.situacion_laboral.monto_finiquito || ""

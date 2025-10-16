@@ -1,11 +1,13 @@
-import { Select } from "@/shared/components/form";
-import { AQuien, HaceCuanto, QueMedio, SiONo } from "@/shared/lib/options";
+import { useSidebar } from "@features/sidebar";
+import { Select } from "@shared/components/form";
+import { AQuien, HaceCuanto, QueMedio, SiONo } from "@shared/lib/options";
 import { Card, Table } from "@shared/components/ui";
 import { useClientDataContext } from "@shared/context";
 import { usePinService } from "@shared/hooks";
 
 export function Vehiculos() {
   const { isRowPinned, togglePinRow } = usePinService();
+  const { isInDistribution } = useSidebar();
   //! TODO esto está hard-codeado. No se cambiará hasta que el backend esté listo.
   const { clientData } = useClientDataContext();
   return (
@@ -22,6 +24,7 @@ export function Vehiculos() {
             isStared={isRowPinned("tiene_vehiculo")}
             onStarToggle={() => togglePinRow("tiene_vehiculo")}>
             <Select
+              disabled={isInDistribution}
               value={clientData?.bienes?.vehiculos.posee_vehiculos}
               options={SiONo}
             />
@@ -33,6 +36,7 @@ export function Vehiculos() {
             isStared={isRowPinned("ha_vendido_vehiculo")}
             onStarToggle={() => togglePinRow("ha_vendido_vehiculo")}>
             <Select
+              disabled={isInDistribution}
               value={clientData?.bienes?.vehiculos.ha_vendido_vehiculo}
               options={SiONo}
             />
@@ -44,6 +48,7 @@ export function Vehiculos() {
             isStared={isRowPinned("hace_cuanto_vehiculo")}
             onStarToggle={() => togglePinRow("hace_cuanto_vehiculo")}>
             <Select
+              disabled={isInDistribution}
               value={clientData?.bienes?.vehiculos.hace_cuanto}
               options={HaceCuanto}
             />
@@ -55,6 +60,7 @@ export function Vehiculos() {
             isStared={isRowPinned("a_quien_vendio_vehiculo")}
             onStarToggle={() => togglePinRow("a_quien_vendio_vehiculo")}>
             <Select
+              disabled={isInDistribution}
               value={clientData?.bienes?.vehiculos.a_quien}
               options={AQuien}
             />
@@ -66,6 +72,7 @@ export function Vehiculos() {
             isStared={isRowPinned("a_traves_de_vehiculo")}
             onStarToggle={() => togglePinRow("a_traves_de_vehiculo")}>
             <Select
+              disabled={isInDistribution}
               value={clientData?.bienes?.vehiculos.a_traves_de}
               options={QueMedio}
             />

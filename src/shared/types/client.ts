@@ -6,6 +6,8 @@ export interface ClientData {
   situacion_laboral: LaboralSituation;
   deudas: Deuda[];
   bienes?: Bienes;
+  historia_sobreendeudamiento?: HistoriaSobreendeudamiento;
+  gastos_mensuales?: GastoMensual[];
 }
 
 interface PersonalData {
@@ -110,3 +112,13 @@ export interface Sociedades {
   presenta_contabilidad: string;
   socios: string;
 }
+
+export interface HistoriaSobreendeudamiento {
+  historia?: string;
+}
+
+export type GastoMensual = {
+  categoria: string;
+  descripcion: string;
+  monto: number;
+};

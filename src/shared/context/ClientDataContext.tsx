@@ -7,7 +7,7 @@ import {
   type ReactNode,
 } from "react";
 import { useParams } from "react-router-dom";
-import type { ClientData } from "@shared/types";
+import type { ClientData, GastoMensual } from "@shared/types";
 import type { Deuda } from "@features/deudas";
 import { getClientData } from "../services/client.service";
 import {
@@ -95,6 +95,52 @@ export function ClientDataProvider({ children }: { children: ReactNode }) {
     );
   }, [clientData]);
 
+  const addGastoMensual = useCallback(
+    (gasto: GastoMensual) => {
+      if (!clientData) return;
+      const actualGastos = clientData.gastos_mensuales || [];
+      const updatedGastos = [...actualGastos, gasto];
+      setClientData({ ...clientData, gastos_mensuales: updatedGastos });
+    },
+    [clientData]
+  );
+
+  const modifyGastoMensual = useCallback(
+    (index: number, gasto: GastoMensual) => {
+      if (!clientData) return;
+      const actualGastos = clientData.gastos_mensuales || [];
+      if (index < 0 || index >= actualGastos.length) return;
+      const updatedGastos = actualGastos.map((g, i) =>
+        i === index ? gasto : g
+      );
+      setClientData({ ...clientData, gastos_mensuales: updatedGastos });
+    },
+    [clientData]
+  );
+
+  const removeGastoMensual = useCallback(
+    (index: number) => {
+      if (!clientData) return;
+      const actualGastos = clientData.gastos_mensuales || [];
+      if (index < 0 || index >= actualGastos.length) return;
+      const updatedGastos = actualGastos.filter((_, i) => i !== index);
+      setClientData({ ...clientData, gastos_mensuales: updatedGastos });
+    },
+    [clientData]
+  );
+
+  const totalGastosMensuales = useMemo(() => {
+    if (
+      !clientData?.gastos_mensuales ||
+      clientData.gastos_mensuales.length === 0
+    )
+      return 0;
+    return clientData.gastos_mensuales.reduce(
+      (sum, gasto) => sum + (gasto.monto || 0),
+      0
+    );
+  }, [clientData]);
+
   useEffect(() => {
     if (idDefensoria) {
       fetchClientData(idDefensoria);
@@ -116,6 +162,10 @@ export function ClientDataProvider({ children }: { children: ReactNode }) {
       modifyDeuda,
       removeDeuda,
       totalDeudas,
+      addGastoMensual,
+      modifyGastoMensual,
+      removeGastoMensual,
+      totalGastosMensuales,
       loading,
       error,
       fetchClientData,
@@ -127,6 +177,10 @@ export function ClientDataProvider({ children }: { children: ReactNode }) {
       modifyDeuda,
       removeDeuda,
       totalDeudas,
+      addGastoMensual,
+      modifyGastoMensual,
+      removeGastoMensual,
+      totalGastosMensuales,
       loading,
       error,
       fetchClientData,

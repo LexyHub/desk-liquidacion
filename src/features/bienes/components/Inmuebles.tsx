@@ -1,3 +1,4 @@
+import { useSidebar } from "@features/sidebar";
 import { Select } from "@shared/components/form";
 import { Card, Table } from "@shared/components/ui";
 import { useClientDataContext } from "@shared/context";
@@ -6,6 +7,7 @@ import { SiONo } from "@shared/lib/options";
 
 export function Inmuebles() {
   const { isRowPinned, togglePinRow } = usePinService();
+  const { isInDistribution } = useSidebar();
   //! TODO esto está hard-codeado. No se cambiará hasta que el backend esté listo.
   const { clientData } = useClientDataContext();
 
@@ -23,6 +25,7 @@ export function Inmuebles() {
             isStared={isRowPinned("posee_inmuebles")}
             onStarToggle={() => togglePinRow("posee_inmuebles")}>
             <Select
+              disabled={isInDistribution}
               value={clientData?.bienes?.inmuebles.posee_inmuebles}
               options={SiONo}
             />
@@ -34,6 +37,7 @@ export function Inmuebles() {
             isStared={isRowPinned("paga_cred_hipotecario")}
             onStarToggle={() => togglePinRow("paga_cred_hipotecario")}>
             <Select
+              disabled={isInDistribution}
               value={clientData?.bienes?.inmuebles.paga_cred_hipotecario}
               options={SiONo}
             />
@@ -45,6 +49,7 @@ export function Inmuebles() {
             isStared={isRowPinned("tiene_codeudor")}
             onStarToggle={() => togglePinRow("tiene_codeudor")}>
             <Select
+              disabled={isInDistribution}
               value={clientData?.bienes?.inmuebles.tiene_codeudor}
               options={SiONo}
             />
@@ -56,6 +61,7 @@ export function Inmuebles() {
             isStared={isRowPinned("al_dia_hipoteca")}
             onStarToggle={() => togglePinRow("al_dia_hipoteca")}>
             <Select
+              disabled={isInDistribution}
               value={clientData?.bienes?.inmuebles.al_dia_hipoteca}
               options={SiONo}
             />
@@ -67,6 +73,7 @@ export function Inmuebles() {
             isStared={isRowPinned("hipoteco_ultimos_anos")}
             onStarToggle={() => togglePinRow("hipoteco_ultimos_anos")}>
             <Select
+              disabled={isInDistribution}
               value={clientData?.bienes?.inmuebles.hipoteco_ultimos_anos}
               options={SiONo}
             />
@@ -78,6 +85,7 @@ export function Inmuebles() {
             isStared={isRowPinned("vendio_inmueble")}
             onStarToggle={() => togglePinRow("vendio_inmueble")}>
             <Select
+              disabled={isInDistribution}
               value={clientData?.bienes?.inmuebles.vendio_inmueble}
               options={SiONo}
             />

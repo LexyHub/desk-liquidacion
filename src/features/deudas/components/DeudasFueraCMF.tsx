@@ -2,8 +2,10 @@ import { usePinService } from "@shared/hooks";
 import { Card, Table } from "@shared/components/ui";
 import { Select } from "@shared/components/form";
 import { SiONo } from "@shared/lib/options";
+import { useSidebar } from "@features/sidebar";
 
 export function DeudasFueraCMF() {
+  const { isInDistribution } = useSidebar();
   const { isRowPinned, togglePinRow } = usePinService();
 
   /*
@@ -27,6 +29,7 @@ export function DeudasFueraCMF() {
             isStared={isRowPinned("cajas_compensacion")}
             onStarToggle={() => togglePinRow("cajas_compensacion")}>
             <Select
+              disabled={isInDistribution}
               options={SiONo}
               onValueChange={() => console.log("Cambió el cajas_compensacion")}
             />
@@ -38,6 +41,7 @@ export function DeudasFueraCMF() {
             isStared={isRowPinned("autopistas")}
             onStarToggle={() => togglePinRow("autopistas")}>
             <Select
+              disabled={isInDistribution}
               options={SiONo}
               onValueChange={() => console.log("Cambió el autopistas")}
             />
@@ -49,6 +53,7 @@ export function DeudasFueraCMF() {
             isStared={isRowPinned("instituciones_medicas")}
             onStarToggle={() => togglePinRow("instituciones_medicas")}>
             <Select
+              disabled={isInDistribution}
               options={SiONo}
               onValueChange={() =>
                 console.log("Cambió el instituciones_medicas")
@@ -62,6 +67,7 @@ export function DeudasFueraCMF() {
             isStared={isRowPinned("tgr")}
             onStarToggle={() => togglePinRow("tgr")}>
             <Select
+              disabled={isInDistribution}
               options={SiONo}
               onValueChange={() => console.log("Cambió el tgr")}
             />

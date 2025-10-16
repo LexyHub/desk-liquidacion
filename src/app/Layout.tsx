@@ -12,7 +12,7 @@ const MessageBar = lazy(() =>
 
 export function Layout() {
   return (
-    <div className='flex w-dvw h-dvh bg-lexy-bg-platform'>
+    <div className='flex w-dvw h-dvh bg-lexy-bg-platform scroll-smooth'>
       <Sidebar />
 
       <main className='flex-1 grid grid-rows-[auto_1fr] min-h-0'>

@@ -14,6 +14,12 @@ const SituacionLaboral = lazy(
 );
 const Deudas = lazy(() => import("@features/deudas/views/Deudas"));
 const Bienes = lazy(() => import("@features/bienes/views/Bienes"));
+const HSE = lazy(
+  () => import("@features/historia-sobreendeudamiento/views/HSE")
+);
+const Distribucion = lazy(
+  () => import("@features/distribucion/views/Distribucion")
+);
 
 export const router = createBrowserRouter([
   {
@@ -42,10 +48,10 @@ export const router = createBrowserRouter([
       },
       { path: "deudas/:idDefensoria", element: <Deudas /> },
       { path: "bienes/:idDefensoria", element: <Bienes /> },
-      { path: "historia-se/:idDefensoria", element: <h1>Historia</h1> },
+      { path: "historia-se/:idDefensoria", element: <HSE /> },
       {
         path: "distribucion/:idDefensoria",
-        element: <h1>Datos personales</h1>,
+        element: <Distribucion />,
       },
     ],
   },

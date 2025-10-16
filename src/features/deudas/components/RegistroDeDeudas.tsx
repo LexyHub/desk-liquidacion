@@ -6,8 +6,10 @@ import type { Deuda } from "../types/deudas";
 import { TipoCreditos } from "@shared/lib/options";
 import { Plus, Trash2 } from "@shared/lib/icons";
 import { cn } from "@shared/lib/utils";
+import { useSidebar } from "@features/sidebar";
 
 export function RegistroDeDeudas() {
+  const { isInDistribution } = useSidebar();
   const {
     acreedoresOptions,
     loading: loadingAcreedores,
@@ -51,7 +53,8 @@ export function RegistroDeDeudas() {
         <button
           type='button'
           onClick={handleAddDeuda}
-          className='flex items-center gap-x-2 text-lexy-brand-secondary-dark leading-6 font-medium rounded-sm py-2 px-4 bg-white hover:bg-lexy-btn-secondary-hover border-2 border-lexy-brand-secondary-dark shadow-lexy-button cursor-pointer transition-all'>
+          disabled={isInDistribution}
+          className='flex items-center gap-x-2 text-lexy-brand-secondary-dark leading-6 font-medium rounded-sm py-2 px-4 bg-white not-disabled:hover:bg-lexy-btn-secondary-hover border-2 border-lexy-brand-secondary-dark shadow-lexy-button cursor-pointer transition-all disabled:cursor-not-allowed'>
           <Plus />
           Agregar deuda
         </button>
@@ -73,7 +76,7 @@ export function RegistroDeDeudas() {
                   key={`deuda-${index}`}
                   className='grid-cols-[1fr_1fr_1fr_auto] gap-x-8 animate-fade-in-down animate-duration-200'>
                   <SearchableSelect
-                    disabled={loadingAcreedores || !!error}
+                    disabled={loadingAcreedores || !!error || isInDistribution}
                     options={acreedoresOptions}
                     value={deuda.id_acreedor}
                     onValueChange={(v) =>
@@ -90,7 +93,7 @@ export function RegistroDeDeudas() {
                   />
                   <Select
                     placeholder='Ej: Hipotecario'
-                    disabled={loadingAcreedores || !!error}
+                    disabled={isInDistribution}
                     options={TipoCreditos}
                     value={deuda.tipo}
                     onValueChange={(v) => handleDeudaChange(index, "tipo", v)}
@@ -103,6 +106,7 @@ export function RegistroDeDeudas() {
                     )}
                   />
                   <Input
+                    disabled={isInDistribution}
                     placeholder='Ej: $50.000'
                     value={String(deuda.monto) || ""}
                     type='currency'
@@ -119,7 +123,8 @@ export function RegistroDeDeudas() {
                   <button
                     title='Eliminar deuda'
                     type='button'
-                    className='w-fit rounded-sm text-lexy-text-primary border border-black/10 bg-white hover:bg-lexy-btn-secondary-hover transition-all cursor-pointer p-2'
+                    disabled={isInDistribution}
+                    className='w-fit rounded-sm text-lexy-text-primary border border-black/10 bg-white not-disabled:hover:bg-lexy-btn-secondary-hover transition-all cursor-pointer p-2 disabled:cursor-pointer'
                     onClick={() => handleDeleteDeuda(index)}>
                     <Trash2 className='size-6' />
                   </button>
