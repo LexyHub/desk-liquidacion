@@ -70,7 +70,7 @@ export function Input({ placeholder, value, onChange, type, ...props }: Props) {
       placeholder={finalPlaceholder}
       {...props}
       className={cn(
-        "text-base placeholder:text-base text-lexy-text-secondary placeholder:text-lexy-text-secondary outline-none px-3",
+        "text-base placeholder:text-base text-lexy-text-secondary placeholder:text-lexy-text-secondary outline-none px-3 disabled:cursor-not-allowed",
         props.className
       )}
     />

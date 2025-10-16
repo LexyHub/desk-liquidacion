@@ -4,4 +4,5 @@ export const PATH_TITLES: Record<string, string> = {
   deudas: "Deudas",
   bienes: "Bienes",
   "historia-se": "Historia de Sobreendeudamiento",
+  distribucion: "Distribución",
 };
