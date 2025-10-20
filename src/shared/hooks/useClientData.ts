@@ -1,5 +1,5 @@
 import { createContext, useContext } from "react";
-import type { ClientData, GastoMensual } from "@shared/types";
+import type { ClientData, Empresa, GastoMensual } from "@shared/types";
 import type { Deuda } from "@features/deudas";
 
 export interface ClientDataContextValue {
@@ -12,6 +12,9 @@ export interface ClientDataContextValue {
   modifyGastoMensual: (index: number, gasto: GastoMensual) => void;
   removeGastoMensual: (index: number) => void;
   totalGastosMensuales: number;
+  addEmpresa: (empresa: Empresa) => void;
+  modifyEmpresa: (index: number, empresa: Empresa) => void;
+  removeEmpresa: (index: number) => void;
   loading: boolean;
   error: string | null;
   fetchClientData: (
