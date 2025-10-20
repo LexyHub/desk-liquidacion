@@ -7,7 +7,7 @@ import {
   type ReactNode,
 } from "react";
 import { useParams } from "react-router-dom";
-import type { ClientData, GastoMensual } from "@shared/types";
+import type { ClientData, Empresa, GastoMensual } from "@shared/types";
 import type { Deuda } from "@features/deudas";
 import { getClientData } from "../services/client.service";
 import {
@@ -141,6 +141,38 @@ export function ClientDataProvider({ children }: { children: ReactNode }) {
     );
   }, [clientData]);
 
+  const addEmpresa = useCallback(
+    (empresa: Empresa) => {
+      if (!clientData) return;
+      const actualEmpresas = clientData.empresas || [];
+      const updatedEmpresas = [...actualEmpresas, empresa];
+      setClientData({ ...clientData, empresas: updatedEmpresas });
+    },
+    [clientData]
+  );
+
+  const modifyEmpresa = useCallback(
+    (index: number, empresa: Empresa) => {
+      if (!clientData) return;
+      const actualEmpresas = clientData.empresas || [];
+      const updatedEmpresas = actualEmpresas.map((e) =>
+        e.id === index ? empresa : e
+      );
+      setClientData({ ...clientData, empresas: updatedEmpresas });
+    },
+    [clientData]
+  );
+
+  const removeEmpresa = useCallback(
+    (index: number) => {
+      if (!clientData) return;
+      const actualEmpresas = clientData.empresas || [];
+      const updatedEmpresas = actualEmpresas.filter((e) => e.id !== index);
+      setClientData({ ...clientData, empresas: updatedEmpresas });
+    },
+    [clientData]
+  );
+
   useEffect(() => {
     if (idDefensoria) {
       fetchClientData(idDefensoria);
@@ -166,6 +198,9 @@ export function ClientDataProvider({ children }: { children: ReactNode }) {
       modifyGastoMensual,
       removeGastoMensual,
       totalGastosMensuales,
+      addEmpresa,
+      modifyEmpresa,
+      removeEmpresa,
       loading,
       error,
       fetchClientData,
@@ -181,6 +216,9 @@ export function ClientDataProvider({ children }: { children: ReactNode }) {
       modifyGastoMensual,
       removeGastoMensual,
       totalGastosMensuales,
+      addEmpresa,
+      modifyEmpresa,
+      removeEmpresa,
       loading,
       error,
       fetchClientData,
