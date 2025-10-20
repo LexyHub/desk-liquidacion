@@ -30,5 +30,25 @@
     "link_finiquito": "https://revolutionarena.com/pt-br/wp-content/uploads/sites/2/2024/10/Mega-Man-X6.jpg"
   },
   "deudas": [],
-  "historia_sobreendeudamiento": {}
+  "historia_sobreendeudamiento": {},
+  "empresas": [
+    {
+      "id": 1,
+      "nombre": "Moonie's Game Studio",
+      "actividad": "si",
+      "id_cliente": "Oae08REMf",
+      "activos_pasivos": 5000000,
+      "presenta_contabilidad": "si",
+      "otros_socios": "Sofi Silva"
+    },
+    {
+      "id": 2,
+      "nombre": "Moonie Tech Solutions",
+      "actividad": "no",
+      "id_cliente": "Oae08REMf",
+      "activos_pasivos": 3000000,
+      "presenta_contabilidad": "no",
+      "otros_socios": "techpaputron"
+    }
+  ]
 }

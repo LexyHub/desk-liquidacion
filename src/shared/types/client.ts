@@ -8,6 +8,7 @@ export interface ClientData {
   bienes?: Bienes;
   historia_sobreendeudamiento?: HistoriaSobreendeudamiento;
   gastos_mensuales?: GastoMensual[];
+  empresas?: Empresa[];
 }
 
 interface PersonalData {
@@ -84,7 +85,7 @@ interface ResponseLaboralSituation
 export interface Bienes {
   inmuebles: Inmuebles;
   vehiculos: Vehiculos;
-  sociedades: Sociedades;
+  posee_empresas: string;
 }
 
 export interface Inmuebles {
@@ -104,13 +105,15 @@ export interface Vehiculos {
   a_traves_de: string;
 }
 
-export interface Sociedades {
-  posee_empresas: string;
-  nombre: string;
-  activos_pasivos: number;
-  tiene_movimientos: string;
-  presenta_contabilidad: string;
-  socios: string;
+export interface Empresa {
+  id: number;
+  nombre?: string | null;
+  actividad?: string | null; // boolean
+  id_cliente: string;
+  // nueva data
+  activos_pasivos?: number | null;
+  presenta_contabilidad: string | null; // boolean
+  otros_socios?: string | null;
 }
 
 export interface HistoriaSobreendeudamiento {

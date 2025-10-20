@@ -26,7 +26,7 @@ export function Sociedades() {
             onStarToggle={() => togglePinRow("tiene_vehiculo")}>
             <Select
               disabled={isInDistribution}
-              value={clientData?.bienes?.sociedades.posee_empresas}
+              value={clientData?.bienes?.posee_empresas ?? ""}
               options={SiONo}
             />
           </Table.Row>

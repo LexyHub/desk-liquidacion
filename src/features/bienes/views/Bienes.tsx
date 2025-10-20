@@ -3,6 +3,8 @@ import { ContentHead } from "@shared/components/ui";
 import { useClientDataContext } from "@shared/context";
 import { Inmuebles } from "../components/Inmuebles";
 import { Vehiculos } from "../components/Vehiculos";
+import { Sociedades } from "../components/Sociedades";
+import { SociedadesTable } from "../components/SociedadesTable";
 
 export default function Bienes() {
   const { loading } = useClientDataContext();
@@ -20,6 +22,9 @@ export default function Bienes() {
         <Vehiculos />
 
         {/* ACÁ VAN LAS SOCIEDADES PERO POR ERROR DE DISEÑO SE OMITIÓ */}
+        <Sociedades />
+
+        <SociedadesTable />
       </section>
     </main>
   );
