@@ -1,4 +1,4 @@
-type PinnedMap = Record<string, true>;
+type PinnedMap = Record<string, Record<string, true>>;
 
 const STORAGE_KEY = "pinnedRows";
 
@@ -29,42 +29,48 @@ function writePinnedMap(map: PinnedMap) {
   notify();
 }
 
-export function getPinnedRows(): string[] {
+export function getPinnedRows(clientId: string): string[] {
   const map = readPinnedMap();
-  return Object.keys(map);
+  return Object.keys(map[clientId] || {});
 }
 
-export function isPinned(rowKey: string): boolean {
+export function isPinned(clientId: string, rowKey: string): boolean {
   const map = readPinnedMap();
-  return !!map[rowKey];
+  if (map[clientId] === undefined) return false;
+  return !!map[clientId][rowKey];
 }
 
 export function getPinnedSnapshot(): string {
   return localStorage.getItem(STORAGE_KEY) ?? "{}";
 }
 
-export function pinRow(rowKey: string) {
+export function pinRow(clientId: string, rowKey: string) {
   const map = readPinnedMap();
-  if (!map[rowKey]) {
-    map[rowKey] = true;
+  if (!map[clientId][rowKey]) {
+    map[clientId][rowKey] = true;
     writePinnedMap(map);
   }
 }
 
-export function unpinRow(rowKey: string) {
+export function unpinRow(clientId: string, rowKey: string) {
   const map = readPinnedMap();
-  if (map[rowKey]) {
-    delete map[rowKey];
+  if (map[clientId][rowKey]) {
+    delete map[clientId][rowKey];
     writePinnedMap(map);
   }
 }
 
-export function togglePinRow(rowKey: string) {
+function _doClientExist(map: PinnedMap, clientId: string) {
+  return map[clientId] !== undefined;
+}
+
+export function togglePinRow(clientId: string, rowKey: string) {
   const map = readPinnedMap();
-  if (map[rowKey]) {
-    delete map[rowKey];
+  if (!_doClientExist(map, clientId)) map[clientId] = {};
+  if (map[clientId][rowKey]) {
+    delete map[clientId][rowKey];
   } else {
-    map[rowKey] = true;
+    map[clientId][rowKey] = true;
   }
   writePinnedMap(map);
 }

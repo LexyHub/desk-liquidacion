@@ -5,7 +5,7 @@ import { Card, Table } from "@shared/components/ui";
 import { useSidebar } from "@features/sidebar";
 
 export function Domicilio() {
-  const { isRowPinned, togglePinRow } = usePinService();
+  const { isPinned, togglePinRow } = usePinService();
   const { isInDistribution } = useSidebar();
   //! TODO esto está hard-codeado. No se cambiará hasta que el backend esté listo.
   const { clientData } = useClientDataContext();
@@ -21,7 +21,7 @@ export function Domicilio() {
             rowkey='direccion'
             label='Dirección'
             stareable
-            isStared={isRowPinned("direccion")}
+            isStared={isPinned("direccion")}
             onStarToggle={() => togglePinRow("direccion")}>
             <Input
               disabled={isInDistribution}
