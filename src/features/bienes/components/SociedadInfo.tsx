@@ -24,8 +24,8 @@ export function SociedadInfo({ sociedad }: Props) {
   return (
     <div className='w-full grid grid-cols-[1fr_auto] rounded-md border border-[#E6E6E6] animate-fade-in animate-duration-100'>
       <section className='w-full flex flex-col'>
-        <div className='w-full h-full flex items-center border-b border-b-[#E6E6E6]'>
-          <div className='w-2/5 px-3 py-2 bg-[#F5F5F5] border-r border-r-[#E6E6E6]'>
+        <div className='w-full h-full grid grid-cols-[40%_60%] items-center border-b border-b-[#E6E6E6]'>
+          <div className='px-3 py-2 bg-[#F5F5F5] border-r border-r-[#E6E6E6]'>
             <span className='font-medium leading-6 text-[#2F2F2F]'>
               Nombre de la sociedad o empresa
             </span>
@@ -37,11 +37,11 @@ export function SociedadInfo({ sociedad }: Props) {
             onChange={(value: string | number) =>
               handleChange("nombre", String(value))
             }
-            className='py-2 px-4 h-full w-full text-lexy-text-secondary leading-6 rounded-sm'
+            className='py-2 px-3 h-full w-full text-lexy-text-secondary leading-6 rounded-sm'
           />
         </div>
-        <div className='w-full h-full flex items-center border-b border-b-[#E6E6E6]'>
-          <div className='w-2/5 px-3 py-2 h-full bg-[#F5F5F5] border-r border-r-[#E6E6E6]'>
+        <div className='w-full h-full grid grid-cols-[40%_60%] items-center border-b border-b-[#E6E6E6]'>
+          <div className='px-3 py-2 h-full bg-[#F5F5F5] border-r border-r-[#E6E6E6]'>
             <span className='font-medium leading-6 text-[#2F2F2F]'>
               Activos/Pasivos
             </span>
@@ -54,11 +54,11 @@ export function SociedadInfo({ sociedad }: Props) {
             onChange={(value: string | number) =>
               handleChange("activos_pasivos", String(value))
             }
-            className='w-full h-full py-2 px-4 text-lexy-text-secondary leading-6 rounded-sm'
+            className='w-full h-full py-2 px-3 text-lexy-text-secondary leading-6 rounded-sm'
           />
         </div>
-        <div className='w-full h-full flex items-center border-b border-b-[#E6E6E6]'>
-          <div className='w-2/5 px-3 py-2 h-full bg-[#F5F5F5] border-r border-r-[#E6E6E6]'>
+        <div className='w-full h-full grid grid-cols-[40%_60%] items-center border-b border-b-[#E6E6E6]'>
+          <div className='px-3 py-2 h-full bg-[#F5F5F5] border-r border-r-[#E6E6E6]'>
             <span className='font-medium leading-6 text-[#2F2F2F]'>
               Posee movimientos
             </span>
@@ -70,11 +70,11 @@ export function SociedadInfo({ sociedad }: Props) {
             onValueChange={(value: string | number) =>
               handleChange("actividad", String(value))
             }
-            triggerClassName='w-full h-full py-2 px-4 text-lexy-text-secondary leading-6 rounded-sm'
+            triggerClassName='w-full h-full py-2 text-lexy-text-secondary leading-6 rounded-sm'
           />
         </div>
-        <div className='w-full h-full flex items-center border-b border-b-[#E6E6E6]'>
-          <div className='w-2/5 px-3 py-2 h-full bg-[#F5F5F5] border-r border-r-[#E6E6E6]'>
+        <div className='w-full h-full grid grid-cols-[40%_60%] items-center border-b border-b-[#E6E6E6]'>
+          <div className='px-3 py-2 h-full bg-[#F5F5F5] border-r border-r-[#E6E6E6]'>
             <span className='font-medium leading-6 text-[#2F2F2F]'>
               Presenta contabilidad completa
             </span>
@@ -86,11 +86,11 @@ export function SociedadInfo({ sociedad }: Props) {
             onValueChange={(value: string | number) =>
               handleChange("presenta_contabilidad", String(value))
             }
-            triggerClassName='w-full h-full py-2 px-4 text-lexy-text-secondary leading-6 rounded-sm'
+            triggerClassName='w-full h-full py-2 text-lexy-text-secondary leading-6 rounded-sm'
           />
         </div>
-        <div className='w-full h-full flex items-center border-b border-b-[#E6E6E6]'>
-          <div className='w-2/5 px-3 py-2 h-full bg-[#F5F5F5] border-r border-r-[#E6E6E6]'>
+        <div className='w-full h-full grid grid-cols-[40%_60%] items-center border-b border-b-[#E6E6E6]'>
+          <div className='px-3 py-2 h-full bg-[#F5F5F5] border-r border-r-[#E6E6E6]'>
             <span className='font-medium leading-6 text-[#2F2F2F]'>
               Otros socios
             </span>
@@ -102,7 +102,7 @@ export function SociedadInfo({ sociedad }: Props) {
             onChange={(value: string | number) =>
               handleChange("otros_socios", String(value))
             }
-            className='w-full h-full py-2 px-4 text-lexy-text-secondary leading-6 rounded-sm'
+            className='w-full h-full py-2 px-3 text-lexy-text-secondary leading-6 rounded-sm'
           />
         </div>
       </section>
