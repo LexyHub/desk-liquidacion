@@ -17,6 +17,7 @@ import { VideoDialog } from "./VideoDialog";
 import { useSidebar } from "@features/sidebar";
 import { cn } from "@shared/lib/utils";
 import { useAuth } from "@features/auth";
+import { dismiss, useNotify } from "@/features/notificaciones";
 
 export function Sidebar() {
   const { idDefensoria } = useParams();
@@ -24,10 +25,32 @@ export function Sidebar() {
   const { logOut } = useAuth();
   const navigate = useNavigate();
   const { isOpen, toggle, isInDistribution, setInDistribution } = useSidebar();
+  // test notificaciones
+  const { notify } = useNotify();
+
   const [showVideoDialog, setShowVideoDialog] = useState(false);
 
-  const handleOptionClick = (to: string) => {
+  const handleOptionClick = async (to: string) => {
     if (to === pathname) return;
+    //! ESTO ES SOLO PARA TEST Y SIMULAR GUARDADO ANTES DE NAVEGAR
+    // Después hay que quitarlo y cambiarlo por una llamada real a guardado
+    const pretifiedPath = pathname
+      .split("/")[1]
+      .replace("/", "")
+      .replaceAll("-", " ");
+    const idSaving = notify({
+      type: "info",
+      message: `Guardando datos de "${pretifiedPath}"...`,
+      closeable: true,
+    });
+    await new Promise((resolve) => setTimeout(resolve, 500));
+    dismiss(idSaving);
+    notify({
+      type: "success",
+      message: `Datos de "${pretifiedPath}" guardados correctamente.`,
+      closeable: true,
+    });
+    //!
     navigate(to);
   };
 

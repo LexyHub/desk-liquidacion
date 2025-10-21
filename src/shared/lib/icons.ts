@@ -1,5 +1,7 @@
 export {
   CircleX,
+  CircleCheck,
+  CircleAlert,
   Eye,
   EyeClosed,
   MessageCircle,
