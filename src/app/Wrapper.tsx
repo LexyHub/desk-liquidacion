@@ -24,13 +24,15 @@ const APP_PROVIDERS: ComponentType<{ children: ReactNode }>[] = [
 ];
 
 function AllProvidersWrapper({ children }: { children: ReactNode }) {
-  return useProviderComposition(
+  const composed = useProviderComposition(
     APP_PROVIDERS,
     <>
       {children}
       <GlobalDocumentViewer />
     </>
   );
+
+  return composed;
 }
 
 export function ContextWrapper({ isPrivate, redirect, children }: Props) {

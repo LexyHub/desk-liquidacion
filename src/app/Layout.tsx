@@ -3,6 +3,7 @@ import { Outlet } from "react-router-dom";
 import { Header } from "@features/header";
 import { Sidebar } from "@features/sidebar";
 import { lazy } from "react";
+import { NotificationProvider } from "@features/notificaciones";
 
 const MessageBar = lazy(() =>
   import("@features/mensajes/components/MessageBar").then((module) => ({
@@ -20,7 +21,9 @@ export function Layout() {
 
         <section className='grid grid-cols-[1fr_auto] min-h-0'>
           <div className='overflow-auto h-full pb-8 hide-scrollbar'>
-            <Outlet />
+            <NotificationProvider>
+              <Outlet />
+            </NotificationProvider>
           </div>
           <MessageBar />
         </section>
