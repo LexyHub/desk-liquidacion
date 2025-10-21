@@ -64,13 +64,13 @@ export function ContentHead() {
             logo_url={PoderJudicial}
             title='Poder Judicial'
             subtitle='Portal sistema judicial'
-            url='https://www.drive.google.com/drive/'
+            url='https://www.pjud.cl/'
           />
           <LinkButton
             logo_url={SII}
             title='SII'
             subtitle='Servicio de Impuestos Internos'
-            url='https://www.drive.google.com/drive/'
+            url='https://sii.cl/'
           />
         </Card.Content>
       </Card>
