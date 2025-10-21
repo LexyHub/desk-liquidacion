@@ -1,4 +1,3 @@
-import { ContentHead } from "@shared/components/ui/ContentHead";
 import { LoadingView } from "@shared/components/loading/LoadingView";
 import { useClientDataContext } from "@shared/context";
 import {
@@ -10,33 +9,23 @@ import {
 } from "@features/deudas/components";
 
 export default function Deudas() {
-  const {
-    // clientData,
-    // addDeuda,
-    // modifyDeuda,
-    // removeDeuda,
-    // totalDeudas,
-    loading,
-  } = useClientDataContext();
+  const { loading } = useClientDataContext();
 
   if (loading) {
     return <LoadingView />;
   }
 
   return (
-    <main className='animate-fade-in animate-duration-100 animate-ease-in'>
-      <ContentHead />
-      <section className='p-4 flex flex-col gap-y-6'>
-        <RegistroDeDeudas />
+    <section className='p-4 flex flex-col gap-y-6'>
+      <RegistroDeDeudas />
 
-        <TotalDeDeudas />
+      <TotalDeDeudas />
 
-        <InfoFinancieraAdicional />
+      <InfoFinancieraAdicional />
 
-        <InstrumentosFinancieros />
+      <InstrumentosFinancieros />
 
-        <DeudasFueraCMF />
-      </section>
-    </main>
+      <DeudasFueraCMF />
+    </section>
   );
 }

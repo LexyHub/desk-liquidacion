@@ -1,5 +1,5 @@
 import { LoadingView } from "@shared/components/loading";
-import { Card, ContentHead } from "@shared/components/ui";
+import { Card } from "@shared/components/ui";
 import { useClientDataContext } from "@shared/context";
 import { ClipboardCheck, Hourglass } from "@shared/lib/icons";
 import { useState } from "react";
@@ -35,7 +35,7 @@ export default function Distribucion() {
   }
 
   return (
-    <main className='animate-fade-in animate-duration-100 animate-ease-in'>
+    <>
       <GestionarModal
         open={gestionarModal}
         onOpenChange={setGestionarModal}
@@ -48,7 +48,6 @@ export default function Distribucion() {
         onSave={handleSaveWaiting}
       />
 
-      <ContentHead />
       <section className='p-4 flex flex-col gap-y-6'>
         <Card className='gap-y-0'>
           <Card.Header className='mb-2'>
@@ -89,6 +88,6 @@ export default function Distribucion() {
           </Card.Content>
         </Card>
       </section>
-    </main>
+    </>
   );
 }

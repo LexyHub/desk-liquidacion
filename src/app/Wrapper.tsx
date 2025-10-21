@@ -3,7 +3,6 @@ import { SidebarProvider } from "@features/sidebar";
 import { HeaderUIProvider } from "@features/header";
 import { MessagesProvider } from "@features/mensajes";
 import { ClientDataProvider } from "@shared/context";
-import { DocumentViewerProvider } from "@features/documentos";
 import { GlobalDocumentViewer } from "@shared/components/popups/GlobalDocumentViewer";
 import { useProviderComposition } from "@shared/hooks";
 import { PrivateRoute } from "@app/PrivateRoute";
@@ -16,7 +15,6 @@ interface Props {
 
 // Configuración de providers ordenados de exterior a interior
 const APP_PROVIDERS: ComponentType<{ children: ReactNode }>[] = [
-  DocumentViewerProvider,
   SidebarProvider,
   HeaderUIProvider,
   MessagesProvider,
