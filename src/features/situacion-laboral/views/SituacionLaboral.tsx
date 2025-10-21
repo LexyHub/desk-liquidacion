@@ -1,4 +1,3 @@
-import { ContentHead } from "@shared/components/ui/ContentHead";
 import { useClientDataContext } from "@shared/context";
 import { LoadingView } from "@shared/components/loading/LoadingView";
 import {
@@ -15,15 +14,12 @@ export default function SituacionLaboral() {
   }
 
   return (
-    <main className='animate-fade-in animate-duration-100 animate-ease-in'>
-      <ContentHead />
-      <section className='p-4 flex flex-col gap-y-6'>
-        <SituacionLaboralActual />
+    <section className='p-4 flex flex-col gap-y-6'>
+      <SituacionLaboralActual />
 
-        <Remuneracion />
+      <Remuneracion />
 
-        <Finiquito />
-      </section>
-    </main>
+      <Finiquito />
+    </section>
   );
 }
