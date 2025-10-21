@@ -7,7 +7,7 @@ import {
   DialogTitle,
 } from "@shared/components/base/dialog";
 import { X } from "@shared/lib/icons";
-import { useDocumentViewer } from "@features/documentos";
+import { useDocumentViewerStore } from "@features/documentos";
 import { Spinner } from "@shared/components/loading/Spinner";
 
 // Lazy loading solo del contenido del iframe, no del Dialog completo
@@ -28,7 +28,7 @@ const DocumentIframe = lazy(() =>
 );
 
 export function GlobalDocumentViewer() {
-  const { isOpen, document, title, closeDocument } = useDocumentViewer();
+  const { isOpen, document, title, closeDocument } = useDocumentViewerStore();
 
   // Solo renderiza cuando el modal debe estar abierto
   if (!isOpen) {

@@ -26,6 +26,7 @@ export {
   ChevronDown,
   ChevronUp as ChevronUpIcon,
   ChevronUp,
+  ChevronRight,
   X as XIcon,
   ArrowUp,
   // Sidebar icons
@@ -36,6 +37,11 @@ export {
   LogOut,
   ScrollText,
   UserRound,
+  // ErrorBoundary icons
+  AlertTriangle,
+  RefreshCcw,
+  Home,
+  Copy,
 } from "lucide-react";
 
 // Custom

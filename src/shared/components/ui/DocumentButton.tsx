@@ -1,5 +1,5 @@
 import { Eye } from "@shared/lib/icons";
-import { useDocumentViewer } from "@features/documentos";
+import { useDocumentViewerStore } from "@features/documentos";
 
 interface Props {
   document: string;
@@ -7,7 +7,7 @@ interface Props {
 }
 
 export function DocumentButton({ document, title }: Props) {
-  const { openDocument } = useDocumentViewer();
+  const { openDocument } = useDocumentViewerStore();
 
   const handleClick = () => {
     if (document && document.trim() !== "") {

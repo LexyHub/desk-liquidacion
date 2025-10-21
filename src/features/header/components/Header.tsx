@@ -3,7 +3,6 @@ import { useHeaderUI } from "@features/header";
 import { MessageCircle } from "@shared/lib/icons";
 
 export function Header() {
-  // const { actualPath, rawPath, toggle } = useHeaderUI();
   const { actualPath, toggle } = useHeaderUI();
   const { messages } = useMessages();
 
@@ -13,6 +12,9 @@ export function Header() {
         {actualPath}
       </h1>
       <button
+        type='button'
+        title='Abrir o cerrar el visor de comentarios'
+        aria-description={`Hay ${messages.length} comentarios en esta sección`}
         onClick={toggle}
         className='group flex items-center gap-x-2.5 px-3 py-2.5 cursor-pointer rounded-lg border border-lexy-border-table hover:bg-lexy-btn-secondary-hover transition-all'>
         <MessageCircle className='size-6 text-black' />

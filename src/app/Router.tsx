@@ -1,7 +1,6 @@
 import { createBrowserRouter } from "react-router-dom";
 // import { createBrowserRouter } from "@datadog/browser-rum-react/react-router-v6";
 import { Layout } from "@app/Layout";
-import { Navigate } from "react-router-dom";
 import { Login } from "@features/auth/views/Login";
 import { ContextWrapper } from "@app/Wrapper";
 import { lazy } from "react";
@@ -34,10 +33,6 @@ export const router = createBrowserRouter([
       </ContextWrapper>
     ),
     children: [
-      {
-        path: "",
-        element: <Navigate to='datos-personales/sadasdas' replace />,
-      },
       {
         path: "datos-personales/:idDefensoria",
         element: <DatosPersonales />,
