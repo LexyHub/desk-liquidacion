@@ -39,9 +39,17 @@ export function SociedadesTable() {
         </button>
       </Card.Header>
       <Card.Content className='gap-y-4'>
-        {clientData?.empresas?.map((e) => (
-          <SociedadInfo key={e.id} sociedad={e} />
-        ))}
+        {clientData?.empresas && clientData.empresas.length > 0 ? (
+          clientData?.empresas?.map((e) => (
+            <SociedadInfo key={e.id} sociedad={e} />
+          ))
+        ) : (
+          <div className='w-full flex items-center justify-center pt-6 pb-4 animate-fade-in animate-duration-300'>
+            <h2 className='text-xl text-lexy-text-secondary font-medium'>
+              No hay sociedades registradas
+            </h2>
+          </div>
+        )}
       </Card.Content>
       <div data-template ref={bottomRef} />
     </Card>
