@@ -1,7 +1,7 @@
 import { Input, SearchableSelect, Select } from "@shared/components/form";
 import { Card, Table } from "@shared/components/ui";
 import { useAcreedores } from "../hooks/useAcreedores";
-import { useClientDataContext } from "@shared/context";
+import { useDeudas } from "../hooks/useDeudas";
 import type { Deuda } from "../types/deudas";
 import { TipoCreditos } from "@shared/lib/options";
 import { Plus, Trash2 } from "@shared/lib/icons";
@@ -16,35 +16,8 @@ export function RegistroDeDeudas() {
     error,
   } = useAcreedores();
 
-  const { clientData, addDeuda, modifyDeuda, removeDeuda } =
-    useClientDataContext();
-
-  const handleAddDeuda = () => {
-    const newDeuda: Deuda = {
-      id_cliente: "",
-      tipo: "",
-      monto: 0,
-      id_acreedor: "",
-    };
-    addDeuda(newDeuda);
-  };
-
-  const handleDeudaChange = (
-    index: number,
-    field: keyof Deuda,
-    value: string | number
-  ) => {
-    if (!clientData) return;
-    const actualDeudas = clientData.deudas || [];
-    if (index < 0 || index >= actualDeudas.length) return;
-    const updatedDeuda = { ...actualDeudas[index], [field]: value };
-    modifyDeuda(index, updatedDeuda);
-  };
-
-  const handleDeleteDeuda = (index: number) => {
-    if (!clientData) return;
-    removeDeuda(index);
-  };
+  const { deudas, handleAddDeuda, handleDeudaChange, handleDeleteDeuda } =
+    useDeudas();
 
   return (
     <Card>
@@ -70,8 +43,8 @@ export function RegistroDeDeudas() {
             </div>
           </Table.Header>
           <Table.Content>
-            {clientData?.deudas && clientData.deudas.length > 0 ? (
-              clientData.deudas.map((deuda: Deuda, index: number) => (
+            {deudas && deudas.length > 0 ? (
+              deudas.map((deuda: Deuda, index: number) => (
                 <Table.Cell
                   key={`deuda-${index}`}
                   className='grid-cols-[1fr_1fr_1fr_auto] gap-x-8 animate-fade-in-down animate-duration-200'>

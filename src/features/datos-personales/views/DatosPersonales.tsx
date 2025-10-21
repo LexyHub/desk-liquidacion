@@ -1,4 +1,3 @@
-import { ContentHead } from "@shared/components/ui/ContentHead";
 import { useClientDataContext } from "@shared/context";
 import { LoadingView } from "@shared/components/loading/LoadingView";
 import {
@@ -16,17 +15,14 @@ export default function DatosPersonales() {
   }
 
   return (
-    <main className='animate-fade-in animate-duration-100 animate-ease-in'>
-      <ContentHead />
-      <section className='p-4 flex flex-col gap-y-6'>
-        <Identificacion />
+    <section className='p-4 flex flex-col gap-y-6'>
+      <Identificacion />
 
-        <Domicilio />
+      <Domicilio />
 
-        <InformacionFamiliar />
+      <InformacionFamiliar />
 
-        <EstadoCivil />
-      </section>
-    </main>
+      <EstadoCivil />
+    </section>
   );
 }
