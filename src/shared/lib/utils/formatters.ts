@@ -16,7 +16,7 @@ export function parseCurrencyInput(value: string): string {
 }
 
 export function currencyToNumber(value: string): number {
-  const digits = parseCurrencyInput(value);
+  const digits = parseCurrencyInput(value).replace("$", "");
   return digits === "" ? 0 : parseInt(digits, 10);
 }
 

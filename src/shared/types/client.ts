@@ -1,127 +1,158 @@
-import type { Deuda, ResponseDeuda } from "@features/deudas";
-
-// Provicional
 export interface ClientData {
-  datos_personales: PersonalData;
-  situacion_laboral: LaboralSituation;
+  datos: Datos;
   deudas: Deuda[];
-  bienes?: Bienes;
-  historia_sobreendeudamiento?: HistoriaSobreendeudamiento;
-  gastos_mensuales?: GastoMensual[];
-  empresas?: Empresa[];
+  bienes: Bienes[];
+  datos_pp: DatosPP;
+  situacion_laboral: SituacionLaboral;
+  empresas: Empresa[];
+  gastos: Gasto[];
+  historial?: Historial[] | null;
+  datos_financieros?: DatosFinancieros | null;
 }
 
-interface PersonalData {
-  nombre: string;
+export interface Datos {
+  id_cliente: string;
+  id_defensoria: string;
+  nombres: string;
+  apellido_paterno: string;
+  apellido_materno: string;
+  email: string;
   rut: string;
+  fecha_nacimiento: string;
+  domicilio: string;
+  id_comuna: string;
+  id_region: string;
+  sexo: string;
   nacionalidad: string;
-  profesion: string;
-  juicios: string;
-  procedimiento_concursal: string;
-  direccion: string;
-  padres_fallecidos: string;
-  posesion_efectiva: string;
-  derechos_hereditarios: string;
-  hijos: string;
-  recibe_alimentos: string;
-  deuda_alimenticia: string;
-  regularizada: string;
   estado_civil: string;
   regimen_matrimonial: string;
+  situacion_habitacional: string;
+  profesion_oficio: string;
+  derechos_sepultura?: string | null;
+  clave_unica_seteada: string;
+  tiene_sociedades?: string | null;
 }
 
-interface LaboralSituation {
-  trabajando: string;
-  tipo_trabajo: string;
-  tipo_trabajador: string;
-  cesante: string;
-  remuneracion: number;
-  bonos: string;
-  link_liquidacion: string;
-  finiquito: string;
-  monto_finiquito: number;
-  link_finiquito: string;
-}
-
-export interface ClientDataResponse {
-  datos_personales: ResponsePersonalData;
-  situacion_laboral: ResponseLaboralSituation;
-  deudas: ResponseDeuda[];
-}
-
-interface ResponsePersonalData
-  extends Omit<
-    PersonalData,
-    | "procedimiento_concursal"
-    | "padres_fallecidos"
-    | "posesion_efectiva"
-    | "derechos_hereditarios"
-    | "hijos"
-    | "recibe_alimentos"
-    | "deuda_alimenticia"
-    | "regularizada"
-  > {
-  procedimiento_concursal: boolean;
-  padres_fallecidos: boolean;
-  posesion_efectiva: boolean;
-  derechos_hereditarios: boolean;
-  hijos: boolean;
-  recibe_alimentos: boolean;
-  deuda_alimenticia: boolean;
-  regularizada: boolean;
-}
-
-interface ResponseLaboralSituation
-  extends Omit<
-    LaboralSituation,
-    "trabajando" | "cesante" | "bonos" | "finiquito"
-  > {
-  trabajando: boolean;
-  cesante: boolean;
-  bonos: boolean;
-  finiquito: boolean;
+export interface Deuda {
+  id?: number;
+  id_cliente: string;
+  tipo: string;
+  id_acreedor: string;
+  monto: number;
 }
 
 export interface Bienes {
-  inmuebles: Inmuebles;
-  vehiculos: Vehiculos;
-  posee_empresas: string;
+  bien: {
+    id: number;
+    id_cliente: string;
+    tipo_bien: string;
+    descripcion: string;
+    vendido: string;
+  };
+  inmueble: {
+    id: number;
+    credito_hipotecario: string;
+    codeudor_solidario: string;
+    al_dia: string;
+    hipotecado: string;
+    mas_dos_anos_venta: string;
+    comprador?: string | null;
+  };
+  vehiculo: {
+    id: number;
+    mas_dos_anos_venta: string;
+    comprador?: string | null;
+    medio_compra?: string | null;
+  };
 }
 
-export interface Inmuebles {
-  posee_inmuebles: string;
-  paga_cred_hipotecario: string;
-  tiene_codeudor: string;
-  al_dia_hipoteca: string;
-  hipoteco_ultimos_anos: string;
-  vendio_inmueble: string;
+export interface DatosPP {
+  id: string;
+  arrendador: string;
+  relacion_arrendador: string;
+  padres_fallecidos: string;
+  posesion_efectiva: string;
+  ficha_enviada: string;
+  cae_fondo: string;
+  aval: string;
+  tiene_inmueble: string;
+  tiene_vehiculo: string;
+  derechos_hereditarios?: string | null;
+  hijos?: number | null;
+  recibe_alimentos?: string | null;
+  deuda_alimentos?: string | null;
+  alimentos_regularizados?: string | null;
+  comentarios?: Record<string, string> | null;
 }
 
-export interface Vehiculos {
-  posee_vehiculos: string;
-  ha_vendido_vehiculo: string;
-  hace_cuanto: string;
-  a_quien: string;
-  a_traves_de: string;
+export interface SituacionLaboral {
+  id: string;
+  trabajando: string;
+  tipo_trabajo: string;
+  responsable_trabajadores?: string | null;
+  establecimiento_comercial?: string | null;
+  total_trabajadores?: number | null;
+  empresa_propia: string;
+  remuneracion: number;
+  tipo_funcionario: string;
+  bono_gratificacion: string;
+  link_ultima_liquidacion: string;
+  finiquito: string;
+  monto_finiquito?: number | null;
+  link_finiquito?: string | null;
+  comentarios?: Record<string, string> | null;
 }
 
 export interface Empresa {
   id: number;
-  nombre?: string | null;
-  actividad?: string | null; // boolean
+  nombre_empresa: string;
+  actividad: string;
   id_cliente: string;
-  // nueva data
-  activos_pasivos?: number | null;
-  presenta_contabilidad: string | null; // boolean
-  otros_socios?: string | null;
+  activos_pasivos: string;
+  movimientos: string;
+  contabilidad_completa: string;
+  socios: string;
 }
 
-export interface HistoriaSobreendeudamiento {
-  historia?: string;
-}
-
-export type GastoMensual = {
+export interface Gasto {
+  id: number;
+  id_cliente: string;
   categoria: string;
   descripcion: string;
-  monto: number;
-};
+  monto: string;
+}
+
+export interface Historial {
+  id: number;
+  id_cliente: string;
+  historia: string;
+  comentario?: Record<string, string>;
+}
+
+export interface DatosFinancieros {
+  id: number;
+  id_cliente: string;
+  cae: string;
+  aval: string;
+  ultimo_credito: string;
+  declaro_renta: string;
+  recibe_devolucion_impuestos: string;
+  retencion_impuestos: string;
+  categoria_contribuyente: string;
+  tarjeta_credito: string;
+  chequera: string;
+  cheques_protestados: string;
+  vales_sin_cobrar: string;
+  vales_vencidos: string;
+  fondos_cooperativas: string;
+  criptomonedas: string;
+  libreta_ahorros: string;
+  fondos_mutuos: string;
+  apv: string;
+  deposito_plazo: string;
+  caja_compensacion: string;
+  autopista: string;
+  inst_medicas: string;
+  tgr: string;
+  comentarios?: Record<string, string>;
+}

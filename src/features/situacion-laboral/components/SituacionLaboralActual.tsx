@@ -1,14 +1,15 @@
-import { useClientDataContext } from "@shared/context";
 import { usePinService } from "@shared/hooks";
 import { Select } from "@shared/components/form";
 import { Card, Table } from "@shared/components/ui";
 import { SiONo, TipoTrabajador, TipoTrabajo } from "@shared/lib/options";
 import { useSidebar } from "@features/sidebar";
+import { useSituacionLaboralStore } from "../stores/useSituacionLaboral.store";
 
 export function SituacionLaboralActual() {
   const { isInDistribution } = useSidebar();
   const { isRowPinned, togglePinRow } = usePinService();
-  const { clientData } = useClientDataContext();
+  const datos = useSituacionLaboralStore((state) => state.situacion_laboral);
+  const updateField = useSituacionLaboralStore((state) => state.updateField);
 
   return (
     <Card>
@@ -26,7 +27,8 @@ export function SituacionLaboralActual() {
             <Select
               disabled={isInDistribution}
               options={SiONo}
-              value={clientData?.situacion_laboral.trabajando}
+              value={datos?.trabajando}
+              onValueChange={(v) => updateField("trabajando", v)}
             />
           </Table.Row>
           <Table.Row
@@ -38,7 +40,8 @@ export function SituacionLaboralActual() {
             <Select
               disabled={isInDistribution}
               options={TipoTrabajo}
-              value={clientData?.situacion_laboral.tipo_trabajo}
+              value={datos?.tipo_trabajo}
+              onValueChange={(v) => updateField("tipo_trabajo", v)}
             />
           </Table.Row>
           <Table.Row
@@ -50,7 +53,8 @@ export function SituacionLaboralActual() {
             <Select
               disabled={isInDistribution}
               options={TipoTrabajador}
-              value={clientData?.situacion_laboral.tipo_trabajador}
+              value={datos?.tipo_funcionario}
+              onValueChange={(v) => updateField("tipo_funcionario", v)}
             />
           </Table.Row>
           <Table.Row
@@ -62,7 +66,8 @@ export function SituacionLaboralActual() {
             <Select
               disabled={isInDistribution}
               options={SiONo}
-              value={clientData?.situacion_laboral.cesante}
+              value={"jeje"}
+              // tbd falta cesante
             />
           </Table.Row>
         </Table>

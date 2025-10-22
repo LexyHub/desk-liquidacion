@@ -2,14 +2,13 @@ import {
   useCallback,
   useEffect,
   useMemo,
-  useRef,
   useState,
   type ReactNode,
 } from "react";
 import { useParams } from "react-router-dom";
-import type { ClientData, Empresa, GastoMensual } from "@shared/types";
-import type { Deuda } from "@features/deudas";
-import { getClientData } from "../services/client.service";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
+import type { ClientData, Empresa, Gasto, Deuda } from "@shared/types";
+import { fetchClientData } from "../services/client.service";
 import {
   ClientDataContext,
   type ClientDataContextValue,
@@ -17,41 +16,79 @@ import {
 
 export function ClientDataProvider({ children }: { children: ReactNode }) {
   const { idDefensoria } = useParams<{ idDefensoria: string }>();
-  const [clientData, setClientData] = useState<ClientData | null>(null);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
-  const controllerRef = useRef<AbortController | null>(null);
-  const lastIdRef = useRef<string | null>(null);
-  const dataRef = useRef<ClientData | null>(null);
+  const queryClient = useQueryClient();
 
-  if (dataRef.current !== clientData) dataRef.current = clientData;
+  const [localClientData, setLocalClientData] = useState<ClientData | null>(
+    null
+  );
 
-  const fetchClientData = useCallback(
-    async (idDefensoria: string, externalSignal?: AbortSignal) => {
-      if (lastIdRef.current === idDefensoria && dataRef.current) return;
-      lastIdRef.current = idDefensoria;
-      // cancelar petición anterior si existe
-      controllerRef.current?.abort();
-      const ctrl = new AbortController();
-      controllerRef.current = ctrl;
-      const signal = externalSignal ?? ctrl.signal;
+  const {
+    data: fetchedClientData,
+    isLoading,
+    error: queryError,
+    refetch,
+  } = useQuery({
+    queryKey: ["clientData", idDefensoria ?? ""] as const,
+    queryFn: fetchClientData,
+    enabled: !!idDefensoria && idDefensoria !== "undefined",
+    staleTime: 1000 * 60 * 5, // 5 minutos
+    retry: (failureCount: number, error: Error) => {
+      if (error.name === "AbortError") {
+        return false;
+      }
+      if (error.message.includes("ID de Defensoría ausente")) {
+        return false;
+      }
+      return failureCount < 1;
+    },
+    refetchOnMount: true,
+    refetchOnWindowFocus: false,
+  });
 
-      setLoading(true);
-      setError(null);
-      try {
-        const data = await getClientData(idDefensoria /* , { signal } */);
-        if (signal.aborted) return;
-        setClientData(data);
-      } catch (err: unknown) {
-        if ((err as Error)?.name === "AbortError") return;
-        setError((err as Error)?.message || "Unknown error");
-      } finally {
-        if (!signal.aborted) setLoading(false);
-        if (controllerRef.current === ctrl) controllerRef.current = null;
+  useEffect(() => {
+    if (fetchedClientData && !localClientData) {
+      setLocalClientData(fetchedClientData);
+    }
+  }, [fetchedClientData, localClientData]);
+
+  useEffect(() => {
+    if (!idDefensoria || idDefensoria === "undefined") {
+      setLocalClientData(null);
+      queryClient.removeQueries({ queryKey: ["clientData"] });
+    }
+  }, [idDefensoria, queryClient]);
+
+  useEffect(() => {
+    if (
+      idDefensoria &&
+      idDefensoria !== "undefined" &&
+      !localClientData &&
+      !isLoading
+    ) {
+      console.log("Refetching debido a cambio de ID válido");
+      refetch();
+    }
+  }, [idDefensoria, localClientData, isLoading, refetch]);
+
+  const clientData = localClientData;
+  const loading = isLoading;
+  const error = queryError?.message || null;
+
+  const fetchClientDataWrapper = useCallback(
+    async (id: string) => {
+      if (id === idDefensoria) {
+        const result = await refetch();
+        if (result.data) {
+          setLocalClientData(result.data);
+        }
       }
     },
-    []
+    [idDefensoria, refetch]
   );
+
+  const setClientData = useCallback((data: ClientData | null) => {
+    setLocalClientData(data);
+  }, []);
 
   const addDeuda = useCallback(
     (deuda: Deuda) => {
@@ -60,7 +97,7 @@ export function ClientDataProvider({ children }: { children: ReactNode }) {
       const updatedDeudas = [...actualDeudas, deuda];
       setClientData({ ...clientData, deudas: updatedDeudas });
     },
-    [clientData]
+    [clientData, setClientData]
   );
 
   const modifyDeuda = useCallback(
@@ -73,7 +110,7 @@ export function ClientDataProvider({ children }: { children: ReactNode }) {
       );
       setClientData({ ...clientData, deudas: updatedDeudas });
     },
-    [clientData]
+    [clientData, setClientData]
   );
 
   const removeDeuda = useCallback(
@@ -84,7 +121,7 @@ export function ClientDataProvider({ children }: { children: ReactNode }) {
       const updatedDeudas = actualDeudas.filter((_, i) => i !== index);
       setClientData({ ...clientData, deudas: updatedDeudas });
     },
-    [clientData]
+    [clientData, setClientData]
   );
 
   const totalDeudas = useMemo(() => {
@@ -96,47 +133,43 @@ export function ClientDataProvider({ children }: { children: ReactNode }) {
   }, [clientData]);
 
   const addGastoMensual = useCallback(
-    (gasto: GastoMensual) => {
+    (gasto: Gasto) => {
       if (!clientData) return;
-      const actualGastos = clientData.gastos_mensuales || [];
+      const actualGastos = clientData.gastos || [];
       const updatedGastos = [...actualGastos, gasto];
-      setClientData({ ...clientData, gastos_mensuales: updatedGastos });
+      setClientData({ ...clientData, gastos: updatedGastos });
     },
-    [clientData]
+    [clientData, setClientData]
   );
 
   const modifyGastoMensual = useCallback(
-    (index: number, gasto: GastoMensual) => {
+    (index: number, gasto: Gasto) => {
       if (!clientData) return;
-      const actualGastos = clientData.gastos_mensuales || [];
+      const actualGastos = clientData.gastos || [];
       if (index < 0 || index >= actualGastos.length) return;
       const updatedGastos = actualGastos.map((g, i) =>
         i === index ? gasto : g
       );
-      setClientData({ ...clientData, gastos_mensuales: updatedGastos });
+      setClientData({ ...clientData, gastos: updatedGastos });
     },
-    [clientData]
+    [clientData, setClientData]
   );
 
   const removeGastoMensual = useCallback(
     (index: number) => {
       if (!clientData) return;
-      const actualGastos = clientData.gastos_mensuales || [];
+      const actualGastos = clientData.gastos || [];
       if (index < 0 || index >= actualGastos.length) return;
       const updatedGastos = actualGastos.filter((_, i) => i !== index);
-      setClientData({ ...clientData, gastos_mensuales: updatedGastos });
+      setClientData({ ...clientData, gastos: updatedGastos });
     },
-    [clientData]
+    [clientData, setClientData]
   );
 
   const totalGastosMensuales = useMemo(() => {
-    if (
-      !clientData?.gastos_mensuales ||
-      clientData.gastos_mensuales.length === 0
-    )
-      return 0;
-    return clientData.gastos_mensuales.reduce(
-      (sum, gasto) => sum + (gasto.monto || 0),
+    if (!clientData?.gastos || clientData.gastos.length === 0) return 0;
+    return clientData.gastos.reduce(
+      (sum, gasto) => sum + (Number(gasto.monto) || 0),
       0
     );
   }, [clientData]);
@@ -148,7 +181,7 @@ export function ClientDataProvider({ children }: { children: ReactNode }) {
       const updatedEmpresas = [...actualEmpresas, empresa];
       setClientData({ ...clientData, empresas: updatedEmpresas });
     },
-    [clientData]
+    [clientData, setClientData]
   );
 
   const modifyEmpresa = useCallback(
@@ -160,7 +193,7 @@ export function ClientDataProvider({ children }: { children: ReactNode }) {
       );
       setClientData({ ...clientData, empresas: updatedEmpresas });
     },
-    [clientData]
+    [clientData, setClientData]
   );
 
   const removeEmpresa = useCallback(
@@ -170,22 +203,8 @@ export function ClientDataProvider({ children }: { children: ReactNode }) {
       const updatedEmpresas = actualEmpresas.filter((e) => e.id !== index);
       setClientData({ ...clientData, empresas: updatedEmpresas });
     },
-    [clientData]
+    [clientData, setClientData]
   );
-
-  useEffect(() => {
-    if (idDefensoria) {
-      fetchClientData(idDefensoria);
-    } else {
-      // Limpiar datos cuando no hay idDefensoria (ej: en login)
-      setClientData(null);
-      setError(null);
-      setLoading(false);
-      // Cancelar petición si está en progreso
-      controllerRef.current?.abort();
-      controllerRef.current = null;
-    }
-  }, [fetchClientData, idDefensoria]);
 
   const value = useMemo<ClientDataContextValue>(
     () => ({
@@ -203,7 +222,7 @@ export function ClientDataProvider({ children }: { children: ReactNode }) {
       removeEmpresa,
       loading,
       error,
-      fetchClientData,
+      fetchClientData: fetchClientDataWrapper,
       setClientData,
     }),
     [
@@ -221,7 +240,8 @@ export function ClientDataProvider({ children }: { children: ReactNode }) {
       removeEmpresa,
       loading,
       error,
-      fetchClientData,
+      fetchClientDataWrapper,
+      setClientData,
     ]
   );
 

@@ -25,7 +25,7 @@ export function Domicilio() {
             onStarToggle={() => togglePinRow("direccion")}>
             <Input
               disabled={isInDistribution}
-              value={clientData?.datos_personales.direccion}
+              value={clientData?.datos.domicilio}
               onChange={() => console.log("Cambió la dirección")}
             />
           </Table.Row>

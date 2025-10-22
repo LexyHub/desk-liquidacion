@@ -4,15 +4,18 @@ import {
   EstadoCivil as OPT_ESTADOCIVIL,
   RegimenMarital,
 } from "@shared/lib/options";
-import { useClientDataContext } from "@shared/context";
 import { usePinService } from "@shared/hooks";
 import { useSidebar } from "@/features/sidebar";
+import { useDatosPersonalesStore } from "../stores/useDatosPersonales.store";
 
 export function EstadoCivil() {
   const { isRowPinned, togglePinRow } = usePinService();
   const { isInDistribution } = useSidebar();
-  //! TODO esto está hard-codeado. No se cambiará hasta que el backend esté listo.
-  const { clientData } = useClientDataContext();
+
+  const datos = useDatosPersonalesStore((state) => state.datos);
+  const updateDatosField = useDatosPersonalesStore(
+    (state) => state.updateDatosField
+  );
 
   return (
     <Card>
@@ -29,7 +32,8 @@ export function EstadoCivil() {
             onStarToggle={() => togglePinRow("estado_civil")}>
             <Select
               disabled={isInDistribution}
-              value={clientData?.datos_personales.estado_civil}
+              value={datos?.estado_civil}
+              onValueChange={(value) => updateDatosField("estado_civil", value)}
               options={OPT_ESTADOCIVIL}
             />
           </Table.Row>
@@ -41,7 +45,10 @@ export function EstadoCivil() {
             onStarToggle={() => togglePinRow("regimen_matrimonial")}>
             <Select
               disabled={isInDistribution}
-              value={clientData?.datos_personales.regimen_matrimonial}
+              value={datos?.regimen_matrimonial}
+              onValueChange={(value) =>
+                updateDatosField("regimen_matrimonial", value)
+              }
               options={RegimenMarital}
             />
           </Table.Row>

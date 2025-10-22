@@ -1,6 +1,6 @@
 import { useCallback } from "react";
 import { useClientDataContext } from "@shared/context";
-import type { Deuda } from "../types/deudas";
+import type { Deuda } from "@shared/types";
 
 export function useDeudas() {
   const { clientData, addDeuda, modifyDeuda, removeDeuda } =

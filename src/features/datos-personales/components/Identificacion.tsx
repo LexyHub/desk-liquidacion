@@ -1,16 +1,19 @@
 import { Card, Table } from "@shared/components/ui";
 import { Input, SearchableSelect, Select } from "@shared/components/form";
 import { useGeoData, usePinService } from "@shared/hooks";
-import { useClientDataContext } from "@shared/context";
 import { SiONo } from "@shared/lib/options";
 import { useSidebar } from "@features/sidebar";
+import { useDatosPersonalesStore } from "../stores/useDatosPersonales.store";
 
 export function Identificacion() {
   const { isRowPinned, togglePinRow } = usePinService();
   const { isInDistribution } = useSidebar();
   const { countryOptions } = useGeoData();
-  // por ahora hard-coded y con mock-data
-  const { clientData } = useClientDataContext();
+
+  const datos = useDatosPersonalesStore((state) => state.datos);
+  const updateDatosField = useDatosPersonalesStore(
+    (state) => state.updateDatosField
+  );
 
   return (
     <Card>
@@ -27,8 +30,8 @@ export function Identificacion() {
             onStarToggle={() => togglePinRow("nombre")}>
             <Input
               disabled={isInDistribution}
-              value={clientData?.datos_personales.nombre}
-              onChange={() => console.log("Cambió el nombre")}
+              value={datos?.nombres ?? ""}
+              onChange={(value) => updateDatosField("nombres", String(value))}
             />
           </Table.Row>
           <Table.Row
@@ -39,8 +42,8 @@ export function Identificacion() {
             onStarToggle={() => togglePinRow("rut")}>
             <Input
               disabled={isInDistribution}
-              value={clientData?.datos_personales.rut}
-              onChange={() => console.log("Cambió el RUT")}
+              value={datos?.rut ?? ""}
+              onChange={(value) => updateDatosField("rut", String(value))}
             />
           </Table.Row>
           <Table.Row
@@ -51,9 +54,9 @@ export function Identificacion() {
             onStarToggle={() => togglePinRow("nacionalidad")}>
             <SearchableSelect
               disabled={isInDistribution}
-              value={clientData?.datos_personales.nacionalidad ?? ""}
+              value={datos?.nacionalidad ?? ""}
               options={countryOptions}
-              onValueChange={() => console.log("Cambió el país")}
+              onValueChange={(value) => updateDatosField("nacionalidad", value)}
             />
           </Table.Row>
           <Table.Row
@@ -64,8 +67,10 @@ export function Identificacion() {
             onStarToggle={() => togglePinRow("profesion")}>
             <Input
               disabled={isInDistribution}
-              value={clientData?.datos_personales.profesion}
-              onChange={() => console.log("Cambió la profesión")}
+              value={datos?.profesion_oficio ?? ""}
+              onChange={(value) =>
+                updateDatosField("profesion_oficio", String(value))
+              }
             />
           </Table.Row>
           <Table.Row
@@ -76,7 +81,7 @@ export function Identificacion() {
             onStarToggle={() => togglePinRow("juicios")}>
             <Input
               disabled={isInDistribution}
-              value={clientData?.datos_personales.juicios}
+              value={"hola"} // deberia ser juicios
               onChange={() => console.log("Cambió los juicios")}
             />
           </Table.Row>
@@ -89,7 +94,7 @@ export function Identificacion() {
             <Select
               disabled={isInDistribution}
               options={SiONo}
-              value={clientData?.datos_personales.procedimiento_concursal}
+              value={"hola"} // deberia ser procedimiento concursal
               onValueChange={() =>
                 console.log("Cambió el procedimiento concursal")
               }

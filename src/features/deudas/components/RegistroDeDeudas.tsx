@@ -2,7 +2,7 @@ import { Input, SearchableSelect, Select } from "@shared/components/form";
 import { Card, Table } from "@shared/components/ui";
 import { useAcreedores } from "../hooks/useAcreedores";
 import { useDeudas } from "../hooks/useDeudas";
-import type { Deuda } from "../types/deudas";
+import type { Deuda } from "@shared/types";
 import { TipoCreditos } from "@shared/lib/options";
 import { Plus, Trash2 } from "@shared/lib/icons";
 import { cn } from "@shared/lib/utils";
@@ -58,9 +58,7 @@ export function RegistroDeDeudas() {
                     triggerClassName={cn(
                       "py-2 px-4 border border-lexy-input-border text-lexy-text-secondary leading-6 rounded-sm transition-all w-full overflow-hidden",
                       {
-                        "border-transparent":
-                          deuda.id_acreedor &&
-                          deuda.id_acreedor.trim().length > 0,
+                        "border-transparent": deuda.id_acreedor,
                       }
                     )}
                   />
