@@ -8,18 +8,18 @@ import type { Message } from "../types/messages";
 
 export function MessageBar() {
   const { isOpen, close, rawPath } = useHeaderUI();
-  const { addMessage } = useMessages();
   const [message, setMessage] = useState("");
+  const { create: addMessage } = useMessages();
 
   const handleMessageSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const newMsg: Message = {
-      path: rawPath || "desconocido",
-      id: crypto.randomUUID(),
-      message,
-      date: new Date().toISOString(),
+      entidad: "desk-liquidacion",
+      modulo: rawPath || "desconocido",
+      comentario: message.trim(),
+      creado_por: localStorage.getItem("id_defensoria") ?? "usuario-anonimo",
     };
-    addMessage(rawPath || "desconocido", newMsg);
+    addMessage(newMsg);
     setMessage("");
   };
 
