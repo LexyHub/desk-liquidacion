@@ -3,17 +3,16 @@ import { Card, Table } from "@shared/components/ui";
 import { Select } from "@shared/components/form";
 import { SiONo } from "@shared/lib/options";
 import { useSidebar } from "@features/sidebar";
+import { useDeudasStore } from "../stores/deudas.store";
 
 export function InstrumentosFinancieros() {
   const { isInDistribution } = useSidebar();
   const { isRowPinned, togglePinRow } = usePinService();
 
-  /*
-  Próximamente se utilizará
-  const {
-    clientData
-  } = useClientDataContext();
-  */
+  const datos = useDeudasStore((state) => state.datos_financieros);
+  const updateDatos = useDeudasStore(
+    (state) => state.updateDatosFinancierosField
+  );
 
   return (
     <Card>
@@ -31,9 +30,8 @@ export function InstrumentosFinancieros() {
             <Select
               disabled={isInDistribution}
               options={SiONo}
-              onValueChange={() =>
-                console.log("Cambió el instrumento_tarjeta_credito")
-              }
+              value={datos?.tarjeta_credito ?? ""}
+              onValueChange={(v) => updateDatos("tarjeta_credito", v)}
             />
           </Table.Row>
           <Table.Row
@@ -45,9 +43,8 @@ export function InstrumentosFinancieros() {
             <Select
               disabled={isInDistribution}
               options={SiONo}
-              onValueChange={() =>
-                console.log("Cambió el instrumento_chequera")
-              }
+              value={datos?.chequera ?? ""}
+              onValueChange={(v) => updateDatos("chequera", v)}
             />
           </Table.Row>
           <Table.Row
@@ -61,9 +58,8 @@ export function InstrumentosFinancieros() {
             <Select
               disabled={isInDistribution}
               options={SiONo}
-              onValueChange={() =>
-                console.log("Cambió el instrumento_cheques_protestados")
-              }
+              value={datos?.cheques_protestados ?? ""}
+              onValueChange={(v) => updateDatos("cheques_protestados", v)}
             />
           </Table.Row>
           <Table.Row
@@ -75,9 +71,8 @@ export function InstrumentosFinancieros() {
             <Select
               disabled={isInDistribution}
               options={SiONo}
-              onValueChange={() =>
-                console.log("Cambió el instrumento_vv_sincobrar")
-              }
+              value={datos?.vales_sin_cobrar ?? ""}
+              onValueChange={(v) => updateDatos("vales_sin_cobrar", v)}
             />
           </Table.Row>
           <Table.Row
@@ -89,9 +84,8 @@ export function InstrumentosFinancieros() {
             <Select
               disabled={isInDistribution}
               options={SiONo}
-              onValueChange={() =>
-                console.log("Cambió el instrumento_vv_vencido")
-              }
+              value={datos?.vales_vencidos ?? ""}
+              onValueChange={(v) => updateDatos("vales_vencidos", v)}
             />
           </Table.Row>
           <Table.Row
@@ -103,9 +97,8 @@ export function InstrumentosFinancieros() {
             <Select
               disabled={isInDistribution}
               options={SiONo}
-              onValueChange={() =>
-                console.log("Cambió el instrumento_fondo_cooperativas")
-              }
+              value={datos?.fondos_cooperativas ?? ""}
+              onValueChange={(v) => updateDatos("fondos_cooperativas", v)}
             />
           </Table.Row>
           <Table.Row
@@ -117,9 +110,8 @@ export function InstrumentosFinancieros() {
             <Select
               disabled={isInDistribution}
               options={SiONo}
-              onValueChange={() =>
-                console.log("Cambió el instrumento_criptomoneda")
-              }
+              value={datos?.criptomonedas ?? ""}
+              onValueChange={(v) => updateDatos("criptomonedas", v)}
             />
           </Table.Row>
           <Table.Row
@@ -131,9 +123,8 @@ export function InstrumentosFinancieros() {
             <Select
               disabled={isInDistribution}
               options={SiONo}
-              onValueChange={() =>
-                console.log("Cambió el instrumento_libreta_ahorro")
-              }
+              value={datos?.libreta_ahorros ?? ""}
+              onValueChange={(v) => updateDatos("libreta_ahorros", v)}
             />
           </Table.Row>
           <Table.Row
@@ -145,9 +136,8 @@ export function InstrumentosFinancieros() {
             <Select
               disabled={isInDistribution}
               options={SiONo}
-              onValueChange={() =>
-                console.log("Cambió el instrumento_fondos_mutuos")
-              }
+              value={datos?.fondos_mutuos ?? ""}
+              onValueChange={(v) => updateDatos("fondos_mutuos", v)}
             />
           </Table.Row>
           <Table.Row
@@ -159,7 +149,8 @@ export function InstrumentosFinancieros() {
             <Select
               disabled={isInDistribution}
               options={SiONo}
-              onValueChange={() => console.log("Cambió el instrumento_apv")}
+              value={datos?.apv ?? ""}
+              onValueChange={(v) => updateDatos("apv", v)}
             />
           </Table.Row>
           <Table.Row
@@ -171,9 +162,8 @@ export function InstrumentosFinancieros() {
             <Select
               disabled={isInDistribution}
               options={SiONo}
-              onValueChange={() =>
-                console.log("Cambió el instrumento_deposito_plazo")
-              }
+              value={datos?.deposito_plazo ?? ""}
+              onValueChange={(v) => updateDatos("deposito_plazo", v)}
             />
           </Table.Row>
         </Table>

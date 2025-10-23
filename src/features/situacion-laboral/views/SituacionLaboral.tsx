@@ -5,9 +5,11 @@ import {
   Remuneracion,
   Finiquito,
 } from "@features/situacion-laboral/components";
+import { useSyncSituacionLaboral } from "@features/situacion-laboral/hooks/useSyncSituacionLaboral";
 
 export default function SituacionLaboral() {
   const { loading } = useClientDataContext();
+  useSyncSituacionLaboral();
 
   if (loading) {
     return <LoadingView />;

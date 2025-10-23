@@ -1,10 +1,11 @@
 import { useSidebar } from "@features/sidebar";
 import { Card } from "@shared/components/ui";
-import { useClientDataContext } from "@shared/context";
+import { useHistoriaSEStore } from "../stores/HistoriaSE.store";
 
 export function Historia() {
   const { isInDistribution } = useSidebar();
-  const { clientData } = useClientDataContext();
+  const data = useHistoriaSEStore((state) => state.historiaSE);
+  const updateField = useHistoriaSEStore((state) => state.updateHistoria);
 
   return (
     <Card>
@@ -18,7 +19,8 @@ export function Historia() {
         <textarea
           disabled={isInDistribution}
           title='Historia sobre endeudamiento'
-          value={clientData?.historia_sobreendeudamiento?.historia}
+          value={data?.historia}
+          onChange={(e) => updateField(e.target.value)}
           placeholder='Describe como llegaste a esta situación de sobreendeudamiento, qué eventos o circunstancias contribuyeron, y cualquier información adicional que consideres relevante...'
           className='resize-none w-full h-32 p-4 rounded-sm text-lexy-text-secondary leading-6 placeholder:text-lexy-text-placeholder bg-white border border-lexy-input-border outline-none disabled:cursor-not-allowed'
         />

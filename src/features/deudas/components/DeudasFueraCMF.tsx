@@ -3,17 +3,16 @@ import { Card, Table } from "@shared/components/ui";
 import { Select } from "@shared/components/form";
 import { SiONo } from "@shared/lib/options";
 import { useSidebar } from "@features/sidebar";
+import { useDeudasStore } from "../stores/deudas.store";
 
 export function DeudasFueraCMF() {
   const { isInDistribution } = useSidebar();
   const { isRowPinned, togglePinRow } = usePinService();
 
-  /*
-  Próximamente se utilizará
-  const {
-    clientData
-  } = useClientDataContext();
-  */
+  const datos = useDeudasStore((state) => state.datos_financieros);
+  const updateDatos = useDeudasStore(
+    (state) => state.updateDatosFinancierosField
+  );
 
   return (
     <Card>
@@ -31,7 +30,8 @@ export function DeudasFueraCMF() {
             <Select
               disabled={isInDistribution}
               options={SiONo}
-              onValueChange={() => console.log("Cambió el cajas_compensacion")}
+              value={datos?.caja_compensacion ?? ""}
+              onValueChange={(v) => updateDatos("caja_compensacion", v)}
             />
           </Table.Row>
           <Table.Row
@@ -43,7 +43,8 @@ export function DeudasFueraCMF() {
             <Select
               disabled={isInDistribution}
               options={SiONo}
-              onValueChange={() => console.log("Cambió el autopistas")}
+              value={datos?.autopista ?? ""}
+              onValueChange={(v) => updateDatos("autopista", v)}
             />
           </Table.Row>
           <Table.Row
@@ -55,9 +56,8 @@ export function DeudasFueraCMF() {
             <Select
               disabled={isInDistribution}
               options={SiONo}
-              onValueChange={() =>
-                console.log("Cambió el instituciones_medicas")
-              }
+              value={datos?.inst_medicas ?? ""}
+              onValueChange={(v) => updateDatos("inst_medicas", v)}
             />
           </Table.Row>
           <Table.Row
@@ -69,7 +69,8 @@ export function DeudasFueraCMF() {
             <Select
               disabled={isInDistribution}
               options={SiONo}
-              onValueChange={() => console.log("Cambió el tgr")}
+              value={datos?.tgr ?? ""}
+              onValueChange={(v) => updateDatos("tgr", v)}
             />
           </Table.Row>
         </Table>

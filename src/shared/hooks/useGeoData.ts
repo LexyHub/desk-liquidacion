@@ -1,66 +1,25 @@
+import { useQuery } from "@tanstack/react-query";
+import { useCallback, useMemo } from "react";
 import type { Country, Region } from "@shared/types";
 import countriesData from "@shared/lib/data/countries.json";
-import { useCallback, useEffect, useMemo, useState } from "react";
-
-const API_URL = import.meta.env.VITE_LEXY_API + "regiones/con_comunas";
-const API_KEY = import.meta.env.VITE_LEXY_API_KEY;
+import { fetchRegions } from "../services/geodata.service";
 
 export function useGeoData() {
-  const [regions, setRegions] = useState<Region[]>([]);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
-
-  const fetchRegions = useCallback(async (signal?: AbortSignal) => {
-    if (!API_KEY || !API_URL) {
-      setError("API key or URL is missing");
-      return;
-    }
-
-    setLoading(true);
-    setError(null);
-
-    try {
-      const response = await fetch(API_URL, {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-          "lexy-key": API_KEY,
-        },
-        signal,
-      });
-
-      if (!response.ok) {
-        const text = await response.text().catch(() => null);
-        throw new Error(
-          `API error ${response.status} ${response.statusText} ${text}`
-        );
-      }
-
-      const data = (await response.json()) as Region[];
-      setRegions(data);
-    } catch (err: unknown) {
-      if ((err as DOMException).name === "AbortError") {
-        // se abortó
-      } else if (err instanceof Error) {
-        setError(err.message);
-        console.error(err);
-      } else {
-        setError("Error desconocido al cargar las regiones");
-        console.error(err);
-      }
-    } finally {
-      setLoading(false);
-    }
-  }, []);
-
-  useEffect(() => {
-    const ctrl = new AbortController();
-    fetchRegions(ctrl.signal);
-    return () => ctrl.abort();
-  }, [fetchRegions]);
+  const {
+    data: regions = [],
+    isLoading,
+    error,
+    refetch,
+  } = useQuery<Region[], Error>({
+    queryKey: ["regions"],
+    queryFn: fetchRegions,
+    staleTime: 1000 * 60 * 10, // 10 minuitos de cache
+    retry: 1,
+  });
 
   const regionOptions = useMemo(
-    () => regions.map((r) => ({ label: r.nombre, value: r.id.toString() })),
+    () =>
+      regions.map((r: Region) => ({ label: r.nombre, value: r.id.toString() })),
     [regions]
   );
 
@@ -109,8 +68,6 @@ export function useGeoData() {
     [countries]
   );
 
-  const refetch = useCallback(() => fetchRegions(), [fetchRegions]);
-
   return {
     countries,
     getCountryByCode,
@@ -120,7 +77,7 @@ export function useGeoData() {
     regionOptions,
     getComunaByIdAndRegion,
     getComunaOptions,
-    loading,
+    loading: isLoading,
     error,
     refetch,
   };

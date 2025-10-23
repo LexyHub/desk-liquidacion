@@ -7,9 +7,12 @@ import {
   InstrumentosFinancieros,
   DeudasFueraCMF,
 } from "@features/deudas/components";
+import { useSyncDeudas } from "../hooks/useSyncDeudas";
 
 export default function Deudas() {
   const { loading } = useClientDataContext();
+
+  useSyncDeudas();
 
   if (loading) {
     return <LoadingView />;
