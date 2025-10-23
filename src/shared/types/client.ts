@@ -29,7 +29,7 @@ export interface Datos {
   situacion_habitacional: string;
   profesion_oficio: string;
   derechos_sepultura?: string | null;
-  clave_unica_seteada: string;
+  clave_unica_seteada: boolean;
   tiene_sociedades?: string | null;
 }
 
@@ -82,7 +82,8 @@ export interface DatosPP {
   recibe_alimentos?: string | null;
   deuda_alimentos?: string | null;
   alimentos_regularizados?: string | null;
-  comentarios?: Record<string, string> | null;
+  juicios_pendientes: string;
+  proc_concursal: string | null;
 }
 
 export interface SituacionLaboral {
@@ -100,7 +101,6 @@ export interface SituacionLaboral {
   finiquito: string;
   monto_finiquito?: number | null;
   link_finiquito?: string | null;
-  comentarios?: Record<string, string> | null;
 }
 
 export interface Empresa {
@@ -126,7 +126,6 @@ export interface Historial {
   id: number;
   id_cliente: string;
   historia: string;
-  comentario?: Record<string, string>;
 }
 
 export interface DatosFinancieros {
@@ -154,5 +153,4 @@ export interface DatosFinancieros {
   autopista: string;
   inst_medicas: string;
   tgr: string;
-  comentarios?: Record<string, string>;
 }

@@ -13,6 +13,7 @@ import {
   ClientDataContext,
   type ClientDataContextValue,
 } from "@shared/hooks/useClientData";
+import { mapAPIToClientData } from "../lib/utils/mappers";
 
 export function ClientDataProvider({ children }: { children: ReactNode }) {
   const { idDefensoria } = useParams<{ idDefensoria: string }>();
@@ -47,7 +48,8 @@ export function ClientDataProvider({ children }: { children: ReactNode }) {
 
   useEffect(() => {
     if (fetchedClientData && !localClientData) {
-      setLocalClientData(fetchedClientData);
+      const mappedData = mapAPIToClientData(fetchedClientData);
+      setLocalClientData(mappedData);
     }
   }, [fetchedClientData, localClientData]);
 
@@ -79,7 +81,8 @@ export function ClientDataProvider({ children }: { children: ReactNode }) {
       if (id === idDefensoria) {
         const result = await refetch();
         if (result.data) {
-          setLocalClientData(result.data);
+          const mappedData = mapAPIToClientData(result.data);
+          setLocalClientData(mappedData);
         }
       }
     },
