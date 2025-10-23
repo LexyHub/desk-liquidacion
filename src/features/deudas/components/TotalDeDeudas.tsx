@@ -1,9 +1,9 @@
-import { useClientDataContext } from "@shared/context";
 import { Card } from "@shared/components/ui";
 import { formatCurrency } from "@shared/lib/utils/formatters";
+import { useDeudasStore } from "../stores/deudas.store";
 
 export function TotalDeDeudas() {
-  const { totalDeudas } = useClientDataContext();
+  const totalDeudas = useDeudasStore((state) => state.getTotalDeudas());
 
   return (
     <Card className='gap-y-0'>

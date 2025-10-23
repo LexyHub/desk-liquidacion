@@ -129,7 +129,7 @@ export interface Historial {
 }
 
 export interface DatosFinancieros {
-  id: number;
+  id?: number;
   id_cliente: string;
   cae: string;
   aval: string;

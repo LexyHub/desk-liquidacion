@@ -103,7 +103,12 @@ export function mapAPIToClientData(apiData: ClientDataAPIResponse): ClientData {
       ),
     })),
     gastos: apiData.gastos,
-    historial: apiData.historial,
+    historial: apiData.historial
+      ? apiData.historial
+      : {
+          id_cliente: apiData.datos.id_cliente,
+          historia: "",
+        },
     datos_financieros: apiData.datos_financieros
       ? {
           ...apiData.datos_financieros,
@@ -168,6 +173,30 @@ export function mapAPIToClientData(apiData: ClientDataAPIResponse): ClientData {
             apiData.datos_financieros?.tgr || false
           ),
         }
-      : undefined,
+      : {
+          id_cliente: apiData.datos.id_cliente,
+          cae: "no",
+          aval: "no",
+          ultimo_credito: "",
+          declaro_renta: "no",
+          recibe_devolucion_impuestos: "no",
+          retencion_impuestos: "no",
+          categoria_contribuyente: "",
+          tarjeta_credito: "no",
+          chequera: "no",
+          cheques_protestados: "no",
+          vales_sin_cobrar: "no",
+          vales_vencidos: "no",
+          fondos_cooperativas: "no",
+          criptomonedas: "no",
+          libreta_ahorros: "no",
+          fondos_mutuos: "no",
+          apv: "no",
+          deposito_plazo: "no",
+          caja_compensacion: "no",
+          autopista: "no",
+          inst_medicas: "no",
+          tgr: "no",
+        },
   };
 }

@@ -6,7 +6,7 @@ export interface ClientDataAPIResponse {
   situacion_laboral: SituacionLaboralResponse;
   empresas: EmpresaResponse[];
   gastos: GastoResponse[];
-  historial?: HistorialResponse[] | null;
+  historial?: HistorialResponse | null;
   datos_financieros?: DatosFinancierosResponse | null;
 }
 
@@ -119,7 +119,7 @@ export interface GastoResponse {
   id_cliente: string;
   categoria: string;
   descripcion: string;
-  monto: string;
+  monto: number;
 }
 
 export interface HistorialResponse {
