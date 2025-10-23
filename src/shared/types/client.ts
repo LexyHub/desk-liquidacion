@@ -6,7 +6,7 @@ export interface ClientData {
   situacion_laboral: SituacionLaboral;
   empresas: Empresa[];
   gastos: Gasto[];
-  historial?: Historial[] | null;
+  historial?: Historial | null;
   datos_financieros?: DatosFinancieros | null;
 }
 
@@ -115,15 +115,15 @@ export interface Empresa {
 }
 
 export interface Gasto {
-  id: number;
+  id?: number | null;
   id_cliente: string;
   categoria: string;
   descripcion: string;
-  monto: string;
+  monto: number;
 }
 
 export interface Historial {
-  id: number;
+  id?: number;
   id_cliente: string;
   historia: string;
 }

@@ -1,24 +1,30 @@
 import { Input } from "@shared/components/form";
 import { Table, Card } from "@shared/components/ui";
-import { useClientDataContext } from "@shared/context";
-import type { GastoMensual } from "@shared/types";
 import { Plus, Trash2 } from "@shared/lib/icons";
 import { cn } from "@shared/lib/utils";
 import { formatCurrency } from "@shared/lib/utils/formatters";
 import { useSidebar } from "@features/sidebar";
+import { useHistoriaSEStore } from "../stores/HistoriaSE.store";
+import { useDatosPersonalesStore } from "@/features/datos-personales/stores/useDatosPersonales.store";
+import type { Gasto } from "@shared/types";
 
 export function GastosMensuales() {
   const { isInDistribution } = useSidebar();
-  const {
-    clientData,
-    addGastoMensual,
-    modifyGastoMensual,
-    removeGastoMensual,
-    totalGastosMensuales,
-  } = useClientDataContext();
+
+  const datos = useDatosPersonalesStore((state) => state.datos);
+  const gastos = useHistoriaSEStore((state) => state.gastos);
+  const totalGastosMensuales = useHistoriaSEStore((state) =>
+    state.getTotalGastos()
+  );
+  const addGastoMensual = useHistoriaSEStore((state) => state.addGasto);
+  const modifyGastoMensual = useHistoriaSEStore(
+    (state) => state.updateGastoField
+  );
+  const removeGastoMensual = useHistoriaSEStore((state) => state.removeGasto);
 
   const handleAddGasto = () => {
-    const newGasto: GastoMensual = {
+    const newGasto: Gasto = {
+      id_cliente: datos?.id_cliente ?? "",
       categoria: "",
       descripcion: "",
       monto: 0,
@@ -26,28 +32,11 @@ export function GastosMensuales() {
     addGastoMensual(newGasto);
   };
 
-  const handleModifyGasto = (
-    index: number,
-    field: keyof GastoMensual,
-    value: string | number
-  ) => {
-    if (!clientData) return;
-    const actualGastos = clientData.gastos_mensuales || [];
-    if (index < 0 || index >= actualGastos.length) return;
-    const updatedGasto = { ...actualGastos[index], [field]: value };
-    modifyGastoMensual(index, updatedGasto);
-  };
-
-  const handleRemoveGasto = (index: number) => {
-    if (!clientData) return;
-    removeGastoMensual(index);
-  };
-
   return (
     <>
       <Card>
         <Card.Header className='w-full flex items-center justify-between'>
-          <Card.Title>Registro de deudas</Card.Title>
+          <Card.Title>Registro de gastos mensuales</Card.Title>
           <button
             type='button'
             disabled={isInDistribution}
@@ -68,74 +57,70 @@ export function GastosMensuales() {
               </div>
             </Table.Header>
             <Table.Content>
-              {clientData?.gastos_mensuales &&
-              clientData.gastos_mensuales.length > 0 ? (
-                clientData.gastos_mensuales.map(
-                  (gasto: GastoMensual, index: number) => (
-                    <Table.Cell
-                      key={`deuda-${index}`}
-                      className='grid-cols-[1fr_1fr_1fr_auto] gap-x-8 animate-fade-in-down animate-duration-200'>
-                      <Input
-                        disabled={isInDistribution}
-                        value={gasto.categoria}
-                        onChange={(v) =>
-                          handleModifyGasto(index, "categoria", v)
+              {gastos && gastos.length > 0 ? (
+                gastos.map((gasto) => (
+                  <Table.Cell
+                    key={`gasto-${gasto.id}`}
+                    className='grid-cols-[1fr_1fr_1fr_auto] gap-x-8 animate-fade-in-down animate-duration-200'>
+                    <Input
+                      disabled={isInDistribution}
+                      value={gasto.categoria}
+                      onChange={(v) =>
+                        modifyGastoMensual(gasto.id!, "categoria", String(v))
+                      }
+                      className={cn(
+                        "py-2 px-4 border border-lexy-input-border text-lexy-text-secondary leading-6 rounded-sm",
+                        {
+                          "border-transparent":
+                            gasto.categoria &&
+                            gasto.categoria.trim().length > 0,
                         }
-                        className={cn(
-                          "py-2 px-4 border border-lexy-input-border text-lexy-text-secondary leading-6 rounded-sm",
-                          {
-                            "border-transparent":
-                              gasto.categoria &&
-                              gasto.categoria.trim().length > 0,
-                          }
-                        )}
-                      />
-                      <Input
-                        disabled={isInDistribution}
-                        value={gasto.descripcion}
-                        onChange={(v) =>
-                          handleModifyGasto(index, "descripcion", v)
+                      )}
+                    />
+                    <Input
+                      disabled={isInDistribution}
+                      value={gasto.descripcion}
+                      onChange={(v) =>
+                        modifyGastoMensual(gasto.id!, "descripcion", String(v))
+                      }
+                      className={cn(
+                        "py-2 px-4 border border-lexy-input-border text-lexy-text-secondary leading-6 rounded-sm",
+                        {
+                          "border-transparent":
+                            gasto.descripcion &&
+                            gasto.descripcion.trim().length > 0,
                         }
-                        className={cn(
-                          "py-2 px-4 border border-lexy-input-border text-lexy-text-secondary leading-6 rounded-sm",
-                          {
-                            "border-transparent":
-                              gasto.descripcion &&
-                              gasto.descripcion.trim().length > 0,
-                          }
-                        )}
-                      />
-                      <Input
-                        disabled={isInDistribution}
-                        placeholder='Ej: $50.000'
-                        value={String(gasto.monto) || ""}
-                        type='currency'
-                        onChange={(v: string | number) =>
-                          handleModifyGasto(index, "monto", v)
+                      )}
+                    />
+                    <Input
+                      disabled={isInDistribution}
+                      placeholder='Ej: $50.000'
+                      value={String(gasto.monto || 0)}
+                      type='currency'
+                      onChange={(v: string | number) =>
+                        modifyGastoMensual(gasto.id!, "monto", Number(v))
+                      }
+                      className={cn(
+                        "py-2 px-4 border border-lexy-input-border text-lexy-text-secondary leading-6 rounded-sm",
+                        {
+                          "border-transparent": gasto.monto && gasto.monto > 0,
                         }
-                        className={cn(
-                          "py-2 px-4 border border-lexy-input-border text-lexy-text-secondary leading-6 rounded-sm",
-                          {
-                            "border-transparent":
-                              gasto.monto && gasto.monto > 0,
-                          }
-                        )}
-                      />
-                      <button
-                        disabled={isInDistribution}
-                        title='Eliminar gasto'
-                        type='button'
-                        className='w-fit rounded-sm text-lexy-text-primary border border-black/10 bg-white not-disabled:hover:bg-lexy-btn-secondary-hover transition-all cursor-pointer p-2 disabled:cursor-not-allowed'
-                        onClick={() => handleRemoveGasto(index)}>
-                        <Trash2 className='size-6' />
-                      </button>
-                    </Table.Cell>
-                  )
-                )
+                      )}
+                    />
+                    <button
+                      disabled={isInDistribution}
+                      title='Eliminar gasto'
+                      type='button'
+                      className='w-fit rounded-sm text-lexy-text-primary border border-black/10 bg-white not-disabled:hover:bg-lexy-btn-secondary-hover transition-all cursor-pointer p-2 disabled:cursor-not-allowed'
+                      onClick={() => removeGastoMensual(gasto.id!)}>
+                      <Trash2 className='size-6' />
+                    </button>
+                  </Table.Cell>
+                ))
               ) : (
                 <div className='w-full flex items-center justify-center pt-6 pb-4 animate-fade-in animate-duration-300'>
                   <h2 className='text-xl text-lexy-text-secondary font-medium'>
-                    No hay gastos mensuales registradas
+                    No hay gastos mensuales registrados
                   </h2>
                 </div>
               )}
