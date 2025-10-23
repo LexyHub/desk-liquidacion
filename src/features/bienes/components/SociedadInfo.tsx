@@ -2,8 +2,8 @@ import type { Empresa } from "@shared/types";
 import { Trash2 } from "@shared/lib/icons";
 import { Input, Select } from "@shared/components/form";
 import { useSidebar } from "@features/sidebar";
-import { useClientDataContext } from "@/shared/context";
 import { SiONo } from "../../../shared/lib/options";
+import { useBienesStore } from "../stores/useBienes.store";
 
 interface Props {
   sociedad: Empresa;
@@ -11,15 +11,9 @@ interface Props {
 
 export function SociedadInfo({ sociedad }: Props) {
   const { isInDistribution } = useSidebar();
-  const { modifyEmpresa, removeEmpresa } = useClientDataContext();
 
-  const handleChange = (field: string, value: string) => {
-    modifyEmpresa(sociedad.id, { ...sociedad, [field]: value });
-  };
-
-  const handleDelete = () => {
-    removeEmpresa(sociedad.id);
-  };
+  const modifyEmpresa = useBienesStore((state) => state.updateEmpresaField);
+  const removeEmpresa = useBienesStore((state) => state.removeEmpresa);
 
   return (
     <div className='w-full grid grid-cols-[1fr_auto] rounded-md border border-[#E6E6E6] animate-fade-in animate-duration-100'>
@@ -33,9 +27,9 @@ export function SociedadInfo({ sociedad }: Props) {
           <Input
             disabled={isInDistribution}
             placeholder='Ej: Moonie Studios'
-            value={sociedad.nombre ?? ""}
+            value={sociedad.nombre_empresa ?? ""}
             onChange={(value: string | number) =>
-              handleChange("nombre", String(value))
+              modifyEmpresa(sociedad.id ?? -1, "nombre_empresa", String(value))
             }
             className='py-2 px-3 h-full w-full text-lexy-text-secondary leading-6 rounded-sm'
           />
@@ -52,7 +46,7 @@ export function SociedadInfo({ sociedad }: Props) {
             type='currency'
             value={String(sociedad.activos_pasivos)}
             onChange={(value: string | number) =>
-              handleChange("activos_pasivos", String(value))
+              modifyEmpresa(sociedad.id ?? -1, "activos_pasivos", String(value))
             }
             className='w-full h-full py-2 px-3 text-lexy-text-secondary leading-6 rounded-sm'
           />
@@ -67,8 +61,8 @@ export function SociedadInfo({ sociedad }: Props) {
             disabled={isInDistribution}
             value={sociedad.actividad ?? ""}
             options={SiONo}
-            onValueChange={(value: string | number) =>
-              handleChange("actividad", String(value))
+            onValueChange={(value: string) =>
+              modifyEmpresa(sociedad.id ?? -1, "actividad", value)
             }
             triggerClassName='w-full h-full py-2 text-lexy-text-secondary leading-6 rounded-sm'
           />
@@ -81,10 +75,10 @@ export function SociedadInfo({ sociedad }: Props) {
           </div>
           <Select
             disabled={isInDistribution}
-            value={sociedad.presenta_contabilidad ?? ""}
+            value={sociedad.contabilidad_completa ?? ""}
             options={SiONo}
-            onValueChange={(value: string | number) =>
-              handleChange("presenta_contabilidad", String(value))
+            onValueChange={(value: string) =>
+              modifyEmpresa(sociedad.id ?? -1, "contabilidad_completa", value)
             }
             triggerClassName='w-full h-full py-2 text-lexy-text-secondary leading-6 rounded-sm'
           />
@@ -98,9 +92,9 @@ export function SociedadInfo({ sociedad }: Props) {
           <Input
             disabled={isInDistribution}
             placeholder='Ej: María Soto, Felipe Morales'
-            value={sociedad.otros_socios ?? ""}
+            value={sociedad.socios ?? ""}
             onChange={(value: string | number) =>
-              handleChange("otros_socios", String(value))
+              modifyEmpresa(sociedad.id ?? -1, "socios", String(value))
             }
             className='w-full h-full py-2 px-3 text-lexy-text-secondary leading-6 rounded-sm'
           />
@@ -109,7 +103,7 @@ export function SociedadInfo({ sociedad }: Props) {
       <button
         type='button'
         title='Eliminar sociedad'
-        onClick={handleDelete}
+        onClick={() => removeEmpresa(sociedad.id ?? -1)}
         className='flex items-center justify-center h-full w-fit px-3 py-2 bg-[#F5F5F5] hover:bg-[#EEEBFF] transition-all cursor-pointer'>
         <Trash2 className='size-6' />
       </button>

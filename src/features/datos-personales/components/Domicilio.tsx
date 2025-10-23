@@ -1,14 +1,17 @@
-import { useClientDataContext } from "@shared/context";
 import { usePinService } from "@shared/hooks";
 import { Input } from "@shared/components/form";
 import { Card, Table } from "@shared/components/ui";
 import { useSidebar } from "@features/sidebar";
+import { useDatosPersonalesStore } from "../stores/useDatosPersonales.store";
 
 export function Domicilio() {
   const { isPinned, togglePinRow } = usePinService();
   const { isInDistribution } = useSidebar();
-  //! TODO esto está hard-codeado. No se cambiará hasta que el backend esté listo.
-  const { clientData } = useClientDataContext();
+
+  const datos = useDatosPersonalesStore((state) => state.datos);
+  const updateDatos = useDatosPersonalesStore(
+    (state) => state.updateDatosField
+  );
 
   return (
     <Card>
@@ -25,8 +28,8 @@ export function Domicilio() {
             onStarToggle={() => togglePinRow("direccion")}>
             <Input
               disabled={isInDistribution}
-              value={clientData?.datos.domicilio}
-              onChange={() => console.log("Cambió la dirección")}
+              value={datos?.domicilio ?? ""}
+              onChange={(v) => updateDatos("domicilio", String(v))}
             />
           </Table.Row>
         </Table>

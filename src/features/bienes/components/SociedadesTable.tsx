@@ -1,24 +1,29 @@
 import { useSidebar } from "@/features/sidebar";
 import type { Empresa } from "@/shared/types";
 import { Card } from "@shared/components/ui";
-import { useClientDataContext } from "@shared/context";
 import { SociedadInfo } from "./SociedadInfo";
 import { useRef } from "react";
+import { useDatosPersonalesStore } from "@/features/datos-personales/stores/useDatosPersonales.store";
+import { useBienesStore } from "../stores/useBienes.store";
 
 export function SociedadesTable() {
   const { isInDistribution } = useSidebar();
-  const { clientData, addEmpresa } = useClientDataContext();
+
+  const datos = useDatosPersonalesStore((state) => state.datos);
+  const empresas = useBienesStore((state) => state.empresas);
+  const addEmpresa = useBienesStore((state) => state.addEmpresa);
+
   const bottomRef = useRef<HTMLDivElement>(null);
 
   const handleAddEmpresa = () => {
     const newEmpresa: Empresa = {
-      id: window.crypto.getRandomValues(new Uint16Array(1))[0],
-      nombre: "",
+      nombre_empresa: "",
       actividad: "",
-      activos_pasivos: 0,
-      presenta_contabilidad: "",
-      otros_socios: "",
-      id_cliente: "",
+      id_cliente: datos?.id_cliente ?? "",
+      activos_pasivos: "",
+      movimientos: "",
+      contabilidad_completa: "",
+      socios: "",
     };
     addEmpresa(newEmpresa);
     setTimeout(() => {
@@ -39,10 +44,8 @@ export function SociedadesTable() {
         </button>
       </Card.Header>
       <Card.Content className='gap-y-4'>
-        {clientData?.empresas && clientData.empresas.length > 0 ? (
-          clientData?.empresas?.map((e) => (
-            <SociedadInfo key={e.id} sociedad={e} />
-          ))
+        {empresas && empresas.length > 0 ? (
+          empresas.map((e) => <SociedadInfo key={`${e.id}`} sociedad={e} />)
         ) : (
           <div className='w-full flex items-center justify-center pt-6 pb-4 animate-fade-in animate-duration-300'>
             <h2 className='text-xl text-lexy-text-secondary font-medium'>

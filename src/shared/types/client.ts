@@ -104,7 +104,7 @@ export interface SituacionLaboral {
 }
 
 export interface Empresa {
-  id: number;
+  id?: number | null;
   nombre_empresa: string;
   actividad: string;
   id_cliente: string;
