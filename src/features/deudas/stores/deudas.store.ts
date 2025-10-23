@@ -1,5 +1,5 @@
 import type { DatosFinancieros } from "@/shared/types";
-import type { Deuda } from "../types/deudas";
+import type { Deuda } from "@shared/types";
 import { create } from "zustand";
 
 interface DeudasState {

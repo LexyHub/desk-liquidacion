@@ -9,17 +9,6 @@ export default defineConfig({
   resolve: {
     alias: {
       "@": path.resolve(__dirname, "./src"),
-      "@assets": path.resolve(__dirname, "src/assets"),
-      "@components": path.resolve(__dirname, "src/components"),
-      "@hooks": path.resolve(__dirname, "src/hooks"),
-      "@lib": path.resolve(__dirname, "src/lib"),
-      "@context": path.resolve(__dirname, "src/context"),
-      "@routes": path.resolve(__dirname, "src/routes"),
-      "@views": path.resolve(__dirname, "src/views"),
-      "@types": path.resolve(__dirname, "src/types"),
-      "@services": path.resolve(__dirname, "src/services"),
-      "@styles": path.resolve(__dirname, "src/styles"),
-      // nueva arquitectura
       "@features": path.resolve(__dirname, "src/features"),
       "@shared": path.resolve(__dirname, "src/shared"),
       "@app": path.resolve(__dirname, "src/app"),

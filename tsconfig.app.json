@@ -10,20 +10,6 @@
     "baseUrl": ".",
     "paths": {
       "@/*": ["./src/*"],
-      "@assets": ["src/assets/index"],
-      "@assets/*": ["src/assets/*"],
-      "@components/*": ["src/components/*"],
-      "@hooks/*": ["src/hooks/*"],
-      "@hooks": ["src/hooks/index"],
-      "@lib/*": ["src/lib/*"],
-      "@routes/*": ["src/routes/*"],
-      "@services/*": ["src/services/*"],
-      "@views/*": ["src/views/*"],
-      "@types/*": ["src/types/*"],
-      "@types": ["src/types/index"],
-      "@context/*": ["src/context/*"],
-      "@context": ["src/context/index"],
-      // nueva arquitectura
       "@features/*": ["src/features/*"],
       "@shared/*": ["src/shared/*"],
       "@app/*": ["src/app/*"]

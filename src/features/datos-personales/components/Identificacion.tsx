@@ -83,12 +83,11 @@ export function Identificacion() {
             stareable
             isStared={isRowPinned("juicios")}
             onStarToggle={() => togglePinRow("juicios")}>
-            <Select
+            <Input
               disabled={isInDistribution}
-              options={SiONo}
               value={datos_pp?.juicios_pendientes ?? ""}
-              onValueChange={(value) =>
-                updateDatosPPField("juicios_pendientes", value)
+              onChange={(value) =>
+                updateDatosPPField("juicios_pendientes", value as string)
               }
             />
           </Table.Row>
