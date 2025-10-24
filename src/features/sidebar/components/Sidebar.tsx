@@ -17,7 +17,8 @@ import { VideoDialog } from "./VideoDialog";
 import { useSidebar } from "@features/sidebar";
 import { cn } from "@shared/lib/utils";
 import { useAuth } from "@features/auth";
-import { useNotify } from "@/features/notificaciones";
+import { useUpdateDatosPersonales } from "@/features/datos-personales/hooks";
+import { useDatosPersonalesStore } from "@/features/datos-personales/stores/useDatosPersonales.store";
 
 export function Sidebar() {
   const { idDefensoria } = useParams();
@@ -25,8 +26,13 @@ export function Sidebar() {
   const { logOut } = useAuth();
   const navigate = useNavigate();
   const { isOpen, toggle, isInDistribution, setInDistribution } = useSidebar();
-  // test notificaciones
-  const { notify } = useNotify();
+
+  const {
+    datosPP,
+    changes: changesInPP,
+    setChanges: setChangesInPP,
+  } = useDatosPersonalesStore();
+  const { updateDatosPersonales } = useUpdateDatosPersonales();
 
   const [showVideoDialog, setShowVideoDialog] = useState(false);
 
@@ -35,22 +41,20 @@ export function Sidebar() {
 
     navigate(to);
 
-    //! ESTO ES SOLO PARA TEST Y SIMULAR GUARDADO ANTES DE NAVEGAR
-    // Después hay que quitarlo y cambiarlo por una llamada real a guardado
-    saveSectionData();
+    tryUpdateClientData();
   };
 
-  const saveSectionData = async () => {
-    const pretifiedPath = pathname
-      .split("/")[1]
-      .replace("/", "")
-      .replaceAll("-", " ");
-    await new Promise((resolve) => setTimeout(resolve, 500));
-    notify({
-      type: "success",
-      message: `Datos de "${pretifiedPath}" guardados correctamente.`,
-      closeable: true,
-    });
+  const tryUpdateClientData = () => {
+    if (isInDistribution) return;
+
+    if (pathname.startsWith("/datos-personales")) {
+      if (!datosPP || !changesInPP) return;
+      updateDatosPersonales({
+        id_cliente: datosPP.id,
+        payload: datosPP,
+      });
+      setChangesInPP(false);
+    }
   };
 
   const backToEntrevista = () => {

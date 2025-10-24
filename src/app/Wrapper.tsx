@@ -1,7 +1,7 @@
 import type { ReactNode, ComponentType } from "react";
 import { SidebarProvider } from "@features/sidebar";
 import { HeaderUIProvider } from "@features/header";
-import { ClientDataProvider } from "@shared/context";
+import { ClientDataSyncProvider } from "@shared/providers";
 import { GlobalDocumentViewer } from "@shared/components/popups/GlobalDocumentViewer";
 import { useProviderComposition } from "@shared/hooks";
 import { PrivateRoute } from "@app/PrivateRoute";
@@ -15,7 +15,7 @@ interface Props {
 const APP_PROVIDERS: ComponentType<{ children: ReactNode }>[] = [
   SidebarProvider,
   HeaderUIProvider,
-  ClientDataProvider,
+  ClientDataSyncProvider,
 ];
 
 function AllProvidersWrapper({ children }: { children: ReactNode }) {

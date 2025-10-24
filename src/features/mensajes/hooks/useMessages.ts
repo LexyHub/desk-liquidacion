@@ -1,7 +1,7 @@
 import { useMemo } from "react";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { useHeaderUI } from "@features/header";
-import { useClientDataContext } from "@/shared/context";
+import { useClientStore } from "@shared/stores/useClientStore";
 import {
   getMessages,
   createMessage,
@@ -16,7 +16,7 @@ import type {
 } from "../types/messages";
 
 export function useMessages(): MessagesContextValue {
-  const { clientData } = useClientDataContext();
+  const clientData = useClientStore((state) => state.clientData);
   const { rawPath } = useHeaderUI();
   const queryClient = useQueryClient();
   const cliente = clientData?.datos.id_cliente;

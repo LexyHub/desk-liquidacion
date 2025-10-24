@@ -1,9 +1,9 @@
-import { useClientDataContext } from "@/shared/context";
+import { useClientStore } from "@shared/stores/useClientStore";
 import { useSituacionLaboralStore } from "../stores/useSituacionLaboral.store";
 import { useEffect } from "react";
 
 export function useSyncSituacionLaboral() {
-  const { clientData } = useClientDataContext();
+  const clientData = useClientStore((state) => state.clientData);
   const { setDatos, reset } = useSituacionLaboralStore();
 
   useEffect(() => {

@@ -1,9 +1,9 @@
-import { useClientDataContext } from "@/shared/context";
+import { useClientStore } from "@shared/stores/useClientStore";
 import { useHistoriaSEStore } from "../stores/HistoriaSE.store";
 import { useEffect } from "react";
 
 export function useSyncHistoriaSE() {
-  const { clientData } = useClientDataContext();
+  const clientData = useClientStore((state) => state.clientData);
   const { setHistoriaSE, setGastos, reset } = useHistoriaSEStore();
 
   useEffect(() => {

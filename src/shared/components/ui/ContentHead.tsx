@@ -3,7 +3,7 @@ import { Drive, PoderJudicial, SII } from "@shared/assets";
 import { Card } from "./Card";
 import { LinkButton } from "./LinkButton";
 import { Table } from "./Table";
-import { useClientDataContext } from "@shared/context";
+import { useClientStore } from "@shared/stores/useClientStore";
 import { useHeaderUI } from "@features/header";
 import { useSidebar } from "@features/sidebar";
 import { cn } from "@/shared/lib/utils";
@@ -11,7 +11,7 @@ import { cn } from "@/shared/lib/utils";
 export function ContentHead() {
   const { isOpen: isSidebarOpen } = useSidebar();
   const { isOpen: isMessageTabOpen } = useHeaderUI();
-  const { clientData } = useClientDataContext();
+  const clientData = useClientStore((state) => state.clientData);
   const claveUnica = "*********";
   return (
     <section className='p-4 grid grid-cols-[auto_1fr] gap-x-6 h-fit border-b border-b-lexy-border-table'>
