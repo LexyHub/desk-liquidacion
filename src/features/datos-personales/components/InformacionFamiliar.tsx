@@ -85,6 +85,7 @@ export function InformacionFamiliar() {
             <Select
               disabled={isInDistribution}
               value={datos_pp?.recibe_alimentos ?? ""}
+              onValueChange={(v) => updateDatosPPField("recibe_alimentos", v)}
               options={SiONo}
             />
           </Table.Row>
@@ -97,6 +98,7 @@ export function InformacionFamiliar() {
             <Select
               disabled={isInDistribution}
               value={datos_pp?.deuda_alimentos ?? ""}
+              onValueChange={(v) => updateDatosPPField("deuda_alimentos", v)}
               options={SiONo}
             />
           </Table.Row>
@@ -109,6 +111,9 @@ export function InformacionFamiliar() {
             <Select
               disabled={isInDistribution}
               value={datos_pp?.alimentos_regularizados ?? ""}
+              onValueChange={(v) =>
+                updateDatosPPField("alimentos_regularizados", v)
+              }
               options={SiONo}
             />
           </Table.Row>

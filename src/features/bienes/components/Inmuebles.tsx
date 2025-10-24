@@ -1,15 +1,21 @@
 import { useSidebar } from "@features/sidebar";
 import { Select } from "@shared/components/form";
 import { Card, Table } from "@shared/components/ui";
-import { useClientDataContext } from "@shared/context";
 import { usePinService } from "@shared/hooks";
 import { SiONo } from "@shared/lib/options";
+import { useBienesStore } from "../stores/useBienes.store";
+import { useDatosPersonalesStore } from "@/features/datos-personales/stores/useDatosPersonales.store";
 
 export function Inmuebles() {
   const { isRowPinned, togglePinRow } = usePinService();
   const { isInDistribution } = useSidebar();
-  //! TODO esto está hard-codeado. No se cambiará hasta que el backend esté listo.
-  const { clientData } = useClientDataContext();
+
+  const datos = useBienesStore((state) => state.bienes);
+  const updateDatos = useBienesStore((state) => state.updateBienesField);
+  const datos_pp = useDatosPersonalesStore((state) => state.datosPP);
+  const updateDatosPP = useDatosPersonalesStore(
+    (state) => state.updateDatosPPField
+  );
 
   return (
     <Card>
@@ -26,7 +32,8 @@ export function Inmuebles() {
             onStarToggle={() => togglePinRow("posee_inmuebles")}>
             <Select
               disabled={isInDistribution}
-              value={clientData?.bienes?.inmuebles.posee_inmuebles}
+              value={datos_pp?.tiene_inmueble ?? ""}
+              onValueChange={(v) => updateDatosPP("tiene_inmueble", v)}
               options={SiONo}
             />
           </Table.Row>
@@ -38,7 +45,13 @@ export function Inmuebles() {
             onStarToggle={() => togglePinRow("paga_cred_hipotecario")}>
             <Select
               disabled={isInDistribution}
-              value={clientData?.bienes?.inmuebles.paga_cred_hipotecario}
+              value={datos?.inmueble.credito_hipotecario ?? ""}
+              onValueChange={(v) =>
+                updateDatos("inmueble", {
+                  ...datos!.inmueble,
+                  credito_hipotecario: v,
+                })
+              }
               options={SiONo}
             />
           </Table.Row>
@@ -50,7 +63,13 @@ export function Inmuebles() {
             onStarToggle={() => togglePinRow("tiene_codeudor")}>
             <Select
               disabled={isInDistribution}
-              value={clientData?.bienes?.inmuebles.tiene_codeudor}
+              value={datos?.inmueble.codeudor_solidario ?? ""}
+              onValueChange={(v) =>
+                updateDatos("inmueble", {
+                  ...datos!.inmueble,
+                  codeudor_solidario: v,
+                })
+              }
               options={SiONo}
             />
           </Table.Row>
@@ -62,7 +81,10 @@ export function Inmuebles() {
             onStarToggle={() => togglePinRow("al_dia_hipoteca")}>
             <Select
               disabled={isInDistribution}
-              value={clientData?.bienes?.inmuebles.al_dia_hipoteca}
+              value={datos?.inmueble.al_dia ?? ""}
+              onValueChange={(v) =>
+                updateDatos("inmueble", { ...datos!.inmueble, al_dia: v })
+              }
               options={SiONo}
             />
           </Table.Row>
@@ -74,7 +96,10 @@ export function Inmuebles() {
             onStarToggle={() => togglePinRow("hipoteco_ultimos_anos")}>
             <Select
               disabled={isInDistribution}
-              value={clientData?.bienes?.inmuebles.hipoteco_ultimos_anos}
+              value={datos?.inmueble.hipotecado ?? ""}
+              onValueChange={(v) =>
+                updateDatos("inmueble", { ...datos!.inmueble, hipotecado: v })
+              }
               options={SiONo}
             />
           </Table.Row>
@@ -86,7 +111,10 @@ export function Inmuebles() {
             onStarToggle={() => togglePinRow("vendio_inmueble")}>
             <Select
               disabled={isInDistribution}
-              value={clientData?.bienes?.inmuebles.vendio_inmueble}
+              value={datos?.bien.vendido ?? ""}
+              onValueChange={(v) =>
+                updateDatos("bien", { ...datos!.bien, vendido: v })
+              }
               options={SiONo}
             />
           </Table.Row>

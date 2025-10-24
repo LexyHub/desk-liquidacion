@@ -1,15 +1,18 @@
 import { Select } from "@shared/components/form";
 import { SiONo } from "@shared/lib/options";
 import { Card, Table } from "@shared/components/ui";
-import { useClientDataContext } from "@shared/context";
 import { usePinService } from "@shared/hooks";
 import { useSidebar } from "@features/sidebar";
+import { useDatosPersonalesStore } from "@/features/datos-personales/stores/useDatosPersonales.store";
 
 export function Sociedades() {
   const { isRowPinned, togglePinRow } = usePinService();
   const { isInDistribution } = useSidebar();
-  //! TODO esto está hard-codeado. No se cambiará hasta que el backend esté listo.
-  const { clientData } = useClientDataContext();
+
+  const datos = useDatosPersonalesStore((state) => state.datos);
+  const updateDatos = useDatosPersonalesStore(
+    (state) => state.updateDatosField
+  );
 
   return (
     <Card>
@@ -26,7 +29,8 @@ export function Sociedades() {
             onStarToggle={() => togglePinRow("tiene_vehiculo")}>
             <Select
               disabled={isInDistribution}
-              value={clientData?.bienes?.posee_empresas ?? ""}
+              value={datos?.tiene_sociedades ?? ""}
+              onValueChange={(v) => updateDatos("tiene_sociedades", v)}
               options={SiONo}
             />
           </Table.Row>

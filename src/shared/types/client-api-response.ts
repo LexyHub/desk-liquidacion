@@ -6,7 +6,7 @@ export interface ClientDataAPIResponse {
   situacion_laboral: SituacionLaboralResponse;
   empresas: EmpresaResponse[];
   gastos: GastoResponse[];
-  historial?: HistorialResponse[] | null;
+  historial?: HistorialResponse | null;
   datos_financieros?: DatosFinancierosResponse | null;
 }
 
@@ -82,7 +82,8 @@ export interface DatosPPResponse {
   recibe_alimentos?: boolean | null;
   deuda_alimentos?: boolean | null;
   alimentos_regularizados?: boolean | null;
-  comentarios?: Record<string, string> | null;
+  juicios_pendientes?: string | null;
+  proc_concursal?: boolean | null;
 }
 
 export interface SituacionLaboralResponse {
@@ -100,7 +101,6 @@ export interface SituacionLaboralResponse {
   finiquito: boolean;
   monto_finiquito?: number | null;
   link_finiquito?: string | null;
-  comentarios?: Record<string, string> | null;
 }
 
 export interface EmpresaResponse {
@@ -119,14 +119,13 @@ export interface GastoResponse {
   id_cliente: string;
   categoria: string;
   descripcion: string;
-  monto: string;
+  monto: number;
 }
 
 export interface HistorialResponse {
   id: number;
   id_cliente: string;
   historia: string;
-  comentario?: Record<string, string>;
 }
 
 export interface DatosFinancierosResponse {
@@ -154,5 +153,4 @@ export interface DatosFinancierosResponse {
   autopista: boolean;
   inst_medicas: boolean;
   tgr: boolean;
-  comentarios?: Record<string, string>;
 }

@@ -1,5 +1,5 @@
 import type { QueryFunctionContext } from "@tanstack/react-query";
-import type { ClientData } from "@shared/types";
+import type { ClientDataAPIResponse } from "@shared/types";
 // import _ClientData from "@shared/lib/data/client.mock.json";
 
 const API_URL =
@@ -7,7 +7,7 @@ const API_URL =
 
 export async function fetchClientData(
   context: QueryFunctionContext<[string, string]>
-): Promise<ClientData> {
+): Promise<ClientDataAPIResponse> {
   const [, idDefensoria] = context.queryKey;
   if (!idDefensoria || idDefensoria === "" || idDefensoria === "undefined") {
     throw new Error("ID de Defensoría ausente");
@@ -25,6 +25,7 @@ export async function fetchClientData(
       headers: {
         "Content-Type": "application/json",
         // "lexy-key": API_KEY,
+        Authorization: sessionStorage.getItem("token") || "",
       },
       signal: context.signal,
     });

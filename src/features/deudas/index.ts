@@ -1,4 +1,3 @@
 export { default as Deudas } from "./views/Deudas";
-export * from "./types/deudas";
+export * from "./types/acreedor";
 export { useAcreedores } from "./hooks/useAcreedores";
-export { useDeudas } from "./hooks/useDeudas";

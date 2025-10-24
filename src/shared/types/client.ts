@@ -6,7 +6,7 @@ export interface ClientData {
   situacion_laboral: SituacionLaboral;
   empresas: Empresa[];
   gastos: Gasto[];
-  historial?: Historial[] | null;
+  historial?: Historial | null;
   datos_financieros?: DatosFinancieros | null;
 }
 
@@ -29,7 +29,7 @@ export interface Datos {
   situacion_habitacional: string;
   profesion_oficio: string;
   derechos_sepultura?: string | null;
-  clave_unica_seteada: string;
+  clave_unica_seteada: boolean;
   tiene_sociedades?: string | null;
 }
 
@@ -82,7 +82,8 @@ export interface DatosPP {
   recibe_alimentos?: string | null;
   deuda_alimentos?: string | null;
   alimentos_regularizados?: string | null;
-  comentarios?: Record<string, string> | null;
+  juicios_pendientes: string;
+  proc_concursal: string | null;
 }
 
 export interface SituacionLaboral {
@@ -100,11 +101,10 @@ export interface SituacionLaboral {
   finiquito: string;
   monto_finiquito?: number | null;
   link_finiquito?: string | null;
-  comentarios?: Record<string, string> | null;
 }
 
 export interface Empresa {
-  id: number;
+  id?: number | null;
   nombre_empresa: string;
   actividad: string;
   id_cliente: string;
@@ -115,22 +115,21 @@ export interface Empresa {
 }
 
 export interface Gasto {
-  id: number;
+  id?: number | null;
   id_cliente: string;
   categoria: string;
   descripcion: string;
-  monto: string;
+  monto: number;
 }
 
 export interface Historial {
-  id: number;
+  id?: number;
   id_cliente: string;
   historia: string;
-  comentario?: Record<string, string>;
 }
 
 export interface DatosFinancieros {
-  id: number;
+  id?: number;
   id_cliente: string;
   cae: string;
   aval: string;
@@ -154,5 +153,4 @@ export interface DatosFinancieros {
   autopista: string;
   inst_medicas: string;
   tgr: string;
-  comentarios?: Record<string, string>;
 }

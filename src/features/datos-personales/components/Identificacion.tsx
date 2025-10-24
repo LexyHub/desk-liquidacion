@@ -14,6 +14,10 @@ export function Identificacion() {
   const updateDatosField = useDatosPersonalesStore(
     (state) => state.updateDatosField
   );
+  const datos_pp = useDatosPersonalesStore((state) => state.datosPP);
+  const updateDatosPPField = useDatosPersonalesStore(
+    (state) => state.updateDatosPPField
+  );
 
   return (
     <Card>
@@ -81,8 +85,10 @@ export function Identificacion() {
             onStarToggle={() => togglePinRow("juicios")}>
             <Input
               disabled={isInDistribution}
-              value={"hola"} // deberia ser juicios
-              onChange={() => console.log("Cambió los juicios")}
+              value={datos_pp?.juicios_pendientes ?? ""}
+              onChange={(value) =>
+                updateDatosPPField("juicios_pendientes", value as string)
+              }
             />
           </Table.Row>
           <Table.Row
@@ -94,9 +100,9 @@ export function Identificacion() {
             <Select
               disabled={isInDistribution}
               options={SiONo}
-              value={"hola"} // deberia ser procedimiento concursal
-              onValueChange={() =>
-                console.log("Cambió el procedimiento concursal")
+              value={datos_pp?.proc_concursal ?? ""}
+              onValueChange={(value) =>
+                updateDatosPPField("proc_concursal", value)
               }
             />
           </Table.Row>
