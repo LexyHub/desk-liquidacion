@@ -32,6 +32,7 @@ export async function logIn(cred: Credentials) {
     sessionStorage.setItem("id_cliente", data.id_cliente);
     sessionStorage.setItem("id_defensoria", data.id_defensoria);
     sessionStorage.setItem("nombre", data.primer_nombre ?? "No identificado");
+    sessionStorage.setItem("email", cred.username);
 
     return { success: true, data };
   } catch (err: unknown) {

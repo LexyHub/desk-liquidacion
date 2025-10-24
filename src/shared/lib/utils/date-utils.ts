@@ -2,7 +2,8 @@ import type { Message } from "@features/mensajes/types/messages";
 
 export function getSortedMessages(messages: Message[]) {
   return messages.sort(
-    (a, b) => new Date(a.date).getTime() - new Date(b.date).getTime()
+    (a, b) =>
+      new Date(a.creado_en!).getTime() - new Date(b.creado_en!).getTime()
   );
 }
 
@@ -22,7 +23,7 @@ export function getGroupedMessages(messages: Message[]): GroupedMessages {
   yesterday.setHours(0, 0, 0, 0);
 
   for (const message of sortedMessages) {
-    const currentDate = new Date(message.date);
+    const currentDate = new Date(message.creado_en!);
     currentDate.setHours(0, 0, 0, 0);
 
     let dateKey: string;

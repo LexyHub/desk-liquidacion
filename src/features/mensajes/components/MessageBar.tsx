@@ -1,25 +1,24 @@
 import { useHeaderUI } from "@features/header";
-import { useMessages } from "@features/mensajes";
+import { useMessages } from "../hooks/useMessages";
 import clsx from "clsx";
 import { ArrowUp, X } from "@shared/lib/icons";
 import { useState } from "react";
 import { MessageList } from "./MessageList";
-import type { Message } from "../types/messages";
+import type { MessageInput } from "../types/messages";
 
 export function MessageBar() {
   const { isOpen, close, rawPath } = useHeaderUI();
-  const { addMessage } = useMessages();
   const [message, setMessage] = useState("");
+  const { create: addMessage } = useMessages();
 
   const handleMessageSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const newMsg: Message = {
-      path: rawPath || "desconocido",
-      id: crypto.randomUUID(),
-      message,
-      date: new Date().toISOString(),
+    const newMsg: MessageInput = {
+      entidad: "desk-liquidacion",
+      modulo: rawPath || "desconocido",
+      comentario: message.trim(),
     };
-    addMessage(rawPath || "desconocido", newMsg);
+    addMessage(newMsg);
     setMessage("");
   };
 
