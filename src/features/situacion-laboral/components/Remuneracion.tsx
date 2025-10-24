@@ -1,14 +1,18 @@
 import { useSidebar } from "@features/sidebar";
 import { Input, Select } from "@shared/components/form";
 import { Card, DocumentButton, Table } from "@shared/components/ui";
-import { useClientDataContext } from "@shared/context";
 import { usePinService } from "@shared/hooks";
 import { SiONo } from "@shared/lib/options";
+import { useSituacionLaboralStore } from "../stores/useSituacionLaboral.store";
 
 export function Remuneracion() {
   const { isInDistribution } = useSidebar();
   const { isRowPinned, togglePinRow } = usePinService();
-  const { clientData } = useClientDataContext();
+
+  const datos = useSituacionLaboralStore((state) => state.situacion_laboral);
+  const updateDatosField = useSituacionLaboralStore(
+    (state) => state.updateField
+  );
 
   return (
     <Card>
@@ -26,8 +30,8 @@ export function Remuneracion() {
             <Input
               type='currency'
               disabled={isInDistribution}
-              value={String(clientData?.situacion_laboral.remuneracion || "")}
-              onChange={(value) => console.log("Nueva remuneración:", value)}
+              value={String(datos?.remuneracion || "")}
+              onChange={(v) => updateDatosField("remuneracion", v as number)}
             />
           </Table.Row>
           <Table.Row
@@ -39,7 +43,10 @@ export function Remuneracion() {
             <Select
               disabled={isInDistribution}
               options={SiONo}
-              value={clientData?.situacion_laboral.bonos}
+              value={datos?.bono_gratificacion}
+              onValueChange={(value) =>
+                updateDatosField("bono_gratificacion", value)
+              }
             />
           </Table.Row>
           <Table.Row
@@ -49,7 +56,7 @@ export function Remuneracion() {
             isStared={isRowPinned("link_liquidacion")}
             onStarToggle={() => togglePinRow("link_liquidacion")}>
             <DocumentButton
-              document={clientData?.situacion_laboral.link_liquidacion ?? ""}
+              document={datos?.link_ultima_liquidacion ?? ""}
               title='Última liquidación de sueldo'
             />
           </Table.Row>

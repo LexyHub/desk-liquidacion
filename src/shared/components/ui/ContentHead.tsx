@@ -35,13 +35,13 @@ export function ContentHead() {
               className='justify-between'
               rowkey='nombre'
               label='Nombre'
-              value={clientData?.datos_personales.nombre}
+              value={clientData?.datos.nombres}
             />
             <Table.Row
               className='justify-between'
               rowkey='rut'
               label='RUT'
-              value={clientData?.datos_personales.rut}
+              value={clientData?.datos.rut}
             />
             <Table.Row
               className='justify-between'

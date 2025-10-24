@@ -3,17 +3,16 @@ import { Input, Select } from "@shared/components/form";
 import { Card, Table } from "@shared/components/ui";
 import { SiONo } from "@shared/lib/options";
 import { useSidebar } from "@features/sidebar";
+import { useDeudasStore } from "../stores/deudas.store";
 
 export function InfoFinancieraAdicional() {
   const { isInDistribution } = useSidebar();
   const { isRowPinned, togglePinRow } = usePinService();
 
-  /*
-  Próximamente se utilizará
-  const {
-    clientData
-  } = useClientDataContext();
-  */
+  const datos = useDeudasStore((state) => state.datos_financieros);
+  const updateDatos = useDeudasStore(
+    (state) => state.updateDatosFinancierosField
+  );
 
   return (
     <Card>
@@ -31,7 +30,8 @@ export function InfoFinancieraAdicional() {
             <Select
               disabled={isInDistribution}
               options={SiONo}
-              onValueChange={() => console.log("Cambió el cae")}
+              value={datos?.cae ?? ""}
+              onValueChange={(v) => updateDatos("cae", v)}
             />
           </Table.Row>
           <Table.Row
@@ -43,7 +43,8 @@ export function InfoFinancieraAdicional() {
             <Select
               disabled={isInDistribution}
               options={SiONo}
-              onValueChange={() => console.log("Cambió el codeudor")}
+              value={datos?.aval ?? ""}
+              onValueChange={(v) => updateDatos("aval", v)}
             />
           </Table.Row>
           <Table.Row
@@ -54,9 +55,9 @@ export function InfoFinancieraAdicional() {
             onStarToggle={() => togglePinRow("ultima_vez_credito")}>
             <Input
               disabled={isInDistribution}
-              value=''
               placeholder='Escribe aquí...'
-              onChange={() => console.log("Cambió el ultima_vez_credito")}
+              value={datos?.ultimo_credito ?? ""}
+              onChange={(e) => updateDatos("ultimo_credito", e as string)}
             />
           </Table.Row>
         </Table>

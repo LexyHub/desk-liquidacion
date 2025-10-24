@@ -1,14 +1,18 @@
 import { useSidebar } from "@features/sidebar";
 import { Input, Select } from "@shared/components/form";
 import { Card, DocumentButton, Table } from "@shared/components/ui";
-import { useClientDataContext } from "@shared/context";
 import { usePinService } from "@shared/hooks";
 import { SiONo } from "@shared/lib/options";
+import { useSituacionLaboralStore } from "../stores/useSituacionLaboral.store";
 
 export function Finiquito() {
   const { isInDistribution } = useSidebar();
   const { isRowPinned, togglePinRow } = usePinService();
-  const { clientData } = useClientDataContext();
+
+  const datos = useSituacionLaboralStore((state) => state.situacion_laboral);
+  const updateDatosField = useSituacionLaboralStore(
+    (state) => state.updateField
+  );
 
   return (
     <Card>
@@ -26,7 +30,8 @@ export function Finiquito() {
             <Select
               disabled={isInDistribution}
               options={SiONo}
-              value={clientData?.situacion_laboral.finiquito}
+              value={datos?.finiquito}
+              onValueChange={(value) => updateDatosField("finiquito", value)}
             />
           </Table.Row>
           <Table.Row
@@ -38,10 +43,10 @@ export function Finiquito() {
             <Input
               disabled={isInDistribution}
               type='currency'
-              value={String(
-                clientData?.situacion_laboral.monto_finiquito || ""
-              )}
-              onChange={(value) => console.log("Nuevo monto finiquito:", value)}
+              value={String(datos?.monto_finiquito || "")}
+              onChange={(value) =>
+                updateDatosField("monto_finiquito", value as number)
+              }
             />
           </Table.Row>
           <Table.Row
@@ -51,7 +56,7 @@ export function Finiquito() {
             isStared={isRowPinned("link_finiquito")}
             onStarToggle={() => togglePinRow("link_finiquito")}>
             <DocumentButton
-              document={clientData?.situacion_laboral.link_finiquito ?? ""}
+              document={datos?.link_finiquito ?? ""}
               title='Documento de finiquito'
             />
           </Table.Row>

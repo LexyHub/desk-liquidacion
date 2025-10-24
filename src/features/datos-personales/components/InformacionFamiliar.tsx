@@ -1,15 +1,18 @@
 import { Card, Table } from "@shared/components/ui";
-import { Select } from "@shared/components/form";
+import { Input, Select } from "@shared/components/form";
 import { SiONo } from "@shared/lib/options";
-import { useClientDataContext } from "@shared/context";
 import { usePinService } from "@shared/hooks";
 import { useSidebar } from "@features/sidebar";
+import { useDatosPersonalesStore } from "../stores/useDatosPersonales.store";
 
 export function InformacionFamiliar() {
   const { isRowPinned, togglePinRow } = usePinService();
   const { isInDistribution } = useSidebar();
-  //! TODO esto está hard-codeado. No se cambiará hasta que el backend esté listo.
-  const { clientData } = useClientDataContext();
+
+  const datos_pp = useDatosPersonalesStore((state) => state.datosPP);
+  const updateDatosPPField = useDatosPersonalesStore(
+    (state) => state.updateDatosPPField
+  );
 
   return (
     <Card>
@@ -26,7 +29,8 @@ export function InformacionFamiliar() {
             onStarToggle={() => togglePinRow("padres_fallecidos")}>
             <Select
               disabled={isInDistribution}
-              value={clientData?.datos_personales.padres_fallecidos}
+              value={datos_pp?.padres_fallecidos}
+              onValueChange={(v) => updateDatosPPField("padres_fallecidos", v)}
               options={SiONo}
             />
           </Table.Row>
@@ -38,7 +42,8 @@ export function InformacionFamiliar() {
             onStarToggle={() => togglePinRow("posesion_efectiva")}>
             <Select
               disabled={isInDistribution}
-              value={clientData?.datos_personales.posesion_efectiva}
+              value={datos_pp?.posesion_efectiva}
+              onValueChange={(v) => updateDatosPPField("posesion_efectiva", v)}
               options={SiONo}
             />
           </Table.Row>
@@ -50,7 +55,10 @@ export function InformacionFamiliar() {
             onStarToggle={() => togglePinRow("derechos_hereditarios")}>
             <Select
               disabled={isInDistribution}
-              value={clientData?.datos_personales.derechos_hereditarios}
+              value={datos_pp?.derechos_hereditarios ?? ""}
+              onValueChange={(v) =>
+                updateDatosPPField("derechos_hereditarios", v)
+              }
               options={SiONo}
             />
           </Table.Row>
@@ -60,10 +68,12 @@ export function InformacionFamiliar() {
             stareable
             isStared={isRowPinned("hijos")}
             onStarToggle={() => togglePinRow("hijos")}>
-            <Select
+            <Input
               disabled={isInDistribution}
-              value={clientData?.datos_personales.hijos}
-              options={SiONo}
+              type='number'
+              placeholder='Ingresa la cantidad de hijos'
+              value={String(datos_pp?.hijos ?? "")}
+              onChange={() => console.log("Cambió los hijos")}
             />
           </Table.Row>
           <Table.Row
@@ -74,7 +84,8 @@ export function InformacionFamiliar() {
             onStarToggle={() => togglePinRow("recibe_alimentos")}>
             <Select
               disabled={isInDistribution}
-              value={clientData?.datos_personales.recibe_alimentos}
+              value={datos_pp?.recibe_alimentos ?? ""}
+              onValueChange={(v) => updateDatosPPField("recibe_alimentos", v)}
               options={SiONo}
             />
           </Table.Row>
@@ -86,7 +97,8 @@ export function InformacionFamiliar() {
             onStarToggle={() => togglePinRow("deuda_alimenticia")}>
             <Select
               disabled={isInDistribution}
-              value={clientData?.datos_personales.deuda_alimenticia}
+              value={datos_pp?.deuda_alimentos ?? ""}
+              onValueChange={(v) => updateDatosPPField("deuda_alimentos", v)}
               options={SiONo}
             />
           </Table.Row>
@@ -98,7 +110,10 @@ export function InformacionFamiliar() {
             onStarToggle={() => togglePinRow("regularizada")}>
             <Select
               disabled={isInDistribution}
-              value={clientData?.datos_personales.regularizada}
+              value={datos_pp?.alimentos_regularizados ?? ""}
+              onValueChange={(v) =>
+                updateDatosPPField("alimentos_regularizados", v)
+              }
               options={SiONo}
             />
           </Table.Row>

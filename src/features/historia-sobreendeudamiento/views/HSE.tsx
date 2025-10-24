@@ -7,6 +7,7 @@ import { GastosMensuales } from "../components/GastosMensuales";
 import { Save } from "@shared/lib/icons";
 import { useNavigate, useParams } from "react-router-dom";
 import { useSidebar } from "@/features/sidebar";
+import { useSyncHistoriaSE } from "../hooks/useSyncHistoriaSE";
 
 export default function HSE() {
   const { idDefensoria } = useParams();
@@ -18,6 +19,8 @@ export default function HSE() {
     setInDistribution(true);
     navigate(`/distribucion/${idDefensoria}`);
   };
+
+  useSyncHistoriaSE();
 
   if (loading) {
     return <LoadingView />;
