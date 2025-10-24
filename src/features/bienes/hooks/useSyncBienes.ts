@@ -1,9 +1,9 @@
-import { useClientDataContext } from "@/shared/context";
+import { useClientStore } from "@shared/stores/useClientStore";
 import { useEffect } from "react";
 import { useBienesStore } from "../stores/useBienes.store";
 
 export function useSyncBienes() {
-  const { clientData } = useClientDataContext();
+  const clientData = useClientStore((state) => state.clientData);
   const { setBienes, setEmpresas, reset } = useBienesStore();
 
   useEffect(() => {

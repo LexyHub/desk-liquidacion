@@ -1,5 +1,5 @@
 import { LoadingView } from "@shared/components/loading/LoadingView";
-import { useClientDataContext } from "@shared/context";
+import { useClientStore } from "@shared/stores/useClientStore";
 import {
   RegistroDeDeudas,
   TotalDeDeudas,
@@ -10,7 +10,7 @@ import {
 import { useSyncDeudas } from "../hooks/useSyncDeudas";
 
 export default function Deudas() {
-  const { loading } = useClientDataContext();
+  const loading = useClientStore((state) => state.isLoading);
 
   useSyncDeudas();
 

@@ -1,7 +1,7 @@
 // hse es historia sobreendeudamiento
 
 import { LoadingView } from "@shared/components/loading";
-import { useClientDataContext } from "@shared/context";
+import { useClientStore } from "@shared/stores/useClientStore";
 import { Historia } from "../components/Historia";
 import { GastosMensuales } from "../components/GastosMensuales";
 import { Save } from "@shared/lib/icons";
@@ -11,7 +11,7 @@ import { useSyncHistoriaSE } from "../hooks/useSyncHistoriaSE";
 
 export default function HSE() {
   const { idDefensoria } = useParams();
-  const { loading } = useClientDataContext();
+  const loading = useClientStore((state) => state.isLoading);
   const { setInDistribution } = useSidebar();
   const navigate = useNavigate();
 

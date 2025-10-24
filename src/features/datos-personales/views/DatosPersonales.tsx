@@ -1,4 +1,4 @@
-import { useClientDataContext } from "@shared/context";
+import { useClientStore } from "@shared/stores/useClientStore";
 import { LoadingView } from "@shared/components/loading/LoadingView";
 import {
   Identificacion,
@@ -9,7 +9,7 @@ import {
 import { useSyncDatosPersonales } from "../hooks/useSyncDatosPersonales";
 
 export default function DatosPersonales() {
-  const { loading } = useClientDataContext();
+  const loading = useClientStore((state) => state.isLoading);
 
   useSyncDatosPersonales();
 
