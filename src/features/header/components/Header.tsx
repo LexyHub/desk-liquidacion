@@ -1,4 +1,4 @@
-import { useMessages } from "@features/mensajes";
+import { useMessages } from "@features/mensajes/hooks/useMessages";
 import { useHeaderUI } from "@features/header";
 import { MessageCircle } from "@shared/lib/icons";
 
