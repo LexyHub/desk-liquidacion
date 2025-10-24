@@ -17,11 +17,8 @@ export function RegistroDeDeudas() {
     error,
   } = useAcreedores();
 
-  const datos = useDatosPersonalesStore((state) => state.datos);
-  const deudas = useDeudasStore((state) => state.deudas);
-  const addDeuda = useDeudasStore((state) => state.addDeuda);
-  const updateDeudaField = useDeudasStore((state) => state.updateDeudaField);
-  const removeDeuda = useDeudasStore((state) => state.removeDeuda);
+  const { datos } = useDatosPersonalesStore();
+  const { deudas, addDeuda, updateDeudaField, removeDeuda } = useDeudasStore();
 
   const handleAddDeuda = () => {
     const deuda: Deuda = {

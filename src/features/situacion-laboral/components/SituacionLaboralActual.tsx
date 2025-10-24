@@ -8,8 +8,7 @@ import { useSituacionLaboralStore } from "../stores/useSituacionLaboral.store";
 export function SituacionLaboralActual() {
   const { isInDistribution } = useSidebar();
   const { isRowPinned, togglePinRow } = usePinService();
-  const datos = useSituacionLaboralStore((state) => state.situacion_laboral);
-  const updateField = useSituacionLaboralStore((state) => state.updateField);
+  const { situacion_laboral, updateField } = useSituacionLaboralStore();
 
   return (
     <Card>
@@ -27,7 +26,7 @@ export function SituacionLaboralActual() {
             <Select
               disabled={isInDistribution}
               options={SiONo}
-              value={datos?.trabajando}
+              value={situacion_laboral?.trabajando}
               onValueChange={(v) => updateField("trabajando", v)}
             />
           </Table.Row>
@@ -40,7 +39,7 @@ export function SituacionLaboralActual() {
             <Select
               disabled={isInDistribution}
               options={TipoTrabajo}
-              value={datos?.tipo_trabajo}
+              value={situacion_laboral?.tipo_trabajo}
               onValueChange={(v) => updateField("tipo_trabajo", v)}
             />
           </Table.Row>
@@ -53,7 +52,7 @@ export function SituacionLaboralActual() {
             <Select
               disabled={isInDistribution}
               options={TipoTrabajador}
-              value={datos?.tipo_funcionario}
+              value={situacion_laboral?.tipo_funcionario}
               onValueChange={(v) => updateField("tipo_funcionario", v)}
             />
           </Table.Row>

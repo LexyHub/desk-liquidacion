@@ -9,10 +9,7 @@ export function InformacionFamiliar() {
   const { isRowPinned, togglePinRow } = usePinService();
   const { isInDistribution } = useSidebar();
 
-  const datos_pp = useDatosPersonalesStore((state) => state.datosPP);
-  const updateDatosPPField = useDatosPersonalesStore(
-    (state) => state.updateDatosPPField
-  );
+  const { datosPP, updateDatosPPField } = useDatosPersonalesStore();
 
   return (
     <Card>
@@ -29,7 +26,7 @@ export function InformacionFamiliar() {
             onStarToggle={() => togglePinRow("padres_fallecidos")}>
             <Select
               disabled={isInDistribution}
-              value={datos_pp?.padres_fallecidos}
+              value={datosPP?.padres_fallecidos}
               onValueChange={(v) => updateDatosPPField("padres_fallecidos", v)}
               options={SiONo}
             />
@@ -42,7 +39,7 @@ export function InformacionFamiliar() {
             onStarToggle={() => togglePinRow("posesion_efectiva")}>
             <Select
               disabled={isInDistribution}
-              value={datos_pp?.posesion_efectiva}
+              value={datosPP?.posesion_efectiva}
               onValueChange={(v) => updateDatosPPField("posesion_efectiva", v)}
               options={SiONo}
             />
@@ -55,7 +52,7 @@ export function InformacionFamiliar() {
             onStarToggle={() => togglePinRow("derechos_hereditarios")}>
             <Select
               disabled={isInDistribution}
-              value={datos_pp?.derechos_hereditarios ?? ""}
+              value={datosPP?.derechos_hereditarios ?? ""}
               onValueChange={(v) =>
                 updateDatosPPField("derechos_hereditarios", v)
               }
@@ -72,8 +69,8 @@ export function InformacionFamiliar() {
               disabled={isInDistribution}
               type='number'
               placeholder='Ingresa la cantidad de hijos'
-              value={String(datos_pp?.hijos ?? "")}
-              onChange={() => console.log("Cambió los hijos")}
+              value={String(datosPP?.hijos ?? "")}
+              onChange={(v) => updateDatosPPField("hijos", v as number)}
             />
           </Table.Row>
           <Table.Row
@@ -84,7 +81,7 @@ export function InformacionFamiliar() {
             onStarToggle={() => togglePinRow("recibe_alimentos")}>
             <Select
               disabled={isInDistribution}
-              value={datos_pp?.recibe_alimentos ?? ""}
+              value={datosPP?.recibe_alimentos ?? ""}
               onValueChange={(v) => updateDatosPPField("recibe_alimentos", v)}
               options={SiONo}
             />
@@ -97,7 +94,7 @@ export function InformacionFamiliar() {
             onStarToggle={() => togglePinRow("deuda_alimenticia")}>
             <Select
               disabled={isInDistribution}
-              value={datos_pp?.deuda_alimentos ?? ""}
+              value={datosPP?.deuda_alimentos ?? ""}
               onValueChange={(v) => updateDatosPPField("deuda_alimentos", v)}
               options={SiONo}
             />
@@ -110,7 +107,7 @@ export function InformacionFamiliar() {
             onStarToggle={() => togglePinRow("regularizada")}>
             <Select
               disabled={isInDistribution}
-              value={datos_pp?.alimentos_regularizados ?? ""}
+              value={datosPP?.alimentos_regularizados ?? ""}
               onValueChange={(v) =>
                 updateDatosPPField("alimentos_regularizados", v)
               }

@@ -10,12 +10,8 @@ export function Inmuebles() {
   const { isRowPinned, togglePinRow } = usePinService();
   const { isInDistribution } = useSidebar();
 
-  const datos = useBienesStore((state) => state.bienes);
-  const updateDatos = useBienesStore((state) => state.updateBienesField);
-  const datos_pp = useDatosPersonalesStore((state) => state.datosPP);
-  const updateDatosPP = useDatosPersonalesStore(
-    (state) => state.updateDatosPPField
-  );
+  const { bienes, updateBienesField } = useBienesStore();
+  const { datosPP, updateDatosPPField } = useDatosPersonalesStore();
 
   return (
     <Card>
@@ -32,8 +28,8 @@ export function Inmuebles() {
             onStarToggle={() => togglePinRow("posee_inmuebles")}>
             <Select
               disabled={isInDistribution}
-              value={datos_pp?.tiene_inmueble ?? ""}
-              onValueChange={(v) => updateDatosPP("tiene_inmueble", v)}
+              value={datosPP?.tiene_inmueble ?? ""}
+              onValueChange={(v) => updateDatosPPField("tiene_inmueble", v)}
               options={SiONo}
             />
           </Table.Row>
@@ -45,10 +41,10 @@ export function Inmuebles() {
             onStarToggle={() => togglePinRow("paga_cred_hipotecario")}>
             <Select
               disabled={isInDistribution}
-              value={datos?.inmueble.credito_hipotecario ?? ""}
+              value={bienes?.inmueble.credito_hipotecario ?? ""}
               onValueChange={(v) =>
-                updateDatos("inmueble", {
-                  ...datos!.inmueble,
+                updateBienesField("inmueble", {
+                  ...bienes!.inmueble,
                   credito_hipotecario: v,
                 })
               }
@@ -63,10 +59,10 @@ export function Inmuebles() {
             onStarToggle={() => togglePinRow("tiene_codeudor")}>
             <Select
               disabled={isInDistribution}
-              value={datos?.inmueble.codeudor_solidario ?? ""}
+              value={bienes?.inmueble.codeudor_solidario ?? ""}
               onValueChange={(v) =>
-                updateDatos("inmueble", {
-                  ...datos!.inmueble,
+                updateBienesField("inmueble", {
+                  ...bienes!.inmueble,
                   codeudor_solidario: v,
                 })
               }
@@ -81,9 +77,12 @@ export function Inmuebles() {
             onStarToggle={() => togglePinRow("al_dia_hipoteca")}>
             <Select
               disabled={isInDistribution}
-              value={datos?.inmueble.al_dia ?? ""}
+              value={bienes?.inmueble.al_dia ?? ""}
               onValueChange={(v) =>
-                updateDatos("inmueble", { ...datos!.inmueble, al_dia: v })
+                updateBienesField("inmueble", {
+                  ...bienes!.inmueble,
+                  al_dia: v,
+                })
               }
               options={SiONo}
             />
@@ -96,9 +95,12 @@ export function Inmuebles() {
             onStarToggle={() => togglePinRow("hipoteco_ultimos_anos")}>
             <Select
               disabled={isInDistribution}
-              value={datos?.inmueble.hipotecado ?? ""}
+              value={bienes?.inmueble.hipotecado ?? ""}
               onValueChange={(v) =>
-                updateDatos("inmueble", { ...datos!.inmueble, hipotecado: v })
+                updateBienesField("inmueble", {
+                  ...bienes!.inmueble,
+                  hipotecado: v,
+                })
               }
               options={SiONo}
             />
@@ -111,9 +113,9 @@ export function Inmuebles() {
             onStarToggle={() => togglePinRow("vendio_inmueble")}>
             <Select
               disabled={isInDistribution}
-              value={datos?.bien.vendido ?? ""}
+              value={bienes?.bien.vendido ?? ""}
               onValueChange={(v) =>
-                updateDatos("bien", { ...datos!.bien, vendido: v })
+                updateBienesField("bien", { ...bienes!.bien, vendido: v })
               }
               options={SiONo}
             />
