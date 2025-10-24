@@ -31,11 +31,10 @@ export async function getMessages(cliente: string, signal?: AbortSignal) {
 }
 
 export async function createMessage(
-  cliente: string,
   message: Omit<Message, "id">,
   signal?: AbortSignal
 ): Promise<boolean | Error> {
-  const final_url = `${API_URL}add-comment/${cliente}`;
+  const final_url = `${API_URL}add-comment`;
   try {
     const response = await fetch(final_url, {
       method: "POST",
