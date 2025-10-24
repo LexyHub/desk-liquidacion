@@ -1,5 +1,11 @@
-import type { ClientData, ClientDataAPIResponse } from "@/shared/types";
+import type {
+  ClientData,
+  ClientDataAPIResponse,
+  DatosPP,
+  DatosPPResponse,
+} from "@/shared/types";
 import { parseBooleanToAffirmation } from "../utils";
+import { currencyToNumber } from "./formatters";
 
 export function mapAPIToClientData(apiData: ClientDataAPIResponse): ClientData {
   return {
@@ -96,13 +102,19 @@ export function mapAPIToClientData(apiData: ClientDataAPIResponse): ClientData {
     },
     empresas: apiData.empresas.map((empresa) => ({
       ...empresa,
+      activos_pasivos: currencyToNumber(empresa.activos_pasivos),
       actividad: parseBooleanToAffirmation(empresa.actividad),
       movimientos: parseBooleanToAffirmation(empresa.movimientos),
       contabilidad_completa: parseBooleanToAffirmation(
         empresa.contabilidad_completa
       ),
     })),
-    gastos: apiData.gastos,
+    gastos: apiData.gastos
+      ? apiData.gastos.map((gasto) => ({
+          ...gasto,
+          monto: currencyToNumber(String(gasto.monto)),
+        }))
+      : [],
     historial: apiData.historial
       ? apiData.historial
       : {
@@ -198,5 +210,23 @@ export function mapAPIToClientData(apiData: ClientDataAPIResponse): ClientData {
           inst_medicas: "no",
           tgr: "no",
         },
+  };
+}
+
+export function mapToPersonalData(cd: DatosPP): DatosPPResponse {
+  return {
+    ...cd,
+    padres_fallecidos: cd!.padres_fallecidos === "si",
+    posesion_efectiva: cd!.posesion_efectiva === "si",
+    ficha_enviada: cd!.ficha_enviada === "si",
+    cae_fondo: cd!.cae_fondo === "si",
+    aval: cd!.aval === "si",
+    tiene_inmueble: cd!.tiene_inmueble === "si",
+    tiene_vehiculo: cd!.tiene_vehiculo === "si",
+    recibe_alimentos: cd!.recibe_alimentos === "si",
+    deuda_alimentos: cd!.deuda_alimentos === "si",
+    alimentos_regularizados: cd!.alimentos_regularizados === "si",
+    juicios_pendientes: cd!.juicios_pendientes,
+    proc_concursal: cd!.proc_concursal === "si",
   };
 }

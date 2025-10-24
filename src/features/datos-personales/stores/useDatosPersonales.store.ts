@@ -2,48 +2,56 @@ import { create } from "zustand";
 import type { Datos, DatosPP } from "@shared/types";
 
 interface DatosPersonalesState {
-  // Estado
   datos: Datos | null;
   datosPP: DatosPP | null;
+  changes: boolean;
 
-  // Acciones para inicializar desde el fetch
   setDatos: (datos: Datos) => void;
   setDatosPP: (datosPP: DatosPP) => void;
 
-  // Acciones para actualizar campos individuales de Datos
   updateDatosField: <K extends keyof Datos>(field: K, value: Datos[K]) => void;
 
-  // Acciones para actualizar campos individuales de DatosPP
   updateDatosPPField: <K extends keyof DatosPP>(
     field: K,
     value: DatosPP[K]
   ) => void;
 
-  // Acción para limpiar todo
+  setChanges: (changes: boolean) => void;
+
   reset: () => void;
 }
 
-export const useDatosPersonalesStore = create<DatosPersonalesState>((set) => ({
-  // Estado inicial
-  datos: null,
-  datosPP: null,
+export const useDatosPersonalesStore = create<DatosPersonalesState>(
+  (set, get) => ({
+    datos: null,
+    datosPP: null,
+    changes: false,
 
-  // Inicializar datos desde el fetch
-  setDatos: (datos) => set({ datos }),
-  setDatosPP: (datosPP) => set({ datosPP }),
+    setDatos: (datos) => set({ datos }),
+    setDatosPP: (datosPP) => set({ datosPP }),
 
-  // Actualizar campo individual de Datos
-  updateDatosField: (field, value) =>
-    set((state) => ({
-      datos: state.datos ? { ...state.datos, [field]: value } : null,
-    })),
+    updateDatosField: (field, value) => {
+      set((state) => ({
+        datos: state.datos ? { ...state.datos, [field]: value } : null,
+      }));
+      const changes = get().changes;
+      if (!changes) {
+        set({ changes: true });
+      }
+    },
 
-  // Actualizar campo individual de DatosPP
-  updateDatosPPField: (field, value) =>
-    set((state) => ({
-      datosPP: state.datosPP ? { ...state.datosPP, [field]: value } : null,
-    })),
+    updateDatosPPField: (field, value) => {
+      set((state) => ({
+        datosPP: state.datosPP ? { ...state.datosPP, [field]: value } : null,
+      }));
+      const changes = get().changes;
+      if (!changes) {
+        set({ changes: true });
+      }
+    },
 
-  // Limpiar todo el estado
-  reset: () => set({ datos: null, datosPP: null }),
-}));
+    setChanges: (changes) => set({ changes }),
+
+    reset: () => set({ datos: null, datosPP: null, changes: false }),
+  })
+);

@@ -10,12 +10,8 @@ export function Vehiculos() {
   const { isRowPinned, togglePinRow } = usePinService();
   const { isInDistribution } = useSidebar();
 
-  const data = useDatosPersonalesStore((state) => state.datosPP);
-  const updateDatos = useDatosPersonalesStore(
-    (state) => state.updateDatosPPField
-  );
-  const bienes = useBienesStore((state) => state.bienes);
-  const updateBienes = useBienesStore((state) => state.updateBienesField);
+  const { datosPP, updateDatosPPField } = useDatosPersonalesStore();
+  const { bienes, updateBienesField } = useBienesStore();
 
   return (
     <Card>
@@ -32,8 +28,8 @@ export function Vehiculos() {
             onStarToggle={() => togglePinRow("tiene_vehiculo")}>
             <Select
               disabled={isInDistribution}
-              value={data?.tiene_vehiculo ?? ""}
-              onValueChange={(v) => updateDatos("tiene_vehiculo", v)}
+              value={datosPP?.tiene_vehiculo ?? ""}
+              onValueChange={(v) => updateDatosPPField("tiene_vehiculo", v)}
               options={SiONo}
             />
           </Table.Row>
@@ -47,7 +43,7 @@ export function Vehiculos() {
               disabled={isInDistribution}
               value={bienes?.vehiculo.comprador ? "si" : ""}
               onValueChange={(v) =>
-                updateBienes("vehiculo", {
+                updateBienesField("vehiculo", {
                   ...bienes!.vehiculo,
                   comprador: v,
                 })
@@ -65,7 +61,7 @@ export function Vehiculos() {
               disabled={isInDistribution}
               value={bienes?.vehiculo.mas_dos_anos_venta ?? ""}
               onValueChange={(v) =>
-                updateBienes("vehiculo", {
+                updateBienesField("vehiculo", {
                   ...bienes!.vehiculo,
                   mas_dos_anos_venta: v,
                 })
@@ -83,7 +79,7 @@ export function Vehiculos() {
               disabled={isInDistribution}
               value={bienes?.vehiculo.comprador ?? ""}
               onValueChange={(v) =>
-                updateBienes("vehiculo", {
+                updateBienesField("vehiculo", {
                   ...bienes!.vehiculo,
                   comprador: v,
                 })
@@ -101,7 +97,7 @@ export function Vehiculos() {
               disabled={isInDistribution}
               value={bienes?.vehiculo.medio_compra ?? ""}
               onValueChange={(v) =>
-                updateBienes("vehiculo", {
+                updateBienesField("vehiculo", {
                   ...bienes!.vehiculo,
                   medio_compra: v,
                 })

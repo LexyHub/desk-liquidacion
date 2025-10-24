@@ -9,10 +9,7 @@ export function InfoFinancieraAdicional() {
   const { isInDistribution } = useSidebar();
   const { isRowPinned, togglePinRow } = usePinService();
 
-  const datos = useDeudasStore((state) => state.datos_financieros);
-  const updateDatos = useDeudasStore(
-    (state) => state.updateDatosFinancierosField
-  );
+  const { datos_financieros, updateDatosFinancierosField } = useDeudasStore();
 
   return (
     <Card>
@@ -30,8 +27,8 @@ export function InfoFinancieraAdicional() {
             <Select
               disabled={isInDistribution}
               options={SiONo}
-              value={datos?.cae ?? ""}
-              onValueChange={(v) => updateDatos("cae", v)}
+              value={datos_financieros?.cae ?? ""}
+              onValueChange={(v) => updateDatosFinancierosField("cae", v)}
             />
           </Table.Row>
           <Table.Row
@@ -43,8 +40,8 @@ export function InfoFinancieraAdicional() {
             <Select
               disabled={isInDistribution}
               options={SiONo}
-              value={datos?.aval ?? ""}
-              onValueChange={(v) => updateDatos("aval", v)}
+              value={datos_financieros?.aval ?? ""}
+              onValueChange={(v) => updateDatosFinancierosField("aval", v)}
             />
           </Table.Row>
           <Table.Row
@@ -56,8 +53,10 @@ export function InfoFinancieraAdicional() {
             <Input
               disabled={isInDistribution}
               placeholder='Escribe aquí...'
-              value={datos?.ultimo_credito ?? ""}
-              onChange={(e) => updateDatos("ultimo_credito", e as string)}
+              value={datos_financieros?.ultimo_credito ?? ""}
+              onChange={(e) =>
+                updateDatosFinancierosField("ultimo_credito", e as string)
+              }
             />
           </Table.Row>
         </Table>

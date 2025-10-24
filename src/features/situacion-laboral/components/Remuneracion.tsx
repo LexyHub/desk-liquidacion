@@ -9,10 +9,7 @@ export function Remuneracion() {
   const { isInDistribution } = useSidebar();
   const { isRowPinned, togglePinRow } = usePinService();
 
-  const datos = useSituacionLaboralStore((state) => state.situacion_laboral);
-  const updateDatosField = useSituacionLaboralStore(
-    (state) => state.updateField
-  );
+  const { situacion_laboral, updateField } = useSituacionLaboralStore();
 
   return (
     <Card>
@@ -30,8 +27,8 @@ export function Remuneracion() {
             <Input
               type='currency'
               disabled={isInDistribution}
-              value={String(datos?.remuneracion || "")}
-              onChange={(v) => updateDatosField("remuneracion", v as number)}
+              value={String(situacion_laboral?.remuneracion || "")}
+              onChange={(v) => updateField("remuneracion", v as number)}
             />
           </Table.Row>
           <Table.Row
@@ -43,9 +40,9 @@ export function Remuneracion() {
             <Select
               disabled={isInDistribution}
               options={SiONo}
-              value={datos?.bono_gratificacion}
+              value={situacion_laboral?.bono_gratificacion}
               onValueChange={(value) =>
-                updateDatosField("bono_gratificacion", value)
+                updateField("bono_gratificacion", value)
               }
             />
           </Table.Row>
@@ -56,7 +53,7 @@ export function Remuneracion() {
             isStared={isRowPinned("link_liquidacion")}
             onStarToggle={() => togglePinRow("link_liquidacion")}>
             <DocumentButton
-              document={datos?.link_ultima_liquidacion ?? ""}
+              document={situacion_laboral?.link_ultima_liquidacion ?? ""}
               title='Última liquidación de sueldo'
             />
           </Table.Row>

@@ -1,4 +1,4 @@
-import { useClientDataContext } from "@shared/context";
+import { useClientStore } from "@shared/stores/useClientStore";
 import { LoadingView } from "@shared/components/loading/LoadingView";
 import {
   SituacionLaboralActual,
@@ -8,7 +8,7 @@ import {
 import { useSyncSituacionLaboral } from "@features/situacion-laboral/hooks/useSyncSituacionLaboral";
 
 export default function SituacionLaboral() {
-  const { loading } = useClientDataContext();
+  const loading = useClientStore((state) => state.isLoading);
   useSyncSituacionLaboral();
 
   if (loading) {

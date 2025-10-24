@@ -9,10 +9,7 @@ export function Finiquito() {
   const { isInDistribution } = useSidebar();
   const { isRowPinned, togglePinRow } = usePinService();
 
-  const datos = useSituacionLaboralStore((state) => state.situacion_laboral);
-  const updateDatosField = useSituacionLaboralStore(
-    (state) => state.updateField
-  );
+  const { situacion_laboral, updateField } = useSituacionLaboralStore();
 
   return (
     <Card>
@@ -30,8 +27,8 @@ export function Finiquito() {
             <Select
               disabled={isInDistribution}
               options={SiONo}
-              value={datos?.finiquito}
-              onValueChange={(value) => updateDatosField("finiquito", value)}
+              value={situacion_laboral?.finiquito}
+              onValueChange={(value) => updateField("finiquito", value)}
             />
           </Table.Row>
           <Table.Row
@@ -43,9 +40,9 @@ export function Finiquito() {
             <Input
               disabled={isInDistribution}
               type='currency'
-              value={String(datos?.monto_finiquito || "")}
+              value={String(situacion_laboral?.monto_finiquito || "")}
               onChange={(value) =>
-                updateDatosField("monto_finiquito", value as number)
+                updateField("monto_finiquito", value as number)
               }
             />
           </Table.Row>
@@ -56,7 +53,7 @@ export function Finiquito() {
             isStared={isRowPinned("link_finiquito")}
             onStarToggle={() => togglePinRow("link_finiquito")}>
             <DocumentButton
-              document={datos?.link_finiquito ?? ""}
+              document={situacion_laboral?.link_finiquito ?? ""}
               title='Documento de finiquito'
             />
           </Table.Row>

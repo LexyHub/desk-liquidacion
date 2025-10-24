@@ -108,7 +108,7 @@ export interface Empresa {
   nombre_empresa: string;
   actividad: string;
   id_cliente: string;
-  activos_pasivos: string;
+  activos_pasivos: number;
   movimientos: string;
   contabilidad_completa: string;
   socios: string;

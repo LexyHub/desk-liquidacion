@@ -9,10 +9,7 @@ export function DeudasFueraCMF() {
   const { isInDistribution } = useSidebar();
   const { isRowPinned, togglePinRow } = usePinService();
 
-  const datos = useDeudasStore((state) => state.datos_financieros);
-  const updateDatos = useDeudasStore(
-    (state) => state.updateDatosFinancierosField
-  );
+  const { datos_financieros, updateDatosFinancierosField } = useDeudasStore();
 
   return (
     <Card>
@@ -30,8 +27,10 @@ export function DeudasFueraCMF() {
             <Select
               disabled={isInDistribution}
               options={SiONo}
-              value={datos?.caja_compensacion ?? ""}
-              onValueChange={(v) => updateDatos("caja_compensacion", v)}
+              value={datos_financieros?.caja_compensacion ?? ""}
+              onValueChange={(v) =>
+                updateDatosFinancierosField("caja_compensacion", v)
+              }
             />
           </Table.Row>
           <Table.Row
@@ -43,8 +42,8 @@ export function DeudasFueraCMF() {
             <Select
               disabled={isInDistribution}
               options={SiONo}
-              value={datos?.autopista ?? ""}
-              onValueChange={(v) => updateDatos("autopista", v)}
+              value={datos_financieros?.autopista ?? ""}
+              onValueChange={(v) => updateDatosFinancierosField("autopista", v)}
             />
           </Table.Row>
           <Table.Row
@@ -56,8 +55,10 @@ export function DeudasFueraCMF() {
             <Select
               disabled={isInDistribution}
               options={SiONo}
-              value={datos?.inst_medicas ?? ""}
-              onValueChange={(v) => updateDatos("inst_medicas", v)}
+              value={datos_financieros?.inst_medicas ?? ""}
+              onValueChange={(v) =>
+                updateDatosFinancierosField("inst_medicas", v)
+              }
             />
           </Table.Row>
           <Table.Row
@@ -69,8 +70,8 @@ export function DeudasFueraCMF() {
             <Select
               disabled={isInDistribution}
               options={SiONo}
-              value={datos?.tgr ?? ""}
-              onValueChange={(v) => updateDatos("tgr", v)}
+              value={datos_financieros?.tgr ?? ""}
+              onValueChange={(v) => updateDatosFinancierosField("tgr", v)}
             />
           </Table.Row>
         </Table>

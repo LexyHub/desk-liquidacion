@@ -1,6 +1,6 @@
 import { LoadingView } from "@shared/components/loading";
 import { Card } from "@shared/components/ui";
-import { useClientDataContext } from "@shared/context";
+import { useClientStore } from "@shared/stores/useClientStore";
 import { ClipboardCheck, Hourglass } from "@shared/lib/icons";
 import { useState } from "react";
 import type { Documento, Motivo } from "../types/documento";
@@ -10,7 +10,7 @@ const GestionarModal = (await import("../components/GestionarModal"))
 const WaitingModal = (await import("../components/WaitingModal")).WaitingModal;
 
 export default function Distribucion() {
-  const { loading } = useClientDataContext();
+  const loading = useClientStore((state) => state.isLoading);
 
   const [gestionarModal, setGestionarModal] = useState(false);
   const [waitingModal, setWaitingModal] = useState(false);
