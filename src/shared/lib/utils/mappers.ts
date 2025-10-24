@@ -5,6 +5,7 @@ import type {
   DatosPPResponse,
 } from "@/shared/types";
 import { parseBooleanToAffirmation } from "../utils";
+import { currencyToNumber } from "./formatters";
 
 export function mapAPIToClientData(apiData: ClientDataAPIResponse): ClientData {
   return {
@@ -101,13 +102,19 @@ export function mapAPIToClientData(apiData: ClientDataAPIResponse): ClientData {
     },
     empresas: apiData.empresas.map((empresa) => ({
       ...empresa,
+      activos_pasivos: currencyToNumber(empresa.activos_pasivos),
       actividad: parseBooleanToAffirmation(empresa.actividad),
       movimientos: parseBooleanToAffirmation(empresa.movimientos),
       contabilidad_completa: parseBooleanToAffirmation(
         empresa.contabilidad_completa
       ),
     })),
-    gastos: apiData.gastos,
+    gastos: apiData.gastos
+      ? apiData.gastos.map((gasto) => ({
+          ...gasto,
+          monto: currencyToNumber(String(gasto.monto)),
+        }))
+      : [],
     historial: apiData.historial
       ? apiData.historial
       : {

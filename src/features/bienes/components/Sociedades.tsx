@@ -9,10 +9,7 @@ export function Sociedades() {
   const { isRowPinned, togglePinRow } = usePinService();
   const { isInDistribution } = useSidebar();
 
-  const datos = useDatosPersonalesStore((state) => state.datos);
-  const updateDatos = useDatosPersonalesStore(
-    (state) => state.updateDatosField
-  );
+  const { datos, updateDatosField } = useDatosPersonalesStore();
 
   return (
     <Card>
@@ -30,7 +27,7 @@ export function Sociedades() {
             <Select
               disabled={isInDistribution}
               value={datos?.tiene_sociedades ?? ""}
-              onValueChange={(v) => updateDatos("tiene_sociedades", v)}
+              onValueChange={(v) => updateDatosField("tiene_sociedades", v)}
               options={SiONo}
             />
           </Table.Row>

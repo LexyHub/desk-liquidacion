@@ -12,15 +12,8 @@ export function GastosMensuales() {
   const { isInDistribution } = useSidebar();
 
   const datos = useDatosPersonalesStore((state) => state.datos);
-  const gastos = useHistoriaSEStore((state) => state.gastos);
-  const totalGastosMensuales = useHistoriaSEStore((state) =>
-    state.getTotalGastos()
-  );
-  const addGastoMensual = useHistoriaSEStore((state) => state.addGasto);
-  const modifyGastoMensual = useHistoriaSEStore(
-    (state) => state.updateGastoField
-  );
-  const removeGastoMensual = useHistoriaSEStore((state) => state.removeGasto);
+  const { gastos, getTotalGastos, addGasto, updateGastoField, removeGasto } =
+    useHistoriaSEStore();
 
   const handleAddGasto = () => {
     const newGasto: Gasto = {
@@ -29,8 +22,10 @@ export function GastosMensuales() {
       descripcion: "",
       monto: 0,
     };
-    addGastoMensual(newGasto);
+    addGasto(newGasto);
   };
+
+  console.log(gastos);
 
   return (
     <>
@@ -66,7 +61,7 @@ export function GastosMensuales() {
                       disabled={isInDistribution}
                       value={gasto.categoria}
                       onChange={(v) =>
-                        modifyGastoMensual(gasto.id!, "categoria", String(v))
+                        updateGastoField(gasto.id!, "categoria", String(v))
                       }
                       className={cn(
                         "py-2 px-4 border border-lexy-input-border text-lexy-text-secondary leading-6 rounded-sm",
@@ -81,7 +76,7 @@ export function GastosMensuales() {
                       disabled={isInDistribution}
                       value={gasto.descripcion}
                       onChange={(v) =>
-                        modifyGastoMensual(gasto.id!, "descripcion", String(v))
+                        updateGastoField(gasto.id!, "descripcion", String(v))
                       }
                       className={cn(
                         "py-2 px-4 border border-lexy-input-border text-lexy-text-secondary leading-6 rounded-sm",
@@ -98,7 +93,7 @@ export function GastosMensuales() {
                       value={String(gasto.monto || 0)}
                       type='currency'
                       onChange={(v: string | number) =>
-                        modifyGastoMensual(gasto.id!, "monto", Number(v))
+                        updateGastoField(gasto.id!, "monto", Number(v))
                       }
                       className={cn(
                         "py-2 px-4 border border-lexy-input-border text-lexy-text-secondary leading-6 rounded-sm",
@@ -112,7 +107,7 @@ export function GastosMensuales() {
                       title='Eliminar gasto'
                       type='button'
                       className='w-fit rounded-sm text-lexy-text-primary border border-black/10 bg-white not-disabled:hover:bg-lexy-btn-secondary-hover transition-all cursor-pointer p-2 disabled:cursor-not-allowed'
-                      onClick={() => removeGastoMensual(gasto.id!)}>
+                      onClick={() => removeGasto(gasto.id!)}>
                       <Trash2 className='size-6' />
                     </button>
                   </Table.Cell>
@@ -134,7 +129,7 @@ export function GastosMensuales() {
           <h4>Total gastos mensuales</h4>
           <div className='w-fit px-4 py-2 border border-lexy-border-table shadow-lexy-table rounded-sm bg-white'>
             <span className='text-lexy-brand-secondary-dark font-medium leading-6'>
-              {formatCurrency(totalGastosMensuales)}
+              {formatCurrency(getTotalGastos())}
             </span>
           </div>
         </Card.Content>

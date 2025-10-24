@@ -10,14 +10,8 @@ export function Identificacion() {
   const { isInDistribution } = useSidebar();
   const { countryOptions } = useGeoData();
 
-  const datos = useDatosPersonalesStore((state) => state.datos);
-  const updateDatosField = useDatosPersonalesStore(
-    (state) => state.updateDatosField
-  );
-  const datos_pp = useDatosPersonalesStore((state) => state.datosPP);
-  const updateDatosPPField = useDatosPersonalesStore(
-    (state) => state.updateDatosPPField
-  );
+  const { datos, updateDatosField } = useDatosPersonalesStore();
+  const { datosPP, updateDatosPPField } = useDatosPersonalesStore();
 
   return (
     <Card>
@@ -85,7 +79,7 @@ export function Identificacion() {
             onStarToggle={() => togglePinRow("juicios")}>
             <Input
               disabled={isInDistribution}
-              value={datos_pp?.juicios_pendientes ?? ""}
+              value={datosPP?.juicios_pendientes ?? ""}
               onChange={(value) =>
                 updateDatosPPField("juicios_pendientes", value as string)
               }
@@ -100,7 +94,7 @@ export function Identificacion() {
             <Select
               disabled={isInDistribution}
               options={SiONo}
-              value={datos_pp?.proc_concursal ?? ""}
+              value={datosPP?.proc_concursal ?? ""}
               onValueChange={(value) =>
                 updateDatosPPField("proc_concursal", value)
               }

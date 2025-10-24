@@ -12,10 +12,7 @@ export function EstadoCivil() {
   const { isRowPinned, togglePinRow } = usePinService();
   const { isInDistribution } = useSidebar();
 
-  const datos = useDatosPersonalesStore((state) => state.datos);
-  const updateDatosField = useDatosPersonalesStore(
-    (state) => state.updateDatosField
-  );
+  const { datos, updateDatosField } = useDatosPersonalesStore();
 
   return (
     <Card>

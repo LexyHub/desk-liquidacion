@@ -10,8 +10,7 @@ export function SociedadesTable() {
   const { isInDistribution } = useSidebar();
 
   const datos = useDatosPersonalesStore((state) => state.datos);
-  const empresas = useBienesStore((state) => state.empresas);
-  const addEmpresa = useBienesStore((state) => state.addEmpresa);
+  const { empresas, addEmpresa } = useBienesStore();
 
   const bottomRef = useRef<HTMLDivElement>(null);
 
@@ -20,7 +19,7 @@ export function SociedadesTable() {
       nombre_empresa: "",
       actividad: "",
       id_cliente: datos?.id_cliente ?? "",
-      activos_pasivos: "",
+      activos_pasivos: 0,
       movimientos: "",
       contabilidad_completa: "",
       socios: "",
