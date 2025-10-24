@@ -1,5 +1,5 @@
 import { useHeaderUI } from "@features/header";
-import { useMessages } from "@features/mensajes";
+import { useMessages } from "../hooks/useMessages";
 import clsx from "clsx";
 import { ArrowUp, X } from "@shared/lib/icons";
 import { useState } from "react";
