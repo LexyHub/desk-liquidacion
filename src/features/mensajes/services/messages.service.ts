@@ -31,7 +31,7 @@ export async function getMessages(cliente: string, signal?: AbortSignal) {
 }
 
 export async function createMessage(
-  message: Omit<Message, "id">,
+  message: Omit<Message, "id" | "creado_en">,
   signal?: AbortSignal
 ): Promise<boolean | Error> {
   const final_url = `${API_URL}add-comment`;

@@ -9,8 +9,9 @@ import {
   modifyMessage,
 } from "../services/messages.service";
 import type {
+  Message,
+  MessageInput,
   MessagesContextValue,
-  NewMessageInput,
   UpdateMessageInput,
 } from "../types/messages";
 
@@ -41,14 +42,16 @@ export function useMessages(): MessagesContextValue {
   );
 
   const createMutation = useMutation({
-    mutationFn: (input: NewMessageInput) => {
+    mutationFn: (input: MessageInput) => {
       if (!cliente) throw new Error("Cliente no disponible");
-      const payload: NewMessageInput = {
+      const payload: Message = {
         ...input,
+        id_cliente: cliente,
         modulo: rawPath,
         entidad: input.entidad ?? "desk-liquidacion",
+        creado_por: sessionStorage.getItem("email") || "desconocido",
       };
-      return createMessage(cliente, payload);
+      return createMessage(payload);
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["messages", cliente] });
@@ -82,7 +85,7 @@ export function useMessages(): MessagesContextValue {
     refetch: () => {
       queryClient.invalidateQueries({ queryKey: ["messages", cliente] });
     },
-    create: async (input: NewMessageInput) => {
+    create: async (input: MessageInput) => {
       await createMutation.mutateAsync(input);
     },
     remove: async (id: number) => {

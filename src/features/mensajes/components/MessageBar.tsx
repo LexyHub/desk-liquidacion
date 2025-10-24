@@ -4,7 +4,7 @@ import clsx from "clsx";
 import { ArrowUp, X } from "@shared/lib/icons";
 import { useState } from "react";
 import { MessageList } from "./MessageList";
-import type { Message } from "../types/messages";
+import type { MessageInput } from "../types/messages";
 
 export function MessageBar() {
   const { isOpen, close, rawPath } = useHeaderUI();
@@ -13,11 +13,10 @@ export function MessageBar() {
 
   const handleMessageSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const newMsg: Message = {
+    const newMsg: MessageInput = {
       entidad: "desk-liquidacion",
       modulo: rawPath || "desconocido",
       comentario: message.trim(),
-      creado_por: localStorage.getItem("id_defensoria") ?? "usuario-anonimo",
     };
     addMessage(newMsg);
     setMessage("");

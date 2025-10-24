@@ -1,6 +1,6 @@
-// Mensaje según API actual (desk_entrevista/comments)
 export type Message = {
   id?: number | null;
+  id_cliente: string;
   entidad: string; // p.ej. "desk-liquidacion"
   modulo: string; // p.ej. rawPath de la vista
   campo?: string | null;
@@ -9,18 +9,22 @@ export type Message = {
   creado_en?: string | null; // ISO desde backend
 };
 
-export type NewMessageInput = Omit<Message, "id" | "creado_en">;
+export type MessageInput = Omit<
+  Message,
+  "id" | "id_cliente" | "creado_en" | "creado_por"
+>;
+
+// export type NewMessageInput = Omit<Message, "id" | "creado_en">;
 export type UpdateMessageInput = Partial<
   Omit<Message, "id" | "entidad" | "modulo" | "creado_en">
 >;
 
-// Contrato público del dominio de mensajes (hook + store)
 export interface MessagesContextValue {
-  messages: Message[]; // ya filtrados por modulo (rawPath)
+  messages: Message[];
   loading: boolean;
   error: string | null;
   refetch: () => void;
-  create: (input: NewMessageInput) => Promise<void>;
+  create: (input: MessageInput) => Promise<void>;
   remove: (id: number) => Promise<void>;
   modify: (id: number, patch: UpdateMessageInput) => Promise<void>;
 }
