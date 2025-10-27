@@ -3,6 +3,8 @@ import type {
   ClientDataAPIResponse,
   DatosPP,
   DatosPPResponse,
+  SituacionLaboral,
+  SituacionLaboralResponse,
 } from "@/shared/types";
 import { parseBooleanToAffirmation } from "../utils";
 import { currencyToNumber } from "./formatters";
@@ -228,5 +230,19 @@ export function mapToPersonalData(cd: DatosPP): DatosPPResponse {
     alimentos_regularizados: cd!.alimentos_regularizados === "si",
     juicios_pendientes: cd!.juicios_pendientes,
     proc_concursal: cd!.proc_concursal === "si",
+  };
+}
+
+export function mapToSituacionLaboral(
+  sl: SituacionLaboral
+): SituacionLaboralResponse {
+  return {
+    ...sl,
+    trabajando: sl.trabajando === "si",
+    responsable_trabajadores: sl.responsable_trabajadores === "si",
+    establecimiento_comercial: sl.establecimiento_comercial === "si",
+    empresa_propia: sl.empresa_propia === "si",
+    bono_gratificacion: sl.bono_gratificacion === "si",
+    finiquito: sl.finiquito === "si",
   };
 }

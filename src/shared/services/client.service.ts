@@ -1,6 +1,11 @@
 import type { QueryFunctionContext } from "@tanstack/react-query";
-import type { ClientDataAPIResponse, DatosPP } from "@shared/types";
-import { mapToPersonalData } from "../lib/utils/mappers";
+import type {
+  ClientDataAPIResponse,
+  DatosPP,
+  Deuda,
+  SituacionLaboral,
+} from "@shared/types";
+import { mapToPersonalData, mapToSituacionLaboral } from "../lib/utils/mappers";
 import { notificationBus } from "@features/notificaciones/lib/notificationBus";
 
 const RAW_ENDPOINT =
@@ -90,6 +95,112 @@ export async function patchDatosPersonales(
       id: crypto.randomUUID(),
       type: "error",
       message: "Error al actualizar los Datos Personales del cliente.",
+      closeable: true,
+    });
+    throw error;
+  }
+}
+
+export async function patchSituacionLaboral(
+  id_cliente: string,
+  payload: SituacionLaboral,
+  signal?: AbortSignal
+) {
+  if (!RAW_ENDPOINT) throw new Error("API Key o URL ausentes");
+
+  const final_api = `${RAW_ENDPOINT}/situacion-laboral/${id_cliente}`;
+  const data = mapToSituacionLaboral(payload);
+
+  try {
+    const response = await fetch(final_api, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: sessionStorage.getItem("token") || "",
+      },
+      body: JSON.stringify(data),
+      signal,
+    });
+    if (!response.ok) {
+      const text = await response.text().catch(() => null);
+      const errorMsg = `Error al actualizar situación laboral del cliente. ${response.status} ${response.statusText}${text ? `: ${text}` : ""}`;
+      throw new Error(errorMsg);
+    }
+    notificationBus.emit("notify", {
+      id: crypto.randomUUID(),
+      type: "success",
+      message: "Situación Laboral del cliente actualizados correctamente.",
+      closeable: true,
+    });
+    return true;
+  } catch (error) {
+    if (error instanceof Error && error.name !== "AbortError") {
+      console.error(
+        "Fetch error al actualizar situación laboral del cliente:",
+        error
+      );
+    }
+    notificationBus.emit("notify", {
+      id: crypto.randomUUID(),
+      type: "error",
+      message: "Error al actualizar la Situación Laboral del cliente.",
+      closeable: true,
+    });
+    throw error;
+  }
+}
+
+export async function uploadDeudas(
+  id_cliente: string,
+  payload: Deuda[],
+  signal?: AbortSignal
+) {
+  if (!RAW_ENDPOINT) throw new Error("API Key o URL ausentes");
+
+  const final_api = `${RAW_ENDPOINT}/deudas/${id_cliente}`;
+
+  const deudas = payload.map((d) => {
+    if (d.id! > 0) {
+      return d;
+    }
+    return {
+      id_cliente: d.id_cliente,
+      tipo: d.tipo,
+      id_acreedor: d.id_acreedor,
+      monto: d.monto,
+    };
+  });
+
+  try {
+    const response = await fetch(final_api, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: sessionStorage.getItem("token") || "",
+      },
+      body: JSON.stringify(deudas),
+      signal,
+    });
+    if (!response.ok) {
+      const text = await response.text().catch(() => null);
+      const errorMsg = `Error al actualizar deudas del cliente. ${response.status} ${response.statusText}${text ? `: ${text}` : ""}`;
+      throw new Error(errorMsg);
+    }
+    notificationBus.emit("notify", {
+      id: crypto.randomUUID(),
+      type: "success",
+      message: "Deudas del cliente actualizadas correctamente.",
+      closeable: true,
+    });
+    return true;
+  } catch (error) {
+    if (error instanceof Error && error.name !== "AbortError") {
+      console.error("Fetch error al actualizar deudas del cliente:", error);
+    }
+    notificationBus.emit("notify", {
+      id: crypto.randomUUID(),
+      type: "error",
+      message: "Error al actualizar las Deudas del cliente.",
       closeable: true,
     });
     throw error;

@@ -17,8 +17,10 @@ import { VideoDialog } from "./VideoDialog";
 import { useSidebar } from "@features/sidebar";
 import { cn } from "@shared/lib/utils";
 import { useAuth } from "@features/auth";
-import { useUpdateDatosPersonales } from "@/features/datos-personales/hooks";
-import { useDatosPersonalesStore } from "@/features/datos-personales/stores/useDatosPersonales.store";
+import { useUpdateDatosPersonales } from "@features/datos-personales/hooks";
+import { useDatosPersonalesStore } from "@features/datos-personales/stores/useDatosPersonales.store";
+import { useUpdateSituacionLaboral } from "@features/situacion-laboral/hooks/useUpdateSituacionLaboral";
+import { useSituacionLaboralStore } from "@/features/situacion-laboral/stores/useSituacionLaboral.store";
 
 export function Sidebar() {
   const { idDefensoria } = useParams();
@@ -33,6 +35,9 @@ export function Sidebar() {
     setChanges: setChangesInPP,
   } = useDatosPersonalesStore();
   const { updateDatosPersonales } = useUpdateDatosPersonales();
+  const { situacion_laboral, changes: changesInSL } =
+    useSituacionLaboralStore();
+  const { updateSituacionLaboral } = useUpdateSituacionLaboral();
 
   const [showVideoDialog, setShowVideoDialog] = useState(false);
 
@@ -54,6 +59,15 @@ export function Sidebar() {
         payload: datosPP,
       });
       setChangesInPP(false);
+    }
+
+    if (pathname.startsWith("/situacion-laboral")) {
+      if (!datosPP || !changesInSL) return;
+
+      updateSituacionLaboral({
+        id_cliente: datosPP.id || "",
+        payload: situacion_laboral!,
+      });
     }
   };
 
