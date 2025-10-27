@@ -4,12 +4,21 @@ import { Card, DocumentButton, Table } from "@shared/components/ui";
 import { usePinService } from "@shared/hooks";
 import { SiONo } from "@shared/lib/options";
 import { useSituacionLaboralStore } from "../stores/useSituacionLaboral.store";
+import { useUFService } from "@/shared/hooks/useUFService";
+import clsx from "clsx";
+import { useMemo } from "react";
 
 export function Remuneracion() {
   const { isInDistribution } = useSidebar();
   const { isRowPinned, togglePinRow } = usePinService();
+  const { clpToUF } = useUFService();
 
   const { situacion_laboral, updateField } = useSituacionLaboralStore();
+
+  const hasHighRemuneration = useMemo(
+    () => clpToUF(situacion_laboral?.remuneracion || 0)! > 56,
+    [situacion_laboral?.remuneracion, clpToUF]
+  );
 
   return (
     <Card>
@@ -23,7 +32,8 @@ export function Remuneracion() {
             label='Remuneración mensual'
             stareable
             isStared={isRowPinned("remuneracion")}
-            onStarToggle={() => togglePinRow("remuneracion")}>
+            onStarToggle={() => togglePinRow("remuneracion")}
+            className={clsx({ "bg-red-200/80": hasHighRemuneration })}>
             <Input
               type='currency'
               disabled={isInDistribution}

@@ -1,10 +1,3 @@
-export async function getTodaysUF() {
-  const response = await fetch("https://api.santa.cl/uf");
-  const data = (await response.json()) as { today: string; uf: string };
-  if (!data?.uf) throw new Error("Invalid UF response");
-  return parseFloat(data.uf.replace(".", "").replace(",", "."));
-}
-
 export function formatCurrency(value: string | number): string {
   if (!value || value === "" || Number(value) === 0) return "$0";
   return "$" + Number(value).toLocaleString("es-CL");
