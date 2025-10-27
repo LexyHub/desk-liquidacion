@@ -12,7 +12,7 @@ export function EstadoCivil() {
   const { isRowPinned, togglePinRow } = usePinService();
   const { isInDistribution } = useSidebar();
 
-  const { datos, updateDatosField } = useDatosPersonalesStore();
+  const { datos, patchDatos } = useDatosPersonalesStore();
 
   return (
     <Card>
@@ -30,7 +30,7 @@ export function EstadoCivil() {
             <Select
               disabled={isInDistribution}
               value={datos?.estado_civil}
-              onValueChange={(value) => updateDatosField("estado_civil", value)}
+              onValueChange={(value) => patchDatos({ estado_civil: value })}
               options={OPT_ESTADOCIVIL}
             />
           </Table.Row>
@@ -44,7 +44,7 @@ export function EstadoCivil() {
               disabled={isInDistribution}
               value={datos?.regimen_matrimonial}
               onValueChange={(value) =>
-                updateDatosField("regimen_matrimonial", value)
+                patchDatos({ regimen_matrimonial: value })
               }
               options={RegimenMarital}
             />

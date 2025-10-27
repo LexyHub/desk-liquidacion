@@ -10,8 +10,8 @@ export function Vehiculos() {
   const { isRowPinned, togglePinRow } = usePinService();
   const { isInDistribution } = useSidebar();
 
-  const { datosPP, updateDatosPPField } = useDatosPersonalesStore();
-  const { bienes, updateBienesField } = useBienesStore();
+  const { datosPP, patchDatosPP } = useDatosPersonalesStore();
+  const { bienes, patchVehiculo } = useBienesStore();
 
   return (
     <Card>
@@ -29,7 +29,7 @@ export function Vehiculos() {
             <Select
               disabled={isInDistribution}
               value={datosPP?.tiene_vehiculo ?? ""}
-              onValueChange={(v) => updateDatosPPField("tiene_vehiculo", v)}
+              onValueChange={(v) => patchDatosPP({ tiene_vehiculo: v })}
               options={SiONo}
             />
           </Table.Row>
@@ -41,13 +41,8 @@ export function Vehiculos() {
             onStarToggle={() => togglePinRow("ha_vendido_vehiculo")}>
             <Select
               disabled={isInDistribution}
-              value={bienes?.vehiculo.comprador ? "si" : ""}
-              onValueChange={(v) =>
-                updateBienesField("vehiculo", {
-                  ...bienes!.vehiculo,
-                  comprador: v,
-                })
-              }
+              value={bienes?.vehiculo?.comprador ? "si" : ""}
+              onValueChange={(v) => patchVehiculo({ comprador: v })}
               options={SiONo}
             />
           </Table.Row>
@@ -59,13 +54,8 @@ export function Vehiculos() {
             onStarToggle={() => togglePinRow("hace_cuanto_vehiculo")}>
             <Select
               disabled={isInDistribution}
-              value={bienes?.vehiculo.mas_dos_anos_venta ?? ""}
-              onValueChange={(v) =>
-                updateBienesField("vehiculo", {
-                  ...bienes!.vehiculo,
-                  mas_dos_anos_venta: v,
-                })
-              }
+              value={bienes?.vehiculo?.mas_dos_anos_venta ?? ""}
+              onValueChange={(v) => patchVehiculo({ mas_dos_anos_venta: v })}
               options={HaceCuanto}
             />
           </Table.Row>
@@ -77,13 +67,8 @@ export function Vehiculos() {
             onStarToggle={() => togglePinRow("a_quien_vendio_vehiculo")}>
             <Select
               disabled={isInDistribution}
-              value={bienes?.vehiculo.comprador ?? ""}
-              onValueChange={(v) =>
-                updateBienesField("vehiculo", {
-                  ...bienes!.vehiculo,
-                  comprador: v,
-                })
-              }
+              value={bienes?.vehiculo?.comprador ?? ""}
+              onValueChange={(v) => patchVehiculo({ comprador: v })}
               options={AQuien}
             />
           </Table.Row>
@@ -95,13 +80,8 @@ export function Vehiculos() {
             onStarToggle={() => togglePinRow("a_traves_de_vehiculo")}>
             <Select
               disabled={isInDistribution}
-              value={bienes?.vehiculo.medio_compra ?? ""}
-              onValueChange={(v) =>
-                updateBienesField("vehiculo", {
-                  ...bienes!.vehiculo,
-                  medio_compra: v,
-                })
-              }
+              value={bienes?.vehiculo?.medio_compra ?? ""}
+              onValueChange={(v) => patchVehiculo({ medio_compra: v })}
               options={QueMedio}
             />
           </Table.Row>

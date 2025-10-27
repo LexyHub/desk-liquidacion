@@ -31,26 +31,30 @@ export function mapAPIToClientData(apiData: ClientDataAPIResponse): ClientData {
         ...bienes.bien,
         vendido: parseBooleanToAffirmation(bienes.bien.vendido),
       },
-      inmueble: {
-        ...bienes.inmueble,
-        credito_hipotecario: parseBooleanToAffirmation(
-          bienes.inmueble.credito_hipotecario
-        ),
-        codeudor_solidario: parseBooleanToAffirmation(
-          bienes.inmueble.codeudor_solidario
-        ),
-        al_dia: parseBooleanToAffirmation(bienes.inmueble.al_dia),
-        hipotecado: parseBooleanToAffirmation(bienes.inmueble.hipotecado),
-        mas_dos_anos_venta: parseBooleanToAffirmation(
-          bienes.inmueble.mas_dos_anos_venta
-        ),
-      },
-      vehiculo: {
-        ...bienes.vehiculo,
-        mas_dos_anos_venta: parseBooleanToAffirmation(
-          bienes.vehiculo.mas_dos_anos_venta
-        ),
-      },
+      inmueble: bienes.inmueble
+        ? {
+            ...bienes.inmueble,
+            credito_hipotecario: parseBooleanToAffirmation(
+              bienes.inmueble.credito_hipotecario
+            ),
+            codeudor_solidario: parseBooleanToAffirmation(
+              bienes.inmueble.codeudor_solidario
+            ),
+            al_dia: parseBooleanToAffirmation(bienes.inmueble.al_dia),
+            hipotecado: parseBooleanToAffirmation(bienes.inmueble.hipotecado),
+            mas_dos_anos_venta: parseBooleanToAffirmation(
+              bienes.inmueble.mas_dos_anos_venta
+            ),
+          }
+        : null,
+      vehiculo: bienes.vehiculo
+        ? {
+            ...bienes.vehiculo,
+            mas_dos_anos_venta: parseBooleanToAffirmation(
+              bienes.vehiculo.mas_dos_anos_venta
+            ),
+          }
+        : null,
     })),
     datos_pp: {
       ...apiData.datos_pp,

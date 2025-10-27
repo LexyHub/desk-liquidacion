@@ -12,6 +12,10 @@ interface BienesState {
     field: K,
     value: Bienes[K]
   ) => void;
+  // Helpers de patch para evitar lógica repetida en componentes
+  patchBien: (patch: Partial<Bienes["bien"]>) => void;
+  patchInmueble: (patch: Partial<NonNullable<Bienes["inmueble"]>>) => void;
+  patchVehiculo: (patch: Partial<NonNullable<Bienes["vehiculo"]>>) => void;
   setEmpresas: (empresas: Empresa[]) => void;
   addEmpresa: (empresa: Empresa) => void;
   removeEmpresa: (id: number) => void;
@@ -34,6 +38,33 @@ export const useBienesStore = create<BienesState>((set) => ({
     set((state) => ({
       bienes: state.bienes ? { ...state.bienes, [field]: value } : null,
     })),
+  patchBien: (patch) =>
+    set((state) => {
+      if (!state.bienes) return state;
+      return {
+        bienes: { ...state.bienes, bien: { ...state.bienes.bien, ...patch } },
+      };
+    }),
+  patchInmueble: (patch) =>
+    set((state) => {
+      if (!state.bienes || !state.bienes.inmueble) return state;
+      return {
+        bienes: {
+          ...state.bienes,
+          inmueble: { ...state.bienes.inmueble, ...patch },
+        },
+      };
+    }),
+  patchVehiculo: (patch) =>
+    set((state) => {
+      if (!state.bienes || !state.bienes.vehiculo) return state;
+      return {
+        bienes: {
+          ...state.bienes,
+          vehiculo: { ...state.bienes.vehiculo, ...patch },
+        },
+      };
+    }),
   setEmpresas: (empresas) => set({ empresas, nextEmpresaTempId: -1 }),
   addEmpresa: (empresa) =>
     set((state) => {
