@@ -1,4 +1,4 @@
-import { useState, useCallback } from "react";
+import { useState, useCallback, useEffect } from "react";
 
 interface DocumentViewerState {
   isOpen: boolean;
@@ -22,12 +22,12 @@ const setState = (newState: Partial<DocumentViewerState>) => {
 export const useDocumentViewerStore = () => {
   const [state, setLocalState] = useState(globalState);
 
-  useState(() => {
+  useEffect(() => {
     listeners.add(setLocalState);
     return () => {
       listeners.delete(setLocalState);
     };
-  });
+  }, []);
 
   const openDocument = useCallback((document: string, title: string) => {
     setState({ isOpen: true, document, title });

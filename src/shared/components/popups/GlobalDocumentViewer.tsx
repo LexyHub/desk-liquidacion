@@ -1,4 +1,4 @@
-import { lazy, Suspense } from "react";
+import { lazy, Suspense, useEffect, useState } from "react";
 import {
   Dialog,
   DialogContent,
@@ -7,21 +7,19 @@ import {
   DialogTitle,
 } from "@shared/components/base/dialog";
 import { X } from "@shared/lib/icons";
-import { useDocumentViewerStore } from "@features/documentos";
 import { Spinner } from "@shared/components/loading/Spinner";
+import { fetchFile } from "@shared/lib/utils";
+import { useDocumentViewerStore } from "@/features/documentos/stores/documentViewerStore";
 
-// Lazy loading solo del contenido del iframe, no del Dialog completo
 const DocumentIframe = lazy(() =>
   Promise.resolve({
     default: ({ document, title }: { document: string; title?: string }) => (
-      <iframe
+      <embed
         title={title || "Visualizando documento"}
         src={document}
         className='w-full h-full rounded-b-lg'
         width='560'
         height='315'
-        loading='lazy'
-        allowFullScreen
       />
     ),
   })
@@ -29,8 +27,30 @@ const DocumentIframe = lazy(() =>
 
 export function GlobalDocumentViewer() {
   const { isOpen, document, title, closeDocument } = useDocumentViewerStore();
+  const [file, setFile] = useState<string | null>(null);
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
-  // Solo renderiza cuando el modal debe estar abierto
+  useEffect(() => {
+    if (document && isOpen) {
+      setFile(null);
+      setError(null);
+      setIsLoading(true);
+
+      fetchFile(document)
+        .then((fileData) => setFile(fileData))
+        .catch((err) => {
+          console.error("Error al cargar el documento:", err);
+          setError("Error al cargar el documento");
+        })
+        .finally(() => setIsLoading(false));
+    } else {
+      setFile(null);
+      setError(null);
+      setIsLoading(false);
+    }
+  }, [document, isOpen]);
+
   if (!isOpen) {
     return null;
   }
@@ -56,7 +76,16 @@ export function GlobalDocumentViewer() {
           </button>
         </DialogHeader>
         <div className='w-full h-[42rem] flex items-center justify-center'>
-          {document ? (
+          {isLoading ? (
+            <div className='flex items-center justify-center h-full'>
+              <Spinner />
+              <span className='ml-2 text-gray-500'>Cargando documento...</span>
+            </div>
+          ) : error ? (
+            <div className='flex items-center justify-center h-full text-red-500'>
+              {error}
+            </div>
+          ) : file ? (
             <Suspense
               fallback={
                 <div className='flex items-center justify-center h-full'>
@@ -66,7 +95,7 @@ export function GlobalDocumentViewer() {
                   </span>
                 </div>
               }>
-              <DocumentIframe document={document} title={title} />
+              <DocumentIframe document={file} title={title} />
             </Suspense>
           ) : (
             <div className='flex items-center justify-center h-full text-gray-500'>
