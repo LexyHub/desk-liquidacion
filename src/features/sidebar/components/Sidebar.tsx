@@ -21,6 +21,11 @@ import { useUpdateDatosPersonales } from "@features/datos-personales/hooks";
 import { useDatosPersonalesStore } from "@features/datos-personales/stores/useDatosPersonales.store";
 import { useUpdateSituacionLaboral } from "@features/situacion-laboral/hooks/useUpdateSituacionLaboral";
 import { useSituacionLaboralStore } from "@/features/situacion-laboral/stores/useSituacionLaboral.store";
+import { useDeudasStore } from "@/features/deudas/stores/deudas.store";
+import {
+  patchDatosFinancieros,
+  uploadDeudas,
+} from "@/shared/services/client.service";
 
 export function Sidebar() {
   const { idDefensoria } = useParams();
@@ -41,6 +46,14 @@ export function Sidebar() {
     setChanges: setChangesInSL,
   } = useSituacionLaboralStore();
   const { updateSituacionLaboral } = useUpdateSituacionLaboral();
+  const {
+    deudas,
+    datos_financieros,
+    changesInDF,
+    changesInDeudas,
+    setChangesInDF,
+    setChangesInDeudas,
+  } = useDeudasStore();
 
   const [showVideoDialog, setShowVideoDialog] = useState(false);
 
@@ -53,10 +66,9 @@ export function Sidebar() {
   };
 
   const tryUpdateClientData = () => {
-    if (isInDistribution) return;
+    if (isInDistribution || !datosPP) return;
 
-    if (pathname.startsWith("/datos-personales")) {
-      if (!datosPP || !changesInPP) return;
+    if (changesInPP) {
       updateDatosPersonales({
         id_cliente: datosPP.id,
         payload: datosPP,
@@ -64,14 +76,21 @@ export function Sidebar() {
       setChangesInPP(false);
     }
 
-    if (pathname.startsWith("/situacion-laboral")) {
-      if (!datosPP || !changesInSL) return;
-
+    if (changesInSL) {
       updateSituacionLaboral({
         id_cliente: datosPP.id || "",
         payload: situacion_laboral!,
       });
       setChangesInSL(false);
+    }
+
+    if (changesInDF) {
+      patchDatosFinancieros(datosPP.id || "", datos_financieros!);
+      setChangesInDF(false);
+    }
+    if (changesInDeudas) {
+      uploadDeudas(datosPP?.id || "", deudas!);
+      setChangesInDeudas(false);
     }
   };
 

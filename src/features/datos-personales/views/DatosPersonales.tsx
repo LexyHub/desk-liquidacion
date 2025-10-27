@@ -6,12 +6,9 @@ import {
   InformacionFamiliar,
   EstadoCivil,
 } from "@features/datos-personales/components";
-import { useSyncDatosPersonales } from "../hooks/useSyncDatosPersonales";
 
 export default function DatosPersonales() {
   const loading = useClientStore((state) => state.isLoading);
-
-  useSyncDatosPersonales();
 
   if (loading) {
     return <LoadingView />;

@@ -1,6 +1,8 @@
 import type {
   ClientData,
   ClientDataAPIResponse,
+  DatosFinancieros,
+  DatosFinancierosResponse,
   DatosPP,
   DatosPPResponse,
   SituacionLaboral,
@@ -248,5 +250,34 @@ export function mapToSituacionLaboral(
     empresa_propia: sl.empresa_propia === "si",
     bono_gratificacion: sl.bono_gratificacion === "si",
     finiquito: sl.finiquito === "si",
+  };
+}
+
+export function mapToDatosFinancieros(
+  df: DatosFinancieros
+): DatosFinancierosResponse {
+  return {
+    ...df,
+    id: df.id ?? 0,
+    cae: df.cae === "si",
+    aval: df.aval === "si",
+    declaro_renta: df.declaro_renta === "si",
+    recibe_devolucion_impuestos: df.recibe_devolucion_impuestos === "si",
+    retencion_impuestos: df.retencion_impuestos === "si",
+    tarjeta_credito: df.tarjeta_credito === "si",
+    chequera: df.chequera === "si",
+    cheques_protestados: df.cheques_protestados === "si",
+    vales_sin_cobrar: df.vales_sin_cobrar === "si",
+    vales_vencidos: df.vales_vencidos === "si",
+    fondos_cooperativas: df.fondos_cooperativas === "si",
+    criptomonedas: df.criptomonedas === "si",
+    libreta_ahorros: df.libreta_ahorros === "si",
+    fondos_mutuos: df.fondos_mutuos === "si",
+    apv: df.apv === "si",
+    deposito_plazo: df.deposito_plazo === "si",
+    caja_compensacion: df.caja_compensacion === "si",
+    autopista: df.autopista === "si",
+    inst_medicas: df.inst_medicas === "si",
+    tgr: df.tgr === "si",
   };
 }

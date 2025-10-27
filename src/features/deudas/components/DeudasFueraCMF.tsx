@@ -9,7 +9,7 @@ export function DeudasFueraCMF() {
   const { isInDistribution } = useSidebar();
   const { isRowPinned, togglePinRow } = usePinService();
 
-  const { datos_financieros, updateDatosFinancierosField } = useDeudasStore();
+  const { datos_financieros, patchDatosFinancieros } = useDeudasStore();
 
   return (
     <Card>
@@ -29,7 +29,7 @@ export function DeudasFueraCMF() {
               options={SiONo}
               value={datos_financieros?.caja_compensacion ?? ""}
               onValueChange={(v) =>
-                updateDatosFinancierosField("caja_compensacion", v)
+                patchDatosFinancieros({ caja_compensacion: v })
               }
             />
           </Table.Row>
@@ -43,7 +43,7 @@ export function DeudasFueraCMF() {
               disabled={isInDistribution}
               options={SiONo}
               value={datos_financieros?.autopista ?? ""}
-              onValueChange={(v) => updateDatosFinancierosField("autopista", v)}
+              onValueChange={(v) => patchDatosFinancieros({ autopista: v })}
             />
           </Table.Row>
           <Table.Row
@@ -56,9 +56,7 @@ export function DeudasFueraCMF() {
               disabled={isInDistribution}
               options={SiONo}
               value={datos_financieros?.inst_medicas ?? ""}
-              onValueChange={(v) =>
-                updateDatosFinancierosField("inst_medicas", v)
-              }
+              onValueChange={(v) => patchDatosFinancieros({ inst_medicas: v })}
             />
           </Table.Row>
           <Table.Row
@@ -71,7 +69,7 @@ export function DeudasFueraCMF() {
               disabled={isInDistribution}
               options={SiONo}
               value={datos_financieros?.tgr ?? ""}
-              onValueChange={(v) => updateDatosFinancierosField("tgr", v)}
+              onValueChange={(v) => patchDatosFinancieros({ tgr: v })}
             />
           </Table.Row>
         </Table>

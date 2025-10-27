@@ -12,11 +12,6 @@ interface DatosPersonalesState {
   updateDatosField: <K extends keyof Datos>(field: K, value: Datos[K]) => void;
   patchDatos: (patch: Partial<Datos>) => void;
 
-  updateDatosPPField: <K extends keyof DatosPP>(
-    field: K,
-    value: DatosPP[K]
-  ) => void;
-
   // Helper de patch para DatosPP
   patchDatosPP: (patch: Partial<DatosPP>) => void;
 
@@ -49,16 +44,6 @@ export const useDatosPersonalesStore = create<DatosPersonalesState>(
         if (!state.datos) return state;
         return { datos: { ...state.datos, ...patch } };
       });
-      const changes = get().changes;
-      if (!changes) {
-        set({ changes: true });
-      }
-    },
-
-    updateDatosPPField: (field, value) => {
-      set((state) => ({
-        datosPP: state.datosPP ? { ...state.datosPP, [field]: value } : null,
-      }));
       const changes = get().changes;
       if (!changes) {
         set({ changes: true });
