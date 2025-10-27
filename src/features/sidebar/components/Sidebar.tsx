@@ -35,8 +35,11 @@ export function Sidebar() {
     setChanges: setChangesInPP,
   } = useDatosPersonalesStore();
   const { updateDatosPersonales } = useUpdateDatosPersonales();
-  const { situacion_laboral, changes: changesInSL } =
-    useSituacionLaboralStore();
+  const {
+    situacion_laboral,
+    changes: changesInSL,
+    setChanges: setChangesInSL,
+  } = useSituacionLaboralStore();
   const { updateSituacionLaboral } = useUpdateSituacionLaboral();
 
   const [showVideoDialog, setShowVideoDialog] = useState(false);
@@ -68,6 +71,7 @@ export function Sidebar() {
         id_cliente: datosPP.id || "",
         payload: situacion_laboral!,
       });
+      setChangesInSL(false);
     }
   };
 
