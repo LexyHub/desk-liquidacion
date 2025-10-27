@@ -204,14 +204,10 @@ export async function patchDatosFinancieros(
   }
 }
 
-export async function uploadDeudas(
-  id_cliente: string,
-  payload: Deuda[],
-  signal?: AbortSignal
-) {
+export async function uploadDeudas(payload: Deuda[], signal?: AbortSignal) {
   if (!RAW_ENDPOINT) throw new Error("API Key o URL ausentes");
 
-  const final_api = `${RAW_ENDPOINT}/deudas/${id_cliente}`;
+  const final_api = `${RAW_ENDPOINT}/deuda`;
 
   const deudas = payload.map((d) => {
     if (d.id! > 0) {

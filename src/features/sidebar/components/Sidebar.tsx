@@ -89,7 +89,7 @@ export function Sidebar() {
       setChangesInDF(false);
     }
     if (changesInDeudas) {
-      uploadDeudas(datosPP?.id || "", deudas!);
+      uploadDeudas(deudas!);
       setChangesInDeudas(false);
     }
   };
