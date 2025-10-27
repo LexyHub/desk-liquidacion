@@ -5,7 +5,10 @@ import type {
   Deuda,
   SituacionLaboral,
 } from "@shared/types";
-import { mapToPersonalData, mapToSituacionLaboral } from "../lib/utils/mappers";
+import {
+  mapToPersonalData,
+  mapToSituacionLaboral,
+} from "../lib/utils/mappers.util";
 import { notificationBus } from "@features/notificaciones/lib/notificationBus";
 
 const RAW_ENDPOINT =

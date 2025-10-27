@@ -7,7 +7,7 @@ import type {
   SituacionLaboralResponse,
 } from "@/shared/types";
 import { parseBooleanToAffirmation } from "../utils";
-import { currencyToNumber } from "./formatters";
+import { currencyToNumber } from "./currency.util";
 
 export function mapAPIToClientData(apiData: ClientDataAPIResponse): ClientData {
   return {

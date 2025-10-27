@@ -14,7 +14,7 @@ import {
 } from "@shared/components/base/popover";
 import clsx from "clsx";
 import { useEffect, useId, useMemo, useState } from "react";
-import { normalizeString } from "@shared/lib/utils/formatters";
+import { normalizeString } from "@shared/lib/utils/formatters.util";
 import type { SelectOption } from "@shared/types/global";
 import { cn } from "@shared/lib/utils";
 
