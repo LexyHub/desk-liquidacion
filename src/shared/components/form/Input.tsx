@@ -2,7 +2,7 @@ import { cn } from "@shared/lib/utils";
 import {
   formatCurrency,
   parseCurrencyInput,
-} from "@shared/lib/utils/formatters";
+} from "@shared/lib/utils/currency.util";
 import type { ChangeEvent } from "react";
 import { useEffect, useState } from "react";
 

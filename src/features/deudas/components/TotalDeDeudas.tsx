@@ -1,5 +1,5 @@
 import { Card } from "@shared/components/ui";
-import { formatCurrency } from "@shared/lib/utils/formatters";
+import { formatCurrency } from "@shared/lib/utils/currency.util";
 import { useDeudasStore } from "../stores/deudas.store";
 
 export function TotalDeDeudas() {

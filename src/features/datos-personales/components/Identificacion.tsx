@@ -10,8 +10,8 @@ export function Identificacion() {
   const { isInDistribution } = useSidebar();
   const { countryOptions } = useGeoData();
 
-  const { datos, updateDatosField } = useDatosPersonalesStore();
-  const { datosPP, updateDatosPPField } = useDatosPersonalesStore();
+  const { datos, patchDatos } = useDatosPersonalesStore();
+  const { datosPP, patchDatosPP } = useDatosPersonalesStore();
 
   return (
     <Card>
@@ -29,7 +29,7 @@ export function Identificacion() {
             <Input
               disabled={isInDistribution}
               value={datos?.nombres ?? ""}
-              onChange={(value) => updateDatosField("nombres", String(value))}
+              onChange={(value) => patchDatos({ nombres: String(value) })}
             />
           </Table.Row>
           <Table.Row
@@ -41,7 +41,7 @@ export function Identificacion() {
             <Input
               disabled={isInDistribution}
               value={datos?.rut ?? ""}
-              onChange={(value) => updateDatosField("rut", String(value))}
+              onChange={(value) => patchDatos({ rut: String(value) })}
             />
           </Table.Row>
           <Table.Row
@@ -54,7 +54,7 @@ export function Identificacion() {
               disabled={isInDistribution}
               value={datos?.nacionalidad ?? ""}
               options={countryOptions}
-              onValueChange={(value) => updateDatosField("nacionalidad", value)}
+              onValueChange={(value) => patchDatos({ nacionalidad: value })}
             />
           </Table.Row>
           <Table.Row
@@ -67,7 +67,7 @@ export function Identificacion() {
               disabled={isInDistribution}
               value={datos?.profesion_oficio ?? ""}
               onChange={(value) =>
-                updateDatosField("profesion_oficio", String(value))
+                patchDatos({ profesion_oficio: String(value) })
               }
             />
           </Table.Row>
@@ -81,7 +81,7 @@ export function Identificacion() {
               disabled={isInDistribution}
               value={datosPP?.juicios_pendientes ?? ""}
               onChange={(value) =>
-                updateDatosPPField("juicios_pendientes", value as string)
+                patchDatosPP({ juicios_pendientes: String(value) })
               }
             />
           </Table.Row>
@@ -95,9 +95,7 @@ export function Identificacion() {
               disabled={isInDistribution}
               options={SiONo}
               value={datosPP?.proc_concursal ?? ""}
-              onValueChange={(value) =>
-                updateDatosPPField("proc_concursal", value)
-              }
+              onValueChange={(value) => patchDatosPP({ proc_concursal: value })}
             />
           </Table.Row>
         </Table>

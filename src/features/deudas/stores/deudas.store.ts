@@ -8,6 +8,9 @@ interface DeudasState {
   // ID temporal decreciente para nuevas deudas (IDs negativos)
   nextDeudaTempId: number;
 
+  changesInDeudas: boolean | null;
+  changesInDF: boolean | null;
+
   setDeudas: (deudas: Deuda[]) => void;
   addDeuda: (deuda: Deuda) => void;
   updateDeudaField: <K extends keyof Deuda>(
@@ -18,11 +21,13 @@ interface DeudasState {
   removeDeuda: (id: number) => void;
   replaceDeudaId: (tempId: number, realId: number) => void;
   setDatosFinancieros: (datos: DatosFinancieros) => void;
-  updateDatosFinancierosField: <K extends keyof DatosFinancieros>(
-    field: K,
-    value: DatosFinancieros[K]
-  ) => void;
+  // Helper para aplicar parches (permite actualizar uno o varios campos)
+  patchDatosFinancieros: (patch: Partial<DatosFinancieros>) => void;
   getTotalDeudas: () => number;
+
+  setChangesInDeudas: (changes: boolean) => void;
+  setChangesInDF: (changes: boolean) => void;
+
   reset: () => void;
 }
 
@@ -30,6 +35,9 @@ export const useDeudasStore = create<DeudasState>((set, get) => ({
   deudas: null,
   datos_financieros: null,
   nextDeudaTempId: -1,
+
+  changesInDeudas: null,
+  changesInDF: null,
 
   setDeudas: (deudas) => set({ deudas, nextDeudaTempId: -1 }),
   addDeuda: (deuda) =>
@@ -42,14 +50,19 @@ export const useDeudasStore = create<DeudasState>((set, get) => ({
           deuda.id == null ? state.nextDeudaTempId - 1 : state.nextDeudaTempId,
       };
     }),
-  updateDeudaField: (id, field, value) =>
+  updateDeudaField: (id, field, value) => {
     set((state) => ({
       deudas: state.deudas
         ? state.deudas.map((deuda) =>
             deuda.id === id ? { ...deuda, [field]: value } : deuda
           )
         : null,
-    })),
+    }));
+    const changes = get().changesInDeudas;
+    if (!changes) {
+      set({ changesInDeudas: true });
+    }
+  },
   removeDeuda: (id) =>
     set((state) => ({
       deudas: state.deudas ? state.deudas.filter((d) => d.id !== id) : null,
@@ -66,11 +79,19 @@ export const useDeudasStore = create<DeudasState>((set, get) => ({
     return deudas.reduce((total, deuda) => total + (deuda.monto || 0), 0);
   },
   setDatosFinancieros: (datos) => set({ datos_financieros: datos }),
-  updateDatosFinancierosField: (field, value) =>
-    set((state) => ({
-      datos_financieros: state.datos_financieros
-        ? { ...state.datos_financieros, [field]: value }
-        : null,
-    })),
+  patchDatosFinancieros: (patch) => {
+    set((state) => {
+      if (!state.datos_financieros) return state;
+      return { datos_financieros: { ...state.datos_financieros, ...patch } };
+    });
+    const changes = get().changesInDF;
+    if (!changes) {
+      set({ changesInDF: true });
+    }
+  },
+
+  setChangesInDeudas: (changes) => set({ changesInDeudas: changes }),
+  setChangesInDF: (changes) => set({ changesInDF: changes }),
+
   reset: () => set({ deudas: null, datos_financieros: null }),
 }));

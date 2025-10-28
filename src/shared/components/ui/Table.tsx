@@ -100,8 +100,8 @@ Table.Row = function Row({
     <div
       className={cn(
         "w-full grid grid-cols-2 items-center px-2 py-2 rounded-sm transition-colors",
-        className,
-        cn({ "bg-lexy-btn-secondary-hover": isStared && stareable })
+        { "bg-lexy-btn-secondary-hover": isStared && stareable },
+        className
       )}>
       <div className={cn("flex items-center", { "gap-x-2": stareable })}>
         {stareable && (

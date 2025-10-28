@@ -57,13 +57,13 @@ export interface Bienes {
     hipotecado: string;
     mas_dos_anos_venta: string;
     comprador?: string | null;
-  };
+  } | null;
   vehiculo: {
     id: number;
     mas_dos_anos_venta: string;
     comprador?: string | null;
     medio_compra?: string | null;
-  };
+  } | null;
 }
 
 export interface DatosPP {

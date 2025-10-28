@@ -9,7 +9,7 @@ export function InstrumentosFinancieros() {
   const { isInDistribution } = useSidebar();
   const { isRowPinned, togglePinRow } = usePinService();
 
-  const { datos_financieros, updateDatosFinancierosField } = useDeudasStore();
+  const { datos_financieros, patchDatosFinancieros } = useDeudasStore();
 
   return (
     <Card>
@@ -29,7 +29,7 @@ export function InstrumentosFinancieros() {
               options={SiONo}
               value={datos_financieros?.tarjeta_credito ?? ""}
               onValueChange={(v) =>
-                updateDatosFinancierosField("tarjeta_credito", v)
+                patchDatosFinancieros({ tarjeta_credito: v })
               }
             />
           </Table.Row>
@@ -43,7 +43,7 @@ export function InstrumentosFinancieros() {
               disabled={isInDistribution}
               options={SiONo}
               value={datos_financieros?.chequera ?? ""}
-              onValueChange={(v) => updateDatosFinancierosField("chequera", v)}
+              onValueChange={(v) => patchDatosFinancieros({ chequera: v })}
             />
           </Table.Row>
           <Table.Row
@@ -59,7 +59,7 @@ export function InstrumentosFinancieros() {
               options={SiONo}
               value={datos_financieros?.cheques_protestados ?? ""}
               onValueChange={(v) =>
-                updateDatosFinancierosField("cheques_protestados", v)
+                patchDatosFinancieros({ cheques_protestados: v })
               }
             />
           </Table.Row>
@@ -74,7 +74,7 @@ export function InstrumentosFinancieros() {
               options={SiONo}
               value={datos_financieros?.vales_sin_cobrar ?? ""}
               onValueChange={(v) =>
-                updateDatosFinancierosField("vales_sin_cobrar", v)
+                patchDatosFinancieros({ vales_sin_cobrar: v })
               }
             />
           </Table.Row>
@@ -89,7 +89,7 @@ export function InstrumentosFinancieros() {
               options={SiONo}
               value={datos_financieros?.vales_vencidos ?? ""}
               onValueChange={(v) =>
-                updateDatosFinancierosField("vales_vencidos", v)
+                patchDatosFinancieros({ vales_vencidos: v })
               }
             />
           </Table.Row>
@@ -104,7 +104,7 @@ export function InstrumentosFinancieros() {
               options={SiONo}
               value={datos_financieros?.fondos_cooperativas ?? ""}
               onValueChange={(v) =>
-                updateDatosFinancierosField("fondos_cooperativas", v)
+                patchDatosFinancieros({ fondos_cooperativas: v })
               }
             />
           </Table.Row>
@@ -118,9 +118,7 @@ export function InstrumentosFinancieros() {
               disabled={isInDistribution}
               options={SiONo}
               value={datos_financieros?.criptomonedas ?? ""}
-              onValueChange={(v) =>
-                updateDatosFinancierosField("criptomonedas", v)
-              }
+              onValueChange={(v) => patchDatosFinancieros({ criptomonedas: v })}
             />
           </Table.Row>
           <Table.Row
@@ -134,7 +132,7 @@ export function InstrumentosFinancieros() {
               options={SiONo}
               value={datos_financieros?.libreta_ahorros ?? ""}
               onValueChange={(v) =>
-                updateDatosFinancierosField("libreta_ahorros", v)
+                patchDatosFinancieros({ libreta_ahorros: v })
               }
             />
           </Table.Row>
@@ -148,9 +146,7 @@ export function InstrumentosFinancieros() {
               disabled={isInDistribution}
               options={SiONo}
               value={datos_financieros?.fondos_mutuos ?? ""}
-              onValueChange={(v) =>
-                updateDatosFinancierosField("fondos_mutuos", v)
-              }
+              onValueChange={(v) => patchDatosFinancieros({ fondos_mutuos: v })}
             />
           </Table.Row>
           <Table.Row
@@ -163,7 +159,7 @@ export function InstrumentosFinancieros() {
               disabled={isInDistribution}
               options={SiONo}
               value={datos_financieros?.apv ?? ""}
-              onValueChange={(v) => updateDatosFinancierosField("apv", v)}
+              onValueChange={(v) => patchDatosFinancieros({ apv: v })}
             />
           </Table.Row>
           <Table.Row
@@ -177,7 +173,7 @@ export function InstrumentosFinancieros() {
               options={SiONo}
               value={datos_financieros?.deposito_plazo ?? ""}
               onValueChange={(v) =>
-                updateDatosFinancierosField("deposito_plazo", v)
+                patchDatosFinancieros({ deposito_plazo: v })
               }
             />
           </Table.Row>

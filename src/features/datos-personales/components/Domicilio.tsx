@@ -8,7 +8,7 @@ export function Domicilio() {
   const { isPinned, togglePinRow } = usePinService();
   const { isInDistribution } = useSidebar();
 
-  const { datos, updateDatosField } = useDatosPersonalesStore();
+  const { datos, patchDatos } = useDatosPersonalesStore();
 
   return (
     <Card>
@@ -26,7 +26,7 @@ export function Domicilio() {
             <Input
               disabled={isInDistribution}
               value={datos?.domicilio ?? ""}
-              onChange={(v) => updateDatosField("domicilio", String(v))}
+              onChange={(v) => patchDatos({ domicilio: String(v) })}
             />
           </Table.Row>
         </Table>

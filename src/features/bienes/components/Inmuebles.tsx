@@ -10,8 +10,8 @@ export function Inmuebles() {
   const { isRowPinned, togglePinRow } = usePinService();
   const { isInDistribution } = useSidebar();
 
-  const { bienes, updateBienesField } = useBienesStore();
-  const { datosPP, updateDatosPPField } = useDatosPersonalesStore();
+  const { bienes, patchBien, patchInmueble } = useBienesStore();
+  const { datosPP, patchDatosPP } = useDatosPersonalesStore();
 
   return (
     <Card>
@@ -29,7 +29,7 @@ export function Inmuebles() {
             <Select
               disabled={isInDistribution}
               value={datosPP?.tiene_inmueble ?? ""}
-              onValueChange={(v) => updateDatosPPField("tiene_inmueble", v)}
+              onValueChange={(v) => patchDatosPP({ tiene_inmueble: v })}
               options={SiONo}
             />
           </Table.Row>
@@ -41,13 +41,8 @@ export function Inmuebles() {
             onStarToggle={() => togglePinRow("paga_cred_hipotecario")}>
             <Select
               disabled={isInDistribution}
-              value={bienes?.inmueble.credito_hipotecario ?? ""}
-              onValueChange={(v) =>
-                updateBienesField("inmueble", {
-                  ...bienes!.inmueble,
-                  credito_hipotecario: v,
-                })
-              }
+              value={bienes?.inmueble?.credito_hipotecario ?? ""}
+              onValueChange={(v) => patchInmueble({ credito_hipotecario: v })}
               options={SiONo}
             />
           </Table.Row>
@@ -59,13 +54,8 @@ export function Inmuebles() {
             onStarToggle={() => togglePinRow("tiene_codeudor")}>
             <Select
               disabled={isInDistribution}
-              value={bienes?.inmueble.codeudor_solidario ?? ""}
-              onValueChange={(v) =>
-                updateBienesField("inmueble", {
-                  ...bienes!.inmueble,
-                  codeudor_solidario: v,
-                })
-              }
+              value={bienes?.inmueble?.codeudor_solidario ?? ""}
+              onValueChange={(v) => patchInmueble({ codeudor_solidario: v })}
               options={SiONo}
             />
           </Table.Row>
@@ -77,13 +67,8 @@ export function Inmuebles() {
             onStarToggle={() => togglePinRow("al_dia_hipoteca")}>
             <Select
               disabled={isInDistribution}
-              value={bienes?.inmueble.al_dia ?? ""}
-              onValueChange={(v) =>
-                updateBienesField("inmueble", {
-                  ...bienes!.inmueble,
-                  al_dia: v,
-                })
-              }
+              value={bienes?.inmueble?.al_dia ?? ""}
+              onValueChange={(v) => patchInmueble({ al_dia: v })}
               options={SiONo}
             />
           </Table.Row>
@@ -95,13 +80,8 @@ export function Inmuebles() {
             onStarToggle={() => togglePinRow("hipoteco_ultimos_anos")}>
             <Select
               disabled={isInDistribution}
-              value={bienes?.inmueble.hipotecado ?? ""}
-              onValueChange={(v) =>
-                updateBienesField("inmueble", {
-                  ...bienes!.inmueble,
-                  hipotecado: v,
-                })
-              }
+              value={bienes?.inmueble?.hipotecado ?? ""}
+              onValueChange={(v) => patchInmueble({ hipotecado: v })}
               options={SiONo}
             />
           </Table.Row>
@@ -114,9 +94,7 @@ export function Inmuebles() {
             <Select
               disabled={isInDistribution}
               value={bienes?.bien.vendido ?? ""}
-              onValueChange={(v) =>
-                updateBienesField("bien", { ...bienes!.bien, vendido: v })
-              }
+              onValueChange={(v) => patchBien({ vendido: v })}
               options={SiONo}
             />
           </Table.Row>
