@@ -1,11 +1,19 @@
 import type {
+  Bienes,
+  BienesResponse,
   ClientData,
   ClientDataAPIResponse,
+  DatosFinancieros,
+  DatosFinancierosResponse,
   DatosPP,
   DatosPPResponse,
+  Empresa,
+  EmpresaResponse,
+  SituacionLaboral,
+  SituacionLaboralResponse,
 } from "@/shared/types";
 import { parseBooleanToAffirmation } from "../utils";
-import { currencyToNumber } from "./formatters";
+import { currencyToNumber } from "./currency.util";
 
 export function mapAPIToClientData(apiData: ClientDataAPIResponse): ClientData {
   return {
@@ -29,26 +37,30 @@ export function mapAPIToClientData(apiData: ClientDataAPIResponse): ClientData {
         ...bienes.bien,
         vendido: parseBooleanToAffirmation(bienes.bien.vendido),
       },
-      inmueble: {
-        ...bienes.inmueble,
-        credito_hipotecario: parseBooleanToAffirmation(
-          bienes.inmueble.credito_hipotecario
-        ),
-        codeudor_solidario: parseBooleanToAffirmation(
-          bienes.inmueble.codeudor_solidario
-        ),
-        al_dia: parseBooleanToAffirmation(bienes.inmueble.al_dia),
-        hipotecado: parseBooleanToAffirmation(bienes.inmueble.hipotecado),
-        mas_dos_anos_venta: parseBooleanToAffirmation(
-          bienes.inmueble.mas_dos_anos_venta
-        ),
-      },
-      vehiculo: {
-        ...bienes.vehiculo,
-        mas_dos_anos_venta: parseBooleanToAffirmation(
-          bienes.vehiculo.mas_dos_anos_venta
-        ),
-      },
+      inmueble: bienes.inmueble
+        ? {
+            ...bienes.inmueble,
+            credito_hipotecario: parseBooleanToAffirmation(
+              bienes.inmueble.credito_hipotecario
+            ),
+            codeudor_solidario: parseBooleanToAffirmation(
+              bienes.inmueble.codeudor_solidario
+            ),
+            al_dia: parseBooleanToAffirmation(bienes.inmueble.al_dia),
+            hipotecado: parseBooleanToAffirmation(bienes.inmueble.hipotecado),
+            mas_dos_anos_venta: parseBooleanToAffirmation(
+              bienes.inmueble.mas_dos_anos_venta
+            ),
+          }
+        : null,
+      vehiculo: bienes.vehiculo
+        ? {
+            ...bienes.vehiculo,
+            mas_dos_anos_venta: parseBooleanToAffirmation(
+              bienes.vehiculo.mas_dos_anos_venta
+            ),
+          }
+        : null,
     })),
     datos_pp: {
       ...apiData.datos_pp,
@@ -229,4 +241,118 @@ export function mapToPersonalData(cd: DatosPP): DatosPPResponse {
     juicios_pendientes: cd!.juicios_pendientes,
     proc_concursal: cd!.proc_concursal === "si",
   };
+}
+
+export function mapToSituacionLaboral(
+  sl: SituacionLaboral
+): SituacionLaboralResponse {
+  return {
+    ...sl,
+    trabajando: sl.trabajando === "si",
+    responsable_trabajadores: sl.responsable_trabajadores === "si",
+    establecimiento_comercial: sl.establecimiento_comercial === "si",
+    empresa_propia: sl.empresa_propia === "si",
+    bono_gratificacion: sl.bono_gratificacion === "si",
+    finiquito: sl.finiquito === "si",
+  };
+}
+
+export function mapToDatosFinancieros(
+  df: DatosFinancieros
+): DatosFinancierosResponse {
+  return {
+    ...df,
+    id: df.id ?? 0,
+    cae: df.cae === "si",
+    aval: df.aval === "si",
+    declaro_renta: df.declaro_renta === "si",
+    recibe_devolucion_impuestos: df.recibe_devolucion_impuestos === "si",
+    retencion_impuestos: df.retencion_impuestos === "si",
+    tarjeta_credito: df.tarjeta_credito === "si",
+    chequera: df.chequera === "si",
+    cheques_protestados: df.cheques_protestados === "si",
+    vales_sin_cobrar: df.vales_sin_cobrar === "si",
+    vales_vencidos: df.vales_vencidos === "si",
+    fondos_cooperativas: df.fondos_cooperativas === "si",
+    criptomonedas: df.criptomonedas === "si",
+    libreta_ahorros: df.libreta_ahorros === "si",
+    fondos_mutuos: df.fondos_mutuos === "si",
+    apv: df.apv === "si",
+    deposito_plazo: df.deposito_plazo === "si",
+    caja_compensacion: df.caja_compensacion === "si",
+    autopista: df.autopista === "si",
+    inst_medicas: df.inst_medicas === "si",
+    tgr: df.tgr === "si",
+  };
+}
+
+export function mapToBienes(bienes: Bienes): BienesResponse {
+  return {
+    bien: {
+      id: bienes.bien.id,
+      id_cliente: bienes.bien.id_cliente,
+      tipo_bien: bienes.bien.tipo_bien,
+      descripcion: bienes.bien.descripcion,
+      vendido: bienes.bien.vendido === "si",
+    },
+    inmueble: bienes.inmueble
+      ? {
+          id: bienes.inmueble.id,
+          credito_hipotecario: bienes.inmueble.credito_hipotecario === "si",
+          codeudor_solidario: bienes.inmueble.codeudor_solidario === "si",
+          al_dia: bienes.inmueble.al_dia === "si",
+          hipotecado: bienes.inmueble.hipotecado === "si",
+          mas_dos_anos_venta:
+            bienes.inmueble.mas_dos_anos_venta === "mas-dos-años",
+          comprador: bienes.inmueble.comprador ?? null,
+        }
+      : {
+          id: 0,
+          credito_hipotecario: false,
+          codeudor_solidario: false,
+          al_dia: false,
+          hipotecado: false,
+          mas_dos_anos_venta: false,
+          comprador: null,
+        },
+    vehiculo: bienes.vehiculo
+      ? {
+          id: bienes.vehiculo.id,
+          mas_dos_anos_venta:
+            bienes.vehiculo.mas_dos_anos_venta === "mas-dos-años",
+          comprador: bienes.vehiculo.comprador ?? null,
+          medio_compra: bienes.vehiculo.medio_compra ?? null,
+        }
+      : {
+          id: 0,
+          mas_dos_anos_venta: false,
+          comprador: null,
+          medio_compra: null,
+        },
+  };
+}
+
+export function mapEmpresas(
+  empresas: Empresa[]
+): Array<
+  Pick<
+    EmpresaResponse,
+    | "nombre_empresa"
+    | "actividad"
+    | "activos_pasivos"
+    | "movimientos"
+    | "contabilidad_completa"
+    | "socios"
+  >
+> {
+  return empresas.map((e) => {
+    return {
+      nombre_empresa: e.nombre_empresa ?? "",
+      actividad: e.actividad === "si",
+      activos_pasivos: String(e.activos_pasivos ?? ""),
+      movimientos: e.movimientos === "si",
+      contabilidad_completa: e.contabilidad_completa === "si",
+      socios: e.socios ?? "",
+    };
+  });
 }

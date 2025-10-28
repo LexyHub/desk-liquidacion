@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { useParams } from "react-router-dom";
 import { fetchClientData } from "@shared/services/client.service";
-import { mapAPIToClientData } from "@shared/lib/utils/mappers";
+import { mapAPIToClientData } from "@shared/lib/utils/mappers.util";
 import { useClientStore } from "@shared/stores/useClientStore";
 
 export function useClientDataSync() {

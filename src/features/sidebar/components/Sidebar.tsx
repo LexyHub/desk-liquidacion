@@ -17,8 +17,7 @@ import { VideoDialog } from "./VideoDialog";
 import { useSidebar } from "@features/sidebar";
 import { cn } from "@shared/lib/utils";
 import { useAuth } from "@features/auth";
-import { useUpdateDatosPersonales } from "@/features/datos-personales/hooks";
-import { useDatosPersonalesStore } from "@/features/datos-personales/stores/useDatosPersonales.store";
+import { useTryUpdateClientData } from "@shared/hooks/useTryUpdateClientData";
 
 export function Sidebar() {
   const { idDefensoria } = useParams();
@@ -26,13 +25,6 @@ export function Sidebar() {
   const { logOut } = useAuth();
   const navigate = useNavigate();
   const { isOpen, toggle, isInDistribution, setInDistribution } = useSidebar();
-
-  const {
-    datosPP,
-    changes: changesInPP,
-    setChanges: setChangesInPP,
-  } = useDatosPersonalesStore();
-  const { updateDatosPersonales } = useUpdateDatosPersonales();
 
   const [showVideoDialog, setShowVideoDialog] = useState(false);
 
@@ -44,16 +36,12 @@ export function Sidebar() {
     tryUpdateClientData();
   };
 
-  const tryUpdateClientData = () => {
-    if (isInDistribution) return;
-
-    if (pathname.startsWith("/datos-personales")) {
-      if (!datosPP || !changesInPP) return;
-      updateDatosPersonales({
-        id_cliente: datosPP.id,
-        payload: datosPP,
-      });
-      setChangesInPP(false);
+  const runTryUpdate = useTryUpdateClientData();
+  const tryUpdateClientData = async () => {
+    try {
+      await runTryUpdate();
+    } catch (error) {
+      console.error("Error actualizando datos cliente:", error);
     }
   };
 

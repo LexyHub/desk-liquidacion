@@ -2,7 +2,7 @@ import { Input } from "@shared/components/form";
 import { Table, Card } from "@shared/components/ui";
 import { Plus, Trash2 } from "@shared/lib/icons";
 import { cn } from "@shared/lib/utils";
-import { formatCurrency } from "@shared/lib/utils/formatters";
+import { formatCurrency } from "@shared/lib/utils/currency.util";
 import { useSidebar } from "@features/sidebar";
 import { useHistoriaSEStore } from "../stores/HistoriaSE.store";
 import { useDatosPersonalesStore } from "@/features/datos-personales/stores/useDatosPersonales.store";
@@ -24,8 +24,6 @@ export function GastosMensuales() {
     };
     addGasto(newGasto);
   };
-
-  console.log(gastos);
 
   return (
     <>

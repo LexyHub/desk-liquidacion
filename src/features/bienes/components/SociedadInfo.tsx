@@ -12,7 +12,7 @@ interface Props {
 export function SociedadInfo({ sociedad }: Props) {
   const { isInDistribution } = useSidebar();
 
-  const { updateEmpresaField, removeEmpresa } = useBienesStore();
+  const { patchEmpresa, removeEmpresa } = useBienesStore();
 
   return (
     <div className='w-full grid grid-cols-[1fr_auto] rounded-md border border-[#E6E6E6] animate-fade-in animate-duration-100'>
@@ -28,11 +28,7 @@ export function SociedadInfo({ sociedad }: Props) {
             placeholder='Ej: Moonie Studios'
             value={sociedad.nombre_empresa ?? ""}
             onChange={(value: string | number) =>
-              updateEmpresaField(
-                sociedad.id ?? -1,
-                "nombre_empresa",
-                String(value)
-              )
+              patchEmpresa(sociedad.id ?? -1, { nombre_empresa: String(value) })
             }
             className='py-2 px-3 h-full w-full text-lexy-text-secondary leading-6 rounded-sm'
           />
@@ -49,11 +45,9 @@ export function SociedadInfo({ sociedad }: Props) {
             type='currency'
             value={String(sociedad.activos_pasivos)}
             onChange={(value: string | number) =>
-              updateEmpresaField(
-                sociedad.id ?? -1,
-                "activos_pasivos",
-                value as number
-              )
+              patchEmpresa(sociedad.id ?? -1, {
+                activos_pasivos: value as number,
+              })
             }
             className='w-full h-full py-2 px-3 text-lexy-text-secondary leading-6 rounded-sm'
           />
@@ -69,7 +63,7 @@ export function SociedadInfo({ sociedad }: Props) {
             value={sociedad.actividad ?? ""}
             options={SiONo}
             onValueChange={(value: string) =>
-              updateEmpresaField(sociedad.id ?? -1, "actividad", value)
+              patchEmpresa(sociedad.id ?? -1, { actividad: value })
             }
             triggerClassName='w-full h-full py-2 text-lexy-text-secondary leading-6 rounded-sm'
           />
@@ -85,11 +79,7 @@ export function SociedadInfo({ sociedad }: Props) {
             value={sociedad.contabilidad_completa ?? ""}
             options={SiONo}
             onValueChange={(value: string) =>
-              updateEmpresaField(
-                sociedad.id ?? -1,
-                "contabilidad_completa",
-                value
-              )
+              patchEmpresa(sociedad.id ?? -1, { contabilidad_completa: value })
             }
             triggerClassName='w-full h-full py-2 text-lexy-text-secondary leading-6 rounded-sm'
           />
@@ -105,7 +95,7 @@ export function SociedadInfo({ sociedad }: Props) {
             placeholder='Ej: María Soto, Felipe Morales'
             value={sociedad.socios ?? ""}
             onChange={(value: string | number) =>
-              updateEmpresaField(sociedad.id ?? -1, "socios", String(value))
+              patchEmpresa(sociedad.id ?? -1, { socios: String(value) })
             }
             className='w-full h-full py-2 px-3 text-lexy-text-secondary leading-6 rounded-sm'
           />

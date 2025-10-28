@@ -4,19 +4,20 @@ import type { Datos, DatosPP } from "@shared/types";
 interface DatosPersonalesState {
   datos: Datos | null;
   datosPP: DatosPP | null;
-  changes: boolean;
+  changesInDatos: boolean;
+  changesInPP: boolean;
 
   setDatos: (datos: Datos) => void;
   setDatosPP: (datosPP: DatosPP) => void;
 
   updateDatosField: <K extends keyof Datos>(field: K, value: Datos[K]) => void;
+  patchDatos: (patch: Partial<Datos>) => void;
 
-  updateDatosPPField: <K extends keyof DatosPP>(
-    field: K,
-    value: DatosPP[K]
-  ) => void;
+  // Helper de patch para DatosPP
+  patchDatosPP: (patch: Partial<DatosPP>) => void;
 
-  setChanges: (changes: boolean) => void;
+  setChangesInDatos: (changes: boolean) => void;
+  setChangesInPP: (changes: boolean) => void;
 
   reset: () => void;
 }
@@ -25,7 +26,8 @@ export const useDatosPersonalesStore = create<DatosPersonalesState>(
   (set, get) => ({
     datos: null,
     datosPP: null,
-    changes: false,
+    changesInDatos: false,
+    changesInPP: false,
 
     setDatos: (datos) => set({ datos }),
     setDatosPP: (datosPP) => set({ datosPP }),
@@ -34,24 +36,43 @@ export const useDatosPersonalesStore = create<DatosPersonalesState>(
       set((state) => ({
         datos: state.datos ? { ...state.datos, [field]: value } : null,
       }));
-      const changes = get().changes;
+      const changes = get().changesInDatos;
       if (!changes) {
-        set({ changes: true });
+        set({ changesInDatos: true });
       }
     },
 
-    updateDatosPPField: (field, value) => {
-      set((state) => ({
-        datosPP: state.datosPP ? { ...state.datosPP, [field]: value } : null,
-      }));
-      const changes = get().changes;
+    patchDatos: (patch) => {
+      set((state) => {
+        if (!state.datos) return state;
+        return { datos: { ...state.datos, ...patch } };
+      });
+      const changes = get().changesInDatos;
       if (!changes) {
-        set({ changes: true });
+        set({ changesInDatos: true });
       }
     },
 
-    setChanges: (changes) => set({ changes }),
+    patchDatosPP: (patch) => {
+      set((state) => {
+        if (!state.datosPP) return state;
+        return { datosPP: { ...state.datosPP, ...patch } };
+      });
+      const changes = get().changesInPP;
+      if (!changes) {
+        set({ changesInPP: true });
+      }
+    },
 
-    reset: () => set({ datos: null, datosPP: null, changes: false }),
+    setChangesInDatos: (changes) => set({ changesInDatos: changes }),
+    setChangesInPP: (changes) => set({ changesInPP: changes }),
+
+    reset: () =>
+      set({
+        datos: null,
+        datosPP: null,
+        changesInDatos: false,
+        changesInPP: false,
+      }),
   })
 );

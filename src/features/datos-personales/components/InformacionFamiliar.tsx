@@ -9,7 +9,7 @@ export function InformacionFamiliar() {
   const { isRowPinned, togglePinRow } = usePinService();
   const { isInDistribution } = useSidebar();
 
-  const { datosPP, updateDatosPPField } = useDatosPersonalesStore();
+  const { datosPP, patchDatosPP } = useDatosPersonalesStore();
 
   return (
     <Card>
@@ -27,7 +27,7 @@ export function InformacionFamiliar() {
             <Select
               disabled={isInDistribution}
               value={datosPP?.padres_fallecidos}
-              onValueChange={(v) => updateDatosPPField("padres_fallecidos", v)}
+              onValueChange={(v) => patchDatosPP({ padres_fallecidos: v })}
               options={SiONo}
             />
           </Table.Row>
@@ -40,7 +40,7 @@ export function InformacionFamiliar() {
             <Select
               disabled={isInDistribution}
               value={datosPP?.posesion_efectiva}
-              onValueChange={(v) => updateDatosPPField("posesion_efectiva", v)}
+              onValueChange={(v) => patchDatosPP({ posesion_efectiva: v })}
               options={SiONo}
             />
           </Table.Row>
@@ -53,9 +53,7 @@ export function InformacionFamiliar() {
             <Select
               disabled={isInDistribution}
               value={datosPP?.derechos_hereditarios ?? ""}
-              onValueChange={(v) =>
-                updateDatosPPField("derechos_hereditarios", v)
-              }
+              onValueChange={(v) => patchDatosPP({ derechos_hereditarios: v })}
               options={SiONo}
             />
           </Table.Row>
@@ -70,7 +68,7 @@ export function InformacionFamiliar() {
               type='number'
               placeholder='Ingresa la cantidad de hijos'
               value={String(datosPP?.hijos ?? "")}
-              onChange={(v) => updateDatosPPField("hijos", v as number)}
+              onChange={(v) => patchDatosPP({ hijos: v as number })}
             />
           </Table.Row>
           <Table.Row
@@ -82,7 +80,7 @@ export function InformacionFamiliar() {
             <Select
               disabled={isInDistribution}
               value={datosPP?.recibe_alimentos ?? ""}
-              onValueChange={(v) => updateDatosPPField("recibe_alimentos", v)}
+              onValueChange={(v) => patchDatosPP({ recibe_alimentos: v })}
               options={SiONo}
             />
           </Table.Row>
@@ -95,7 +93,7 @@ export function InformacionFamiliar() {
             <Select
               disabled={isInDistribution}
               value={datosPP?.deuda_alimentos ?? ""}
-              onValueChange={(v) => updateDatosPPField("deuda_alimentos", v)}
+              onValueChange={(v) => patchDatosPP({ deuda_alimentos: v })}
               options={SiONo}
             />
           </Table.Row>
@@ -109,7 +107,7 @@ export function InformacionFamiliar() {
               disabled={isInDistribution}
               value={datosPP?.alimentos_regularizados ?? ""}
               onValueChange={(v) =>
-                updateDatosPPField("alimentos_regularizados", v)
+                patchDatosPP({ alimentos_regularizados: v })
               }
               options={SiONo}
             />

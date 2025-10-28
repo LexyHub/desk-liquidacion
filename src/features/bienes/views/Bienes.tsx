@@ -4,12 +4,9 @@ import { Inmuebles } from "../components/Inmuebles";
 import { Vehiculos } from "../components/Vehiculos";
 import { Sociedades } from "../components/Sociedades";
 import { SociedadesTable } from "../components/SociedadesTable";
-import { useSyncBienes } from "../hooks/useSyncBienes";
 
 export default function Bienes() {
   const loading = useClientStore((state) => state.isLoading);
-
-  useSyncBienes();
 
   if (loading) {
     return <LoadingView />;
