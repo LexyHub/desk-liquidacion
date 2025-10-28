@@ -25,8 +25,6 @@ export function GastosMensuales() {
     addGasto(newGasto);
   };
 
-  console.log(gastos);
-
   return (
     <>
       <Card>

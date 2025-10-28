@@ -7,45 +7,48 @@ interface BienesState {
   // id temporal, decreciente para nuevas empresas
   nextEmpresaTempId: number;
 
+  changesInBienes: boolean | null;
+  changesInEmpresas: boolean | null;
+
   setBienes: (datos: Bienes) => void;
-  updateBienesField: <K extends keyof Bienes>(
-    field: K,
-    value: Bienes[K]
-  ) => void;
   // Helpers de patch para evitar lógica repetida en componentes
   patchBien: (patch: Partial<Bienes["bien"]>) => void;
   patchInmueble: (patch: Partial<NonNullable<Bienes["inmueble"]>>) => void;
   patchVehiculo: (patch: Partial<NonNullable<Bienes["vehiculo"]>>) => void;
+  // Helpers para empresas
   setEmpresas: (empresas: Empresa[]) => void;
   addEmpresa: (empresa: Empresa) => void;
   removeEmpresa: (id: number) => void;
-  updateEmpresaField: <K extends keyof Empresa>(
-    id: number,
-    field: K,
-    value: Empresa[K]
-  ) => void;
+  patchEmpresa: (id: number, patch: Partial<Empresa>) => void;
   replaceEmpresaId: (tempId: number, realId: number) => void;
+
+  setChangesInBienes: (changes: boolean | null) => void;
+  setChangesInEmpresas: (changes: boolean | null) => void;
+
   reset: () => void;
 }
 
-export const useBienesStore = create<BienesState>((set) => ({
+export const useBienesStore = create<BienesState>((set, get) => ({
   bienes: null,
   empresas: null,
   nextEmpresaTempId: -1,
 
+  changesInBienes: null,
+  changesInEmpresas: null,
+
   setBienes: (datos) => set({ bienes: datos }),
-  updateBienesField: (field, value) =>
-    set((state) => ({
-      bienes: state.bienes ? { ...state.bienes, [field]: value } : null,
-    })),
-  patchBien: (patch) =>
+  patchBien: (patch) => {
     set((state) => {
       if (!state.bienes) return state;
       return {
         bienes: { ...state.bienes, bien: { ...state.bienes.bien, ...patch } },
       };
-    }),
-  patchInmueble: (patch) =>
+    });
+    const changes = get().changesInBienes;
+    if (!changes) set({ changesInBienes: true });
+  },
+
+  patchInmueble: (patch) => {
     set((state) => {
       if (!state.bienes || !state.bienes.inmueble) return state;
       return {
@@ -54,19 +57,30 @@ export const useBienesStore = create<BienesState>((set) => ({
           inmueble: { ...state.bienes.inmueble, ...patch },
         },
       };
-    }),
-  patchVehiculo: (patch) =>
+    });
+    const changes = get().changesInBienes;
+    if (!changes) set({ changesInBienes: true });
+  },
+
+  patchVehiculo: (patch) => {
     set((state) => {
-      if (!state.bienes || !state.bienes.vehiculo) return state;
+      if (!state.bienes) return state;
+      const existingVeh = state.bienes.vehiculo;
+      const newVeh = existingVeh
+        ? { ...existingVeh, ...patch }
+        : ({ ...patch } as NonNullable<Bienes["vehiculo"]>);
       return {
         bienes: {
           ...state.bienes,
-          vehiculo: { ...state.bienes.vehiculo, ...patch },
+          vehiculo: newVeh,
         },
       };
-    }),
+    });
+    const changes = get().changesInBienes;
+    if (!changes) set({ changesInBienes: true });
+  },
   setEmpresas: (empresas) => set({ empresas, nextEmpresaTempId: -1 }),
-  addEmpresa: (empresa) =>
+  addEmpresa: (empresa) => {
     set((state) => {
       const ensuredId = empresa.id ?? state.nextEmpresaTempId;
       const newEmpresa: Empresa = { ...empresa, id: ensuredId };
@@ -79,21 +93,28 @@ export const useBienesStore = create<BienesState>((set) => ({
             ? state.nextEmpresaTempId - 1
             : state.nextEmpresaTempId,
       };
-    }),
-  removeEmpresa: (id) =>
+    });
+    const changes = get().changesInEmpresas;
+    if (!changes) set({ changesInEmpresas: true });
+  },
+  removeEmpresa: (id) => {
     set((state) => ({
       empresas: state.empresas
         ? state.empresas.filter((e) => e.id !== id)
         : null,
-    })),
-  updateEmpresaField: (id, field, value) =>
+    }));
+    const changes = get().changesInEmpresas;
+    if (!changes) set({ changesInEmpresas: true });
+  },
+  patchEmpresa: (id, patch) => {
     set((state) => ({
       empresas: state.empresas
-        ? state.empresas.map((e) =>
-            e.id === id ? { ...e, [field]: value } : e
-          )
+        ? state.empresas.map((e) => (e.id === id ? { ...e, ...patch } : e))
         : null,
-    })),
+    }));
+    const changes = get().changesInEmpresas;
+    if (!changes) set({ changesInEmpresas: true });
+  },
   // cuando se haga un POST y se reciba el id real del servidor
   replaceEmpresaId: (tempId, realId) =>
     set((state) => ({
@@ -103,6 +124,10 @@ export const useBienesStore = create<BienesState>((set) => ({
           )
         : null,
     })),
+
+  setChangesInBienes: (changes) => set({ changesInBienes: changes }),
+  setChangesInEmpresas: (changes) => set({ changesInEmpresas: changes }),
+
   reset: () => {
     set({ bienes: null });
     set({ empresas: null });

@@ -5,6 +5,7 @@ import { Card, Table } from "@shared/components/ui";
 import { usePinService } from "@shared/hooks";
 import { useBienesStore } from "../stores/useBienes.store";
 import { useDatosPersonalesStore } from "@/features/datos-personales/stores/useDatosPersonales.store";
+import { useState } from "react";
 
 export function Vehiculos() {
   const { isRowPinned, togglePinRow } = usePinService();
@@ -12,6 +13,9 @@ export function Vehiculos() {
 
   const { datosPP, patchDatosPP } = useDatosPersonalesStore();
   const { bienes, patchVehiculo } = useBienesStore();
+
+  // no se guarda esta info
+  const [vendioVehiculo, setVendioVehiculo] = useState<string>("");
 
   return (
     <Card>
@@ -41,8 +45,10 @@ export function Vehiculos() {
             onStarToggle={() => togglePinRow("ha_vendido_vehiculo")}>
             <Select
               disabled={isInDistribution}
-              value={bienes?.vehiculo?.comprador ? "si" : ""}
-              onValueChange={(v) => patchVehiculo({ comprador: v })}
+              value={bienes?.vehiculo?.comprador ? "si" : vendioVehiculo}
+              onValueChange={(v) => {
+                setVendioVehiculo(v);
+              }}
               options={SiONo}
             />
           </Table.Row>

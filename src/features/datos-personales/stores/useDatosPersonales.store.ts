@@ -4,7 +4,8 @@ import type { Datos, DatosPP } from "@shared/types";
 interface DatosPersonalesState {
   datos: Datos | null;
   datosPP: DatosPP | null;
-  changes: boolean;
+  changesInDatos: boolean;
+  changesInPP: boolean;
 
   setDatos: (datos: Datos) => void;
   setDatosPP: (datosPP: DatosPP) => void;
@@ -15,7 +16,8 @@ interface DatosPersonalesState {
   // Helper de patch para DatosPP
   patchDatosPP: (patch: Partial<DatosPP>) => void;
 
-  setChanges: (changes: boolean) => void;
+  setChangesInDatos: (changes: boolean) => void;
+  setChangesInPP: (changes: boolean) => void;
 
   reset: () => void;
 }
@@ -24,7 +26,8 @@ export const useDatosPersonalesStore = create<DatosPersonalesState>(
   (set, get) => ({
     datos: null,
     datosPP: null,
-    changes: false,
+    changesInDatos: false,
+    changesInPP: false,
 
     setDatos: (datos) => set({ datos }),
     setDatosPP: (datosPP) => set({ datosPP }),
@@ -33,9 +36,9 @@ export const useDatosPersonalesStore = create<DatosPersonalesState>(
       set((state) => ({
         datos: state.datos ? { ...state.datos, [field]: value } : null,
       }));
-      const changes = get().changes;
+      const changes = get().changesInDatos;
       if (!changes) {
-        set({ changes: true });
+        set({ changesInDatos: true });
       }
     },
 
@@ -44,9 +47,9 @@ export const useDatosPersonalesStore = create<DatosPersonalesState>(
         if (!state.datos) return state;
         return { datos: { ...state.datos, ...patch } };
       });
-      const changes = get().changes;
+      const changes = get().changesInDatos;
       if (!changes) {
-        set({ changes: true });
+        set({ changesInDatos: true });
       }
     },
 
@@ -55,14 +58,21 @@ export const useDatosPersonalesStore = create<DatosPersonalesState>(
         if (!state.datosPP) return state;
         return { datosPP: { ...state.datosPP, ...patch } };
       });
-      const changes = get().changes;
+      const changes = get().changesInPP;
       if (!changes) {
-        set({ changes: true });
+        set({ changesInPP: true });
       }
     },
 
-    setChanges: (changes) => set({ changes }),
+    setChangesInDatos: (changes) => set({ changesInDatos: changes }),
+    setChangesInPP: (changes) => set({ changesInPP: changes }),
 
-    reset: () => set({ datos: null, datosPP: null, changes: false }),
+    reset: () =>
+      set({
+        datos: null,
+        datosPP: null,
+        changesInDatos: false,
+        changesInPP: false,
+      }),
   })
 );

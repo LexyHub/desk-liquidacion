@@ -1,10 +1,14 @@
 import type {
+  Bienes,
+  BienesResponse,
   ClientData,
   ClientDataAPIResponse,
   DatosFinancieros,
   DatosFinancierosResponse,
   DatosPP,
   DatosPPResponse,
+  Empresa,
+  EmpresaResponse,
   SituacionLaboral,
   SituacionLaboralResponse,
 } from "@/shared/types";
@@ -280,4 +284,75 @@ export function mapToDatosFinancieros(
     inst_medicas: df.inst_medicas === "si",
     tgr: df.tgr === "si",
   };
+}
+
+export function mapToBienes(bienes: Bienes): BienesResponse {
+  return {
+    bien: {
+      id: bienes.bien.id,
+      id_cliente: bienes.bien.id_cliente,
+      tipo_bien: bienes.bien.tipo_bien,
+      descripcion: bienes.bien.descripcion,
+      vendido: bienes.bien.vendido === "si",
+    },
+    inmueble: bienes.inmueble
+      ? {
+          id: bienes.inmueble.id,
+          credito_hipotecario: bienes.inmueble.credito_hipotecario === "si",
+          codeudor_solidario: bienes.inmueble.codeudor_solidario === "si",
+          al_dia: bienes.inmueble.al_dia === "si",
+          hipotecado: bienes.inmueble.hipotecado === "si",
+          mas_dos_anos_venta:
+            bienes.inmueble.mas_dos_anos_venta === "mas-dos-años",
+          comprador: bienes.inmueble.comprador ?? null,
+        }
+      : {
+          id: 0,
+          credito_hipotecario: false,
+          codeudor_solidario: false,
+          al_dia: false,
+          hipotecado: false,
+          mas_dos_anos_venta: false,
+          comprador: null,
+        },
+    vehiculo: bienes.vehiculo
+      ? {
+          id: bienes.vehiculo.id,
+          mas_dos_anos_venta:
+            bienes.vehiculo.mas_dos_anos_venta === "mas-dos-años",
+          comprador: bienes.vehiculo.comprador ?? null,
+          medio_compra: bienes.vehiculo.medio_compra ?? null,
+        }
+      : {
+          id: 0,
+          mas_dos_anos_venta: false,
+          comprador: null,
+          medio_compra: null,
+        },
+  };
+}
+
+export function mapEmpresas(
+  empresas: Empresa[]
+): Array<
+  Pick<
+    EmpresaResponse,
+    | "nombre_empresa"
+    | "actividad"
+    | "activos_pasivos"
+    | "movimientos"
+    | "contabilidad_completa"
+    | "socios"
+  >
+> {
+  return empresas.map((e) => {
+    return {
+      nombre_empresa: e.nombre_empresa ?? "",
+      actividad: e.actividad === "si",
+      activos_pasivos: String(e.activos_pasivos ?? ""),
+      movimientos: e.movimientos === "si",
+      contabilidad_completa: e.contabilidad_completa === "si",
+      socios: e.socios ?? "",
+    };
+  });
 }

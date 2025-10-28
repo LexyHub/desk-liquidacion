@@ -17,15 +17,7 @@ import { VideoDialog } from "./VideoDialog";
 import { useSidebar } from "@features/sidebar";
 import { cn } from "@shared/lib/utils";
 import { useAuth } from "@features/auth";
-import { useUpdateDatosPersonales } from "@features/datos-personales/hooks";
-import { useDatosPersonalesStore } from "@features/datos-personales/stores/useDatosPersonales.store";
-import { useUpdateSituacionLaboral } from "@features/situacion-laboral/hooks/useUpdateSituacionLaboral";
-import { useSituacionLaboralStore } from "@/features/situacion-laboral/stores/useSituacionLaboral.store";
-import { useDeudasStore } from "@/features/deudas/stores/deudas.store";
-import {
-  patchDatosFinancieros,
-  uploadDeudas,
-} from "@/shared/services/client.service";
+import { useTryUpdateClientData } from "@shared/hooks/useTryUpdateClientData";
 
 export function Sidebar() {
   const { idDefensoria } = useParams();
@@ -33,27 +25,6 @@ export function Sidebar() {
   const { logOut } = useAuth();
   const navigate = useNavigate();
   const { isOpen, toggle, isInDistribution, setInDistribution } = useSidebar();
-
-  const {
-    datosPP,
-    changes: changesInPP,
-    setChanges: setChangesInPP,
-  } = useDatosPersonalesStore();
-  const { updateDatosPersonales } = useUpdateDatosPersonales();
-  const {
-    situacion_laboral,
-    changes: changesInSL,
-    setChanges: setChangesInSL,
-  } = useSituacionLaboralStore();
-  const { updateSituacionLaboral } = useUpdateSituacionLaboral();
-  const {
-    deudas,
-    datos_financieros,
-    changesInDF,
-    changesInDeudas,
-    setChangesInDF,
-    setChangesInDeudas,
-  } = useDeudasStore();
 
   const [showVideoDialog, setShowVideoDialog] = useState(false);
 
@@ -65,32 +36,12 @@ export function Sidebar() {
     tryUpdateClientData();
   };
 
-  const tryUpdateClientData = () => {
-    if (isInDistribution || !datosPP) return;
-
-    if (changesInPP) {
-      updateDatosPersonales({
-        id_cliente: datosPP.id,
-        payload: datosPP,
-      });
-      setChangesInPP(false);
-    }
-
-    if (changesInSL) {
-      updateSituacionLaboral({
-        id_cliente: datosPP.id || "",
-        payload: situacion_laboral!,
-      });
-      setChangesInSL(false);
-    }
-
-    if (changesInDF) {
-      patchDatosFinancieros(datosPP.id || "", datos_financieros!);
-      setChangesInDF(false);
-    }
-    if (changesInDeudas) {
-      uploadDeudas(deudas!);
-      setChangesInDeudas(false);
+  const runTryUpdate = useTryUpdateClientData();
+  const tryUpdateClientData = async () => {
+    try {
+      await runTryUpdate();
+    } catch (error) {
+      console.error("Error actualizando datos cliente:", error);
     }
   };
 
