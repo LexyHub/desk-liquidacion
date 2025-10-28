@@ -7,6 +7,7 @@ import { GastosMensuales } from "../components/GastosMensuales";
 import { Save } from "@shared/lib/icons";
 import { useNavigate, useParams } from "react-router-dom";
 import { useSidebar } from "@/features/sidebar";
+import { useTryUpdateClientData } from "@/shared/hooks/useTryUpdateClientData";
 
 export default function HSE() {
   const { idDefensoria } = useParams();
@@ -14,8 +15,18 @@ export default function HSE() {
   const { setInDistribution } = useSidebar();
   const navigate = useNavigate();
 
+  const runTryUpdate = useTryUpdateClientData();
+  const tryUpdateClientData = async () => {
+    try {
+      await runTryUpdate();
+    } catch (error) {
+      console.error("Error actualizando datos cliente:", error);
+    }
+  };
+
   const handleNavigation = () => {
     setInDistribution(true);
+    tryUpdateClientData();
     navigate(`/distribucion/${idDefensoria}`);
   };
 
