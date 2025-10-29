@@ -6,9 +6,17 @@ interface ClientStore {
   isLoading: boolean;
   error: string | null;
 
+  claveUnica: string | null;
+  isLoadingClaveUnica: boolean;
+  errorClaveUnica: string | null;
+
   setClientData: (data: ClientData | null) => void;
   setLoading: (loading: boolean) => void;
   setError: (error: string | null) => void;
+
+  setClaveUnica: (clave: string | null) => void;
+  setLoadingClaveUnica: (loading: boolean) => void;
+  setErrorClaveUnica: (error: string | null) => void;
 
   updateDatosPersonales: (datos: ClientData["datos"]) => void;
   updateDatosPP: (datosPP: ClientData["datos_pp"]) => void;
@@ -33,9 +41,17 @@ export const useClientStore = create<ClientStore>((set) => ({
   isLoading: false,
   error: null,
 
+  claveUnica: null,
+  isLoadingClaveUnica: false,
+  errorClaveUnica: null,
+
   setClientData: (data) => set({ clientData: data, error: null }),
   setLoading: (loading) => set({ isLoading: loading }),
   setError: (error) => set({ error }),
+
+  setClaveUnica: (clave) => set({ claveUnica: clave, errorClaveUnica: null }),
+  setLoadingClaveUnica: (loading) => set({ isLoadingClaveUnica: loading }),
+  setErrorClaveUnica: (error) => set({ errorClaveUnica: error }),
 
   updateDatosPersonales: (datos) =>
     set((state) =>
@@ -121,7 +137,15 @@ export const useClientStore = create<ClientStore>((set) => ({
       return { clientData: { ...state.clientData, empresas } };
     }),
 
-  reset: () => set({ clientData: null, isLoading: false, error: null }),
+  reset: () =>
+    set({
+      clientData: null,
+      isLoading: false,
+      error: null,
+      claveUnica: null,
+      isLoadingClaveUnica: false,
+      errorClaveUnica: null,
+    }),
 }));
 
 // Selectores derivados

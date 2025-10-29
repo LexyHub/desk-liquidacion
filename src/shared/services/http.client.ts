@@ -98,15 +98,17 @@ export async function sendPost(
 
 export async function sendGet<T = unknown>(
   url: string,
-  signal?: AbortSignal
+  signal?: AbortSignal,
+  raw_headers?: Record<string, string>
 ): Promise<T> {
+  const headers = raw_headers ?? {
+    "Content-Type": "application/json",
+    Authorization: sessionStorage.getItem("token") || "",
+  };
   try {
     const response = await fetch(url, {
       method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: sessionStorage.getItem("token") || "",
-      },
+      headers,
       signal,
     });
 
