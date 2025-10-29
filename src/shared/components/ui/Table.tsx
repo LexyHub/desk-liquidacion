@@ -82,6 +82,7 @@ interface RowProps extends Omit<TableProps, "children"> {
   value?: string;
   stareable?: boolean;
   isStared?: boolean;
+  loading?: boolean;
   onStarToggle?: (key: string) => void;
 }
 
@@ -94,8 +95,10 @@ Table.Row = function Row({
   stareable,
   isStared,
   onStarToggle,
+  loading,
 }: RowProps) {
   const handleClick = onStarToggle ? () => onStarToggle(rowkey) : undefined;
+
   return (
     <div
       className={cn(
@@ -129,7 +132,9 @@ Table.Row = function Row({
           {label}
         </span>
       </div>
-      {children ? (
+      {loading ? (
+        <div className='w-full h-6 bg-accent animate-pulse animate-duration-500 rounded-sm' />
+      ) : children ? (
         <>{children}</>
       ) : (
         <span className='leading-6 text-[#666666]'>{value}</span>
