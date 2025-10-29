@@ -49,7 +49,7 @@ export function MessageList() {
       ) : (
         !loading &&
         !error && (
-          <div className='flex flex-col gap-y-8 max-w-72'>
+          <div className='flex flex-col gap-y-8 w-full'>
             {Object.entries(realMessages).map(([date, msgs]) => (
               <div key={date} className='w-full'>
                 <div className='w-full grid grid-cols-[1fr_auto_1fr] items-center justify-between gap-x-2 mb-2.5 select-none animate-fade-in animate-duration-400'>

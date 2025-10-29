@@ -33,7 +33,7 @@ export function Remuneracion() {
             stareable
             isStared={isRowPinned("remuneracion")}
             onStarToggle={() => togglePinRow("remuneracion")}
-            className={clsx({ "bg-red-200/80": hasHighRemuneration })}>
+            className={clsx({ "bg-[#FFDFDF]": hasHighRemuneration })}>
             <Input
               type='currency'
               disabled={isInDistribution}

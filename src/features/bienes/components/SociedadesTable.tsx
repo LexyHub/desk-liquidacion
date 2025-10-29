@@ -5,6 +5,7 @@ import { SociedadInfo } from "./SociedadInfo";
 import { useRef } from "react";
 import { useDatosPersonalesStore } from "@/features/datos-personales/stores/useDatosPersonales.store";
 import { useBienesStore } from "../stores/useBienes.store";
+import { Plus } from "lucide-react";
 
 export function SociedadesTable() {
   const { isInDistribution } = useSidebar();
@@ -39,6 +40,7 @@ export function SociedadesTable() {
           onClick={handleAddEmpresa}
           disabled={isInDistribution}
           className='flex items-center gap-x-2 text-lexy-brand-secondary-dark leading-6 font-medium rounded-sm py-2 px-4 bg-white not-disabled:hover:bg-lexy-btn-secondary-hover border-2 border-lexy-brand-secondary-dark shadow-lexy-button cursor-pointer transition-all disabled:cursor-not-allowed'>
+          <Plus />
           Agregar empresa
         </button>
       </Card.Header>
