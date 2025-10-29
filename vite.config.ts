@@ -27,7 +27,6 @@ export default defineConfig({
             "@radix-ui/react-select",
           ],
           utils: ["clsx", "tailwind-merge", "class-variance-authority"],
-          // zod: ['zod'],
         },
       },
     },

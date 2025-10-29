@@ -13,6 +13,7 @@ export {
   Plus,
   Trash2,
   Save,
+  Clipboard,
   ClipboardCheck,
   Hourglass,
   Send,
