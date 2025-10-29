@@ -41,7 +41,7 @@ export function SociedadesTable() {
           disabled={isInDistribution}
           className='flex items-center gap-x-2 text-lexy-brand-secondary-dark leading-6 font-medium rounded-sm py-2 px-4 bg-white not-disabled:hover:bg-lexy-btn-secondary-hover border-2 border-lexy-brand-secondary-dark shadow-lexy-button cursor-pointer transition-all disabled:cursor-not-allowed'>
           <Plus />
-          Agregar empresa
+          Agregar Sociedad/Empresa
         </button>
       </Card.Header>
       <Card.Content className='gap-y-4'>

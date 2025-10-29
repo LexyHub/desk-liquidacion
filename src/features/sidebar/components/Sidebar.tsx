@@ -77,8 +77,8 @@ export function Sidebar() {
               type='button'
               onClick={toggle}
               className={cn(
-                "flex items-center justify-center cursor-pointer p-1 border border-lexy-border-table text-lexy-brand-secondary-dark rounded-sm hover:bg-lexy-btn-secondary-hover transition-colors",
-                { "size-6": isOpen, "rotate-180 size-8": !isOpen }
+                "flex items-center justify-center cursor-pointer size-8 p-1 border border-lexy-border-table text-lexy-brand-secondary-dark rounded-sm hover:bg-lexy-btn-secondary-hover transition-colors",
+                { "rotate-180": !isOpen }
               )}>
               <ArrowLeftToLine className='size-4' />
             </button>

@@ -78,7 +78,7 @@ export function MessageBar() {
           type='button'
           title='Cerrar barra de mensajes'
           onClick={close}
-          className='flex items-center justify-center cursor-pointer shadow-lexy-button border border-black/10 hover:bg-lexy-border-table transition-colors rounded-full w-9 p-1.5'>
+          className='flex items-center justify-center cursor-pointer shadow-lexy-button-sm border border-black/10 hover:bg-lexy-border-table transition-colors rounded-full w-9 p-1.5'>
           <X />
         </button>
       </header>
