@@ -15,10 +15,10 @@ export function SociedadInfo({ sociedad }: Props) {
   const { patchEmpresa, removeEmpresa } = useBienesStore();
 
   return (
-    <div className='w-full grid grid-cols-[1fr_auto] rounded-md border-2 border-[#E6E6E6] animate-fade-in animate-duration-100'>
-      <section className='w-full flex flex-col'>
-        <div className='w-full h-full grid grid-cols-[40%_60%] items-center border-b-2 border-b-[#E6E6E6]'>
-          <div className='px-3 py-2 bg-[#F5F5F5] border-r-2 border-r-[#E6E6E6]'>
+    <div className='w-full grid grid-cols-[1fr_auto] rounded-md border border-[#E6E6E6] animate-fade-in animate-duration-100'>
+      <section className='w-full flex flex-col border-r border-r-[#E6E6E6]'>
+        <div className='w-full h-full grid grid-cols-[40%_60%] items-center border-b border-b-[#E6E6E6]'>
+          <div className='px-3 py-2 bg-[#F5F5F5] rounded-tl-md border-r border-r-[#E6E6E6]'>
             <span className='font-medium leading-6 text-[#2F2F2F]'>
               Nombre de la sociedad o empresa
             </span>
@@ -33,8 +33,8 @@ export function SociedadInfo({ sociedad }: Props) {
             className='py-2 px-3 h-full w-full text-lexy-text-secondary leading-6 rounded-sm'
           />
         </div>
-        <div className='w-full h-full grid grid-cols-[40%_60%] items-center border-b-2 border-b-[#E6E6E6]'>
-          <div className='px-3 py-2 h-full bg-[#F5F5F5] border-r-2 border-r-[#E6E6E6]'>
+        <div className='w-full h-full grid grid-cols-[40%_60%] items-center border-b border-b-[#E6E6E6]'>
+          <div className='px-3 py-2 h-full bg-[#F5F5F5] border-r border-r-[#E6E6E6]'>
             <span className='font-medium leading-6 text-[#2F2F2F]'>
               Activos/Pasivos
             </span>
@@ -52,8 +52,8 @@ export function SociedadInfo({ sociedad }: Props) {
             className='w-full h-full py-2 px-3 text-lexy-text-secondary leading-6 rounded-sm'
           />
         </div>
-        <div className='w-full h-full grid grid-cols-[40%_60%] items-center border-b-2 border-b-[#E6E6E6]'>
-          <div className='px-3 py-2 h-full bg-[#F5F5F5] border-r-2 border-r-[#E6E6E6]'>
+        <div className='w-full h-full grid grid-cols-[40%_60%] items-center border-b border-b-[#E6E6E6]'>
+          <div className='px-3 py-2 h-full bg-[#F5F5F5] border-r border-r-[#E6E6E6]'>
             <span className='font-medium leading-6 text-[#2F2F2F]'>
               Posee movimientos
             </span>
@@ -68,8 +68,8 @@ export function SociedadInfo({ sociedad }: Props) {
             triggerClassName='w-full h-full py-2 text-lexy-text-secondary leading-6 rounded-sm'
           />
         </div>
-        <div className='w-full h-full grid grid-cols-[40%_60%] items-center border-b-2 border-b-[#E6E6E6]'>
-          <div className='px-3 py-2 h-full bg-[#F5F5F5] border-r-2 border-r-[#E6E6E6]'>
+        <div className='w-full h-full grid grid-cols-[40%_60%] items-center border-b border-b-[#E6E6E6]'>
+          <div className='px-3 py-2 h-full bg-[#F5F5F5] border-r border-r-[#E6E6E6]'>
             <span className='font-medium leading-6 text-[#2F2F2F]'>
               Presenta contabilidad completa
             </span>
@@ -85,7 +85,7 @@ export function SociedadInfo({ sociedad }: Props) {
           />
         </div>
         <div className='w-full h-full grid grid-cols-[40%_60%] items-center'>
-          <div className='px-3 py-2 h-full bg-[#F5F5F5] border-r-2 border-r-[#E6E6E6]'>
+          <div className='px-3 py-2 h-full bg-[#F5F5F5] rounded-bl-md border-r border-r-[#E6E6E6]'>
             <span className='font-medium leading-6 text-[#2F2F2F]'>
               Otros socios
             </span>
@@ -105,7 +105,7 @@ export function SociedadInfo({ sociedad }: Props) {
         type='button'
         title='Eliminar sociedad'
         onClick={() => removeEmpresa(sociedad.id ?? -1)}
-        className='flex items-center justify-center h-full w-fit px-3 py-2 bg-[#F5F5F5] hover:bg-[#EEEBFF] transition-all cursor-pointer'>
+        className='flex items-center justify-center h-full w-fit px-3 py-2 rounded-r-md bg-[#F5F5F5] hover:bg-[#EEEBFF] transition-all cursor-pointer'>
         <Trash2 className='size-6' />
       </button>
     </div>

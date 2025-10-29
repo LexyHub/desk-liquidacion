@@ -4,6 +4,7 @@ export {
   CircleAlert,
   Eye,
   EyeClosed,
+  EyeOff,
   MessageCircle,
   SquareArrowOutUpRight,
   Star,

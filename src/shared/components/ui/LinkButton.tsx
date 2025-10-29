@@ -9,7 +9,7 @@ interface Props {
 
 export function LinkButton({ logo_url, title, subtitle, url }: Props) {
   return (
-    <section className='flex items-center justify-between w-full p-2 bg-lexy-bg-secondary border border-lexy-btn-secondary-hover rounded-sm'>
+    <section className='flex items-center justify-between w-full p-2 bg-[#F7F6FF] border border-lexy-btn-secondary-hover rounded-sm'>
       <div className='flex items-center gap-x-4'>
         <img src={logo_url} alt={`Logo de ${title}`} className='size-6' />
         <section className=''>
