@@ -67,7 +67,7 @@ export function GestionarModal({ open, onOpenChange, onSave }: Props) {
             title='Cerrar documento'
             aria-description='Cerrar visualización de documento'
             onClick={() => onOpenChange(false)}
-            className='flex items-center justify-center size-9 bg-white border border-black/10 hover:bg-lexy-border-table shadow-lexy-button transition-colors rounded-full cursor-pointer'>
+            className='flex items-center justify-center size-9 bg-white border border-black/10 hover:bg-lexy-border-table shadow-lexy-button-sm transition-colors rounded-full cursor-pointer'>
             <X />
           </button>
         </DialogHeader>
@@ -109,7 +109,7 @@ export function GestionarModal({ open, onOpenChange, onSave }: Props) {
                       type='button'
                       key={doc.id}
                       className={cn(
-                        "px-4 py-1 rounded-full text-sm font-medium leading-5 border-2 border-lexy-input-border bg-lexy-bg-platform transition-all w-fit animate-fade-in animate-duration-100 cursor-pointer",
+                        "px-4 py-1 rounded-full text-[#666] text-sm font-medium leading-5 border-2 border-lexy-input-border bg-lexy-bg-platform transition-all w-fit animate-fade-in animate-duration-100 cursor-pointer",
                         {
                           "bg-[#DCD6FF] border-lexy-brand-secondary-dark text-lexy-brand-secondary-dark":
                             doc.active,

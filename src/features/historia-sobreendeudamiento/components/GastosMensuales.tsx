@@ -124,7 +124,7 @@ export function GastosMensuales() {
 
       <Card>
         <Card.Content className='w-full flex flex-row items-center justify-between'>
-          <h4>Total gastos mensuales</h4>
+          <h4 className='font-medium leading-6'>Total gastos mensuales</h4>
           <div className='w-fit px-4 py-2 border border-lexy-border-table shadow-lexy-table rounded-sm bg-white'>
             <span className='text-lexy-brand-secondary-dark font-medium leading-6'>
               {formatCurrency(getTotalGastos())}

@@ -69,7 +69,7 @@ export function ContentHead() {
         className={cn(
           "min-w-72 max-w-72 lg:min-w-md lg:max-w-md transition-all",
           cn({
-            "min-w-72 max-w-72 lg:min-w-72 lg:max-w-72":
+            "min-w-xs max-w-xs lg:min-w-xs lg:max-w-xs":
               isSidebarOpen && isMessageTabOpen,
           })
         )}>
