@@ -71,7 +71,7 @@ export function GlobalDocumentViewer() {
             title='Cerrar documento'
             aria-description='Cerrar visualización de documento'
             onClick={() => closeDocument()}
-            className='flex items-center justify-center size-9 bg-white border border-black/10 hover:bg-lexy-border-table transition-colors rounded-full cursor-pointer'>
+            className='flex items-center justify-center size-9 bg-white border border-black/10 hover:bg-lexy-border-table transition-colors rounded-full cursor-pointer shadow-lexy-button-sm'>
             <X />
           </button>
         </DialogHeader>

@@ -22,7 +22,7 @@ export function Historia() {
           value={data?.historia}
           onChange={(e) => updateField(e.target.value)}
           placeholder='Describe como llegaste a esta situación de sobreendeudamiento, qué eventos o circunstancias contribuyeron, y cualquier información adicional que consideres relevante...'
-          className='resize-none w-full h-32 p-4 rounded-sm text-lexy-text-secondary leading-6 placeholder:text-lexy-text-placeholder bg-white border-2 border-lexy-input-border outline-none disabled:cursor-not-allowed'
+          className='resize-none w-full h-32 p-4 rounded-sm text-lexy-text-secondary leading-6 placeholder:text-lexy-text-placeholder bg-white border border-lexy-input-border outline-none disabled:cursor-not-allowed'
         />
       </Card.Content>
     </Card>

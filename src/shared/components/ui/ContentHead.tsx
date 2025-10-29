@@ -1,18 +1,13 @@
-import { Eye, EyeClosed, UserSearch, Copy, Check } from "@shared/lib/icons";
+import { Eye, EyeOff, UserSearch, Copy, Check } from "@shared/lib/icons";
 import { Drive, PoderJudicial, SII } from "@shared/assets";
 import { Card } from "./Card";
 import { LinkButton } from "./LinkButton";
 import { Table } from "./Table";
 import { useClientStore } from "@shared/stores/useClientStore";
-import { useHeaderUI } from "@features/header";
-import { useSidebar } from "@features/sidebar";
-import { cn } from "@/shared/lib/utils";
 import { useMemo, useState } from "react";
 import { notificationBus } from "@/features/notificaciones/lib/notificationBus";
 
 export function ContentHead() {
-  const { isOpen: isSidebarOpen } = useSidebar();
-  const { isOpen: isMessageTabOpen } = useHeaderUI();
   const {
     clientData,
     isLoading,
@@ -65,14 +60,7 @@ export function ContentHead() {
 
   return (
     <section className='p-4 grid grid-cols-[auto_1fr] gap-x-6 h-fit border-b border-b-lexy-border-table'>
-      <Card
-        className={cn(
-          "min-w-72 max-w-72 lg:min-w-md lg:max-w-md transition-all",
-          cn({
-            "min-w-xs max-w-xs lg:min-w-xs lg:max-w-xs":
-              isSidebarOpen && isMessageTabOpen,
-          })
-        )}>
+      <Card className='min-w-72 max-w-72 lg:min-w-md lg:max-w-md transition-all'>
         <Card.Header>
           <Card.Icon>
             <UserSearch className='size-6' />
@@ -114,7 +102,7 @@ export function ContentHead() {
                   {isCUVisible ? (
                     <Eye className='size-6' />
                   ) : (
-                    <EyeClosed className='size-6' />
+                    <EyeOff className='size-6' />
                   )}
                 </button>
                 <button
